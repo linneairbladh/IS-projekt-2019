@@ -39,6 +39,7 @@ public class Course {
 	 public WrittenExam findWrittenExam(String examID) {
 			for (WrittenExam a: writtenExamList) {
 				if (a.getExamID().equals(examID)) {
+					//osäker på examID
 					return a;
 				} else {
 					return null;
@@ -48,11 +49,12 @@ public class Course {
 		}
 	 
 	 public WrittenExam removeWrittenExam(WrittenExam a) {
-		 WrittenExam a = this.findWrittenExam(examID);
-			if(a!= null) {
-				this.writtenExamList.remove(a);
+		 WrittenExam a1 = this.findWrittenExam(name);
+		 //osäker på name
+			if(a1!= null) {
+				this.writtenExamList.remove(a1);
 			}
-		return a;
+		return a1;
 	}
 	 }
 	 
