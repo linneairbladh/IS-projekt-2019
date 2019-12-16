@@ -1,5 +1,5 @@
-package src.isprojekt;
 
+import src.isprojekt.*;
 import java.util.ArrayList;
 
 public class Course {
