@@ -48,11 +48,11 @@ public class Course {
 		}
 	 
 	 public WrittenExam removeWrittenExam(WrittenExam a) {
-		 WrittenExam a = this.findWrittenExam(examID);
-			if(a!= null) {
-				this.writtenExamList.remove(a);
+		 WrittenExam a1 = this.findWrittenExam(name);
+			if(a1!= null) {
+				this.writtenExamList.remove(a1);
 			}
-		return a;
+		return a1;
 	}
 	 }
 	 
