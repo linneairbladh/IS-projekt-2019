@@ -39,6 +39,5 @@ public class WrittenExam {
 		this.maxPoints = maxPoints;
 	} 
 
-	//tjo hej
 
 }
