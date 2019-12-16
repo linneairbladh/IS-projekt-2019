@@ -1,4 +1,4 @@
-package isprojekt;
+package src.isprojekt;
 
 public class Result {
 	
