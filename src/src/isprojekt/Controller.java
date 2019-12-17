@@ -1,5 +1,7 @@
 package src.isprojekt;
 
+import java.util.ArrayList;
+
 import javax.swing.JFrame;
 
 public class Controller {
@@ -17,10 +19,16 @@ public class Controller {
 		 students.addStudent(newstudent);
 	 }
 	 
-	 public void addStudent(String studentID, String name, int courseCode, int credits) {
-		 Student newstudent = new Student(studentID, name);
-		 Course course = new Course(courseCode, credits); 
-		 newstudent.setCourse(courseCode); course.setStudent(newstudent);
+	 public void addStudent(String studentID, String sName, String result, String letterGrade) {
+		 Student newstudent = new Student(studentID, sName);
+		 Result studentResult = new Result(result, letterGrade); 
+		 studentResult.setStudent(newstudent);
 		 students.addStudent(newstudent); }
+	 
+	 public void removeStudent(String studentIDRemove) { 
+		 students.removeStudent(studentIDRemove);
+	 }
+	 
+	 
 
 }
