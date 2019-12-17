@@ -1,4 +1,4 @@
-package src.isprojekt;
+package isprojekt;
 
 import java.awt.EventQueue;
 
