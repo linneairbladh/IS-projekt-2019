@@ -1,4 +1,4 @@
-package src.src.isprojekt;
+package src.isprojekt;
 
 import java.util.ArrayList;
 
