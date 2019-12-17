@@ -2,8 +2,20 @@ package src.src.isprojekt;
 
 import src.isprojekt.*;
 import java.util.ArrayList;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class Student {
+	
+	private static final AtomicInteger idCounter = new AtomicInteger (1000);
+	
+	private final int idNumber;
+	
+	public Student (){
+			idNumber = idCounter.getAndIncrement ();
+	}
+	public int getIdNumber() {
+		return idNumber;
+	}
 	
 	private String studentID;
 	private String name;
