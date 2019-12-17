@@ -6,7 +6,10 @@ public class Student {
 	
 	private String studentID;
 	private String sName;
+	
+	//Association till Result 
 	private ArrayList<Result>resultList = new ArrayList<Result>();
+	
 	
 	//Constructor för att lägga till student
 	public Student(String studentID, String name) {
@@ -26,6 +29,8 @@ public class Student {
 	public void setName(String sName) {
 		this.sName = sName;
 	}
+	
+	//Metoder för associationen till Result
 	public ArrayList<Result> getResultList() {
 		return resultList;
 	}
