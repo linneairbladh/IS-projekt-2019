@@ -5,8 +5,14 @@ import java.util.ArrayList;
 public class Student {
 	
 	private String studentID;
-	private String name;
+	private String sName;
 	private ArrayList<Result>resultList = new ArrayList<Result>();
+	
+	//Constructor för att lägga till student
+	public Student(String studentID, String name) {
+		this.studentID = studentID; 
+		this.sName = sName; 
+	}
 	
 	public String getStudentID() {
 		return studentID;
@@ -15,10 +21,10 @@ public class Student {
 		this.studentID = studentID;
 	}
 	public String getName() {
-		return name;
+		return sName;
 	}
-	public void setName(String name) {
-		this.name = name;
+	public void setName(String sName) {
+		this.sName = sName;
 	}
 	public ArrayList<Result> getResultList() {
 		return resultList;
