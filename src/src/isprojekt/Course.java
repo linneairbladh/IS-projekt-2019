@@ -9,7 +9,12 @@ public class Course {
 	private int credits;
 	private ArrayList <WrittenExam> writtenExamList = new ArrayList <WrittenExam>();
  
-	 public int getCourseCode() {
+	 public Course(int courseCode, int credits) {
+		 this.courseCode = courseCode; 
+		 this.credits = credits; 
+		// TODO Auto-generated constructor stub
+	}
+	public int getCourseCode() {
 		return courseCode;
 	 }
 	 public void setCourseCode(int courseCode) {
