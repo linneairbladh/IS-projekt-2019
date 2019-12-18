@@ -51,5 +51,4 @@ public class WrittenExam {
 	public void addResult(Result e) {
 		examResult.add(e);
 	}
-//test
 }
