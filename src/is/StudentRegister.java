@@ -25,6 +25,6 @@ public class StudentRegister {
 		if (s.getStudentID().equals(studentID)) { 
 			return s;
 		} }
-		return null; } 
-	}
+		return null; }
 	
+}
