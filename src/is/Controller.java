@@ -6,8 +6,11 @@ import javax.swing.JFrame;
 
 public class Controller {
 	
-	StudentRegister students; //Refererar till modellen ("Studentregistret")
+	StudentRegister students; //Refererar till modellen ("Studentregister")
+	WrittenExam exams; //Refererar till WrittenExam
 	JFrame frame; //Refererar till det grafiska gränssnittet
+	
+	//metoder från StudentRegister
 	
 	 public Controller(StudentRegister studentReg, JFrame frame) {
 		 this.students = studentReg;
@@ -34,6 +37,12 @@ public class Controller {
 	 }
 	 
 	 
-	 //hej
-
-}
+	 //metod från WrittenExam
+	 
+	 public void addResult(String examID, String date, String location, String time) {
+		  Result newresult = new Result(examID, date, location, time);
+			exams.addResult(newresult);
+		}
+	 
+	 //metod från Student
+	}
