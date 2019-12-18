@@ -37,6 +37,4 @@ public class Result {
 	public void setStudent(Student student) {
 		this.student = student;
 	}
-	
-	//upp
 }

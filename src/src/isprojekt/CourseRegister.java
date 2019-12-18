@@ -41,6 +41,4 @@ public class CourseRegister {
 		courseRegisterList.remove(c);
 		return c; 
 	}
-//upp
-
 }

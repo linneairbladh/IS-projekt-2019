@@ -59,4 +59,3 @@ public class Course {
 				writtenExamList.remove(a1);
 			}
 	}
- //upp
