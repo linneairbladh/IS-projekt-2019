@@ -123,7 +123,7 @@ public class UniApplication {
 		
 		
 		
-		//
+		//Ny tab - Course
 		
 		JPanel Course = new JPanel();
 		tabbedPane.addTab("Course", null, Course, null);
@@ -171,6 +171,8 @@ public class UniApplication {
 		JButton btnUpdateCourse = new JButton("Update Course");
 		btnUpdateCourse.setBounds(29, 218, 117, 29);
 		Course.add(btnUpdateCourse);
+		
+		//Ny tab - Written Exam 
 		
 		JPanel WrittenExam = new JPanel();
 		tabbedPane.addTab("Written Exam", null, WrittenExam, null);
