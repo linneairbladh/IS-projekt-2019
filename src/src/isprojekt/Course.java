@@ -54,10 +54,9 @@ public class Course {
 	 }
 		
 	 
-	 public WrittenExam removeWrittenExam(String examID) {
+	 public void removeWrittenExam(String examID) {
 		 WrittenExam a1 = this.findWrittenExam(examID);
-				this.writtenExamList.remove(a1);
-				return a1;
+				writtenExamList.remove(a1);
 			}
 	}
 	 
