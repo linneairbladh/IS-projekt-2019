@@ -2,14 +2,14 @@ package src.isprojekt;
 
 import java.util.ArrayList;
 
-public class Cours {
+public class Course {
 	
 	private String courseCode;
 	private String name;
 	private double credits;
 	private ArrayList <WrittenExam> writtenExamList = new ArrayList <WrittenExam>();
  
-	 public Cours(String newcourseCode, String newname, int newcredits) {
+	 public Course(String newcourseCode, String newname, int newcredits) {
 		 this.courseCode = newcourseCode; 
 		 this.name = newname; 
 		 this.credits = newcredits; 
