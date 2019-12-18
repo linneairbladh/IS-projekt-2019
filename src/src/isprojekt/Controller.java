@@ -25,8 +25,8 @@ public class Controller {
 		 studentResult.setStudent(newstudent);
 		 students.addStudent(newstudent); }
 	 
-	 public Student removeStudent(String studentIDRemove) { 
-		 students.removeStudent(studentIDRemove);
+	 public void removeStudent(String studentID) { 
+		 students.removeStudent(studentID);	
 	 }
 	 
 
