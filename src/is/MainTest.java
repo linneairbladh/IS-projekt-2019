@@ -1,4 +1,4 @@
-package src.isprojekt;
+package is;
 
 public class MainTest {
 	
