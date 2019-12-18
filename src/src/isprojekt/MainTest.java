@@ -2,6 +2,7 @@ package src.isprojekt;
 
 public class MainTest {
 	
-	//upp
-
+	public static void main(String[] args) {
+		
+	}
 }

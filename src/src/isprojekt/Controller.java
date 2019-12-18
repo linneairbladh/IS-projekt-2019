@@ -29,5 +29,11 @@ public class Controller {
 		 students.removeStudent(studentID);	
 	 }
 	 
+	 public Student findStudent(String studentID) {
+		 return students.findStudent(studentID);
+	 }
+	 
+	 
+	 
 
 }
