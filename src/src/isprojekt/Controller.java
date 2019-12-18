@@ -25,10 +25,9 @@ public class Controller {
 		 studentResult.setStudent(newstudent);
 		 students.addStudent(newstudent); }
 	 
-	 public void removeStudent(String studentIDRemove) { 
+	 public Student removeStudent(String studentIDRemove) { 
 		 students.removeStudent(studentIDRemove);
 	 }
-	 
 	 
 
 }

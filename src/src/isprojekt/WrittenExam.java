@@ -51,5 +51,5 @@ public class WrittenExam {
 	public void addResult(Result e) {
 		examResult.add(e);
 	}
-//testar för git
+//test
 }

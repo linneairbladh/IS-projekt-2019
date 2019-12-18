@@ -27,5 +27,4 @@ public class StudentRegister {
 		} }
 		return null; }
 	
-	//upp
 }

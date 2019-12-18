@@ -11,6 +11,8 @@ import javax.swing.JTabbedPane;
 import javax.swing.JDesktopPane;
 import javax.swing.JPanel;
 import javax.swing.JComboBox;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class Application {
 
@@ -81,21 +83,47 @@ public class Application {
 		Student.add(textField_1);
 		textField_1.setColumns(10);
 		
+		// Knappar för lägg till, ta bort ändra och uppdatera student på studentfliken
 		JButton btnAddStudent = new JButton("Add Student");
+		btnAddStudent.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
 		btnAddStudent.setBounds(39, 111, 117, 29);
 		Student.add(btnAddStudent);
 		
+		
 		JButton btnRemoveStudent = new JButton("Remove Student");
+		btnRemoveStudent.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
 		btnRemoveStudent.setBounds(39, 144, 145, 29);
 		Student.add(btnRemoveStudent);
 		
+		
+		
 		JButton btnFindStudent = new JButton("Find Student");
+		btnFindStudent.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
 		btnFindStudent.setBounds(39, 177, 117, 29);
 		Student.add(btnFindStudent);
 		
+		
+		
 		JButton btnUpdateStudent = new JButton("Update Student");
+		btnUpdateStudent.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
 		btnUpdateStudent.setBounds(39, 210, 130, 29);
 		Student.add(btnUpdateStudent);
+		
+		
+		
+		//
 		
 		JPanel Course = new JPanel();
 		tabbedPane.addTab("Course", null, Course, null);
