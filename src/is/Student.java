@@ -9,11 +9,12 @@ public class Student {
 	private ArrayList<Result>resultList = new ArrayList<Result>();
 	
 	//Constructor för att lägga till student
-	public Student(String studentID, String name) {
+	/*
+	public Student(String studentID, String sName) {
 		this.studentID = studentID; 
 		this.sName = sName; 
-	}
-	
+	}*/
+
 	public String getStudentID() {
 		return studentID;
 	}

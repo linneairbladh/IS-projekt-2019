@@ -19,7 +19,7 @@ import javax.swing.JSpinner;
 import javax.swing.SwingConstants;
 import javax.swing.JTextArea;
 
-public class Application {
+public class A {
 
 	private JFrame frame;
 	private JTextField textField_StudentName;
@@ -38,7 +38,7 @@ public class Application {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					Application window = new Application();
+					A window = new A();
 					window.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -50,7 +50,7 @@ public class Application {
 	/**
 	 * Create the application.
 	 */
-	public Application() {
+	public A() {
 		initialize();
 	}
 
