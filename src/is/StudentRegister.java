@@ -11,7 +11,7 @@ public class StudentRegister {
 	}
 	
 	public void addStudent(Student a) {
-		studentRegisterList.add(a);
+		this.studentRegisterList.add(a);
 	}
 
 	
@@ -22,10 +22,17 @@ public class StudentRegister {
 		}		
 
 	public Student findStudent(String studentID) { 
-		for (Student s : this.studentRegisterList) {
-		if (s.getStudentID().equals(studentID)) { 
-			return s;
+		Student s = null;
+		for (Student a : this.studentRegisterList) {
+		if (a.getStudentID().equals(studentID)) { 
+			s = a;
 		} }
-		return null; }
+		return s; 
+		}
+	
+	public void updateStudent(Student newStudent, String newName, String newStudentID) {
+		newStudent.setName(newName);
+		newStudent.setStudentID(newStudentID);
+	}
 	
 }

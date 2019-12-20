@@ -27,7 +27,11 @@ private ArrayList <WrittenExam> writtenExamList = new ArrayList <WrittenExam>();
 		}
 		return a1;
 	}
-	
-	
+	public void removeWrittenExam(String examID) {
+		WrittenExam a = findWrittenExam(examID);
+		writtenExamList.remove(a);
+	}
 }
+
+	
 	
