@@ -8,8 +8,9 @@ public class Course {
 	private String name;
 	private double credits;
 	private ArrayList <WrittenExam> writtenExamList = new ArrayList <WrittenExam>();
+	private CourseRegister courseRegister;
  
-	 public Course(String newcourseCode, String newname, int newcredits) {
+	 public Course(String newcourseCode, String newname, double newcredits) {
 		 this.courseCode = newcourseCode; 
 		 this.name = newname; 
 		 this.credits = newcredits; 
@@ -33,6 +34,14 @@ public class Course {
 	 public void setCredits(double credits) {
 		this.credits = credits;
 	 }
+	 public void setCourseRegister(CourseRegister courseRegister) {
+		this.courseRegister = courseRegister;
+	 }
+	 
+	 public CourseRegister getCourseRegister() {
+		 return this.courseRegister;
+	 }
+	 
 	 public ArrayList <WrittenExam> getWrittenExamList() {
 		return writtenExamList;
 	 }

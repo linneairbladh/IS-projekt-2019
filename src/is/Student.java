@@ -6,15 +6,14 @@ public class Student {
 	
 	private String studentID;
 	private String sName;
+	private StudentRegister studentRegister;
 	private ArrayList<Result>resultList = new ArrayList<Result>();
 	
-	//Constructor för att lägga till student
-	/*
 	public Student(String studentID, String sName) {
-		this.studentID = studentID; 
-		this.sName = sName; 
-	}*/
-
+		this.setStudentID(studentID);
+		this.setName(sName);
+	}
+	
 	public String getStudentID() {
 		return studentID;
 	}
@@ -27,6 +26,12 @@ public class Student {
 	public void setName(String sName) {
 		this.sName = sName;
 	}
+	public StudentRegister getStudentRegister() {
+		return studentRegister;
+	}
+	public void setStudentRegister(StudentRegister studentRegister) {
+		this.studentRegister = studentRegister;
+	}
 	public ArrayList<Result> getResultList() {
 		return resultList;
 	}
@@ -37,4 +42,21 @@ public class Student {
 		resultList.add(r);
 	}
 
+	public Result findResult(double result) {
+		for(Result a: resultList) {
+			if(a.getResult()==(result)) {
+				return a;
+			}
+		}
+		return null;
+	}
+	
+	public void AddWrittenExam(WrittenExam e, double resultNr) {
+		Result a = findResult(resultNr);
+		if(a!=null) {
+			a.setWrittenExam(e);
+		}
+		
+	}
 }
+

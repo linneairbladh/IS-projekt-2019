@@ -29,7 +29,7 @@ public class A {
 	private JTextField textField_Credit;
 	private JTextField textField_ExamID;
 	private JTextField textField_Date;
-	private Controller controller = new Controller(); 
+	private Controller controller; 
 
 	/**
 	 * Launch the application.
@@ -113,7 +113,7 @@ public class A {
 				s.setStudentID(studentID);
 				s.setName(sName);
 				 
-				controller.addStudent(s);
+				controller.addStudent(studentID, sName);
 				
 				textArea_StudentAnswer.setText("Student has been added.");
 	

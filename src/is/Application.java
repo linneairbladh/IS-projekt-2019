@@ -29,8 +29,8 @@ public class Application {
 	private JTextField textField_Credit;
 	private JTextField textField_ExamID;
 	private JTextField textField_Date;
-	private Controller controller = new Controller(); 
-
+	private Controller controller;
+	
 	/**
 	 * Launch the application.
 	 */
@@ -107,16 +107,36 @@ public class Application {
 		JButton btnAddStudent = new JButton("Add Student");
 		btnAddStudent.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Student s = new Student();
+				
+				String studentID = textField_StudentID.getText();
+				String sName = textField_StudentName.getText();
+				
+				if(sName.trim().equals("")|| studentID.trim().equals("")){
+					textArea_StudentAnswer.setText("You did not enter anyting.");
+				}
+				
+				else {
+					controller.addStudent(studentID, sName);
+					textArea_StudentAnswer.setText("Student added.");
+				}
+				
+				/*else {
+					textArea_StudentAnswer.setText("Student already exists.");
+					
+				}
+				*/
+				
+				/*Student s = new Student();
 				String studentID = textField_StudentID.getText();
 				String sName = textField_StudentName.getText();
 				s.setStudentID(studentID);
 				s.setName(sName);
 				 
-				controller.addStudent(s);
+				controller.addStudent(studentID, sName);
+				
 				
 				textArea_StudentAnswer.setText("Student has been added.");
-	
+	*/
 			}
 		});
 		btnAddStudent.setBounds(39, 172, 117, 29);
@@ -128,9 +148,12 @@ public class Application {
 			public void actionPerformed(ActionEvent e) {
 				
 				String studentID = textField_StudentID.getText();
+				
+				if(controller.findStudent(studentID)!=null) {
 				controller.removeStudent(studentID);
 				textArea_StudentAnswer.setText("The student has been removed");
 	             }
+			}
 				
 		});
 		btnRemoveStudent.setBounds(39, 205, 145, 29);
