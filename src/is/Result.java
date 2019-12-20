@@ -16,6 +16,18 @@ public class Result {
 		
 	}
 
+	public Result(double d, WrittenExam we1, Student st1) {
+		// TODO Auto-generated constructor stub
+	}
+
+	public Result(String examID, String date, String location, String time) {
+		// TODO Auto-generated constructor stub
+	}
+
+	public Result(String result2, String letterGrade2) {
+		// TODO Auto-generated constructor stub
+	}
+
 	public void setResult(double result) {
 		this.result = result; 
 	}
