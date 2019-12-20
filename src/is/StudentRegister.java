@@ -14,6 +14,7 @@ public class StudentRegister {
 		studentRegisterList.add(a);
 	}
 
+	
 	public void removeStudent(String studentID) {
 		Student s = this.findStudent(studentID); 
 		if (s != null) {
