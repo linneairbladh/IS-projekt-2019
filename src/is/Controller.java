@@ -8,24 +8,16 @@ public class Controller {
 	StudentRegister studentLista; //Refererar till modellen ("Studentregister")
 	WrittenExam examLista; //Refererar till WrittenExam
 	JFrame frame; //Refererar till det grafiska gränssnittet
-
+	//public Controller controller = new Controller ();
 	
 	//metoder från StudentRegister
-	
-	
 	 public Controller(StudentRegister studentLista, JFrame frame) {
 		 this.studentLista = studentLista;
 		 this.frame = frame;
 		 } 
 	
-	//public Controller controller = new Controller ();
-	/*
-	public void addStudent(Student s) {
-		students.addStudent(s);
-	}*/
-	
 	 public void addStudent(String studentID, String sName) { 
-		 Student s = new Student(); 
+		 Student s = new Student(studentID, sName); 
 		 studentLista.addStudent(s);
 	 }
 
@@ -34,11 +26,13 @@ public class Controller {
 	 }
 	 
 	 public Student findStudent(String studentID) {
-		 return studentLista.findStudent(studentID);
+		 Student s;
+		 s = studentLista.findStudent(studentID);
+		 return s;
 	 }
 	 
 	 
-	 /*
+	
 		//// Vet ej om vi behöver 
 		 public void addStudent(String studentID, String sName, String result, String letterGrade) {
 			 Student newstudent = new Student(studentID, sName);
@@ -51,13 +45,12 @@ public class Controller {
 	 //metod från WrittenExam
 	 
 	 
-	
 	 public void addResult(String examID, String date, String location, String time) {
 		  Result newresult = new Result(examID, date, location, time);
 			exams.addResult(newresult);
 		}
 
-	  */
+	  
 	 
 	 //metod från Student
 	 
