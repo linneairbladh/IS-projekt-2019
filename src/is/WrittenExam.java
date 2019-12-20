@@ -9,8 +9,13 @@ public class WrittenExam {
 	private String location; 
 	private String time; 
 	private int maxPoints;
+	private Course course;
 	private ArrayList<Result>examResult = new ArrayList<Result>();
 	
+	public WrittenExam(String string) {
+		// TODO Auto-generated constructor stub
+	}
+
 	public String getExamID() {
 		return examID;
 	}
@@ -41,6 +46,13 @@ public class WrittenExam {
 	public void setMaxPoints(int maxPoints) {
 		this.maxPoints = maxPoints;
 	} 
+	
+	public void setCourse (Course course) {
+		this.course = course;
+	}
+	public Course getCourse() {
+		return course;
+	}
 	public void setExamResult(ArrayList<Result>examResult) {
 		this.examResult = examResult; 
 	}

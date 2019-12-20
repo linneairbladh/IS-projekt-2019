@@ -38,7 +38,7 @@ public class Controller {
 			 Student newstudent = new Student(studentID, sName);
 			 Result studentResult = new Result(result, letterGrade); 
 			 studentResult.setStudent(newstudent);
-			 students.addStudent(newstudent); }
+			 studentLista.addStudent(newstudent); }
 		 
 		
 	 
@@ -47,7 +47,7 @@ public class Controller {
 	 
 	 public void addResult(String examID, String date, String location, String time) {
 		  Result newresult = new Result(examID, date, location, time);
-			exams.addResult(newresult);
+			examLista.addResult(newresult);
 		}
 
 	  
