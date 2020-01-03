@@ -20,14 +20,6 @@ public class Result {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Result(String examID, String date, String location, String time) {
-		// TODO Auto-generated constructor stub
-	}
-
-	public Result(String result2, String letterGrade2) {
-		// TODO Auto-generated constructor stub
-	}
-
 	public void setResult(double result) {
 		this.result = result; 
 	}
