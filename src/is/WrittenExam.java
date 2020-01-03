@@ -12,7 +12,7 @@ public class WrittenExam {
 	private Course course;
 	private ArrayList<Result>examResult = new ArrayList<Result>();
 	
-	public WrittenExam(String string) {
+	public WrittenExam(String examID, String date, String location, String time, int maxPoints) {
 		// TODO Auto-generated constructor stub
 	}
 
