@@ -11,10 +11,7 @@ public class Course {
 	private CourseRegister courseRegister;
  
 	 public Course() {
-		 this.courseCode = newcourseCode; 
-		 this.name = newname; 
-		 this.credits = newcredits; 
-
+		 
 	}
 	public String getCourseCode() {
 		return courseCode;

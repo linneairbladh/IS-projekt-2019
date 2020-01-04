@@ -113,15 +113,32 @@ public class TestApp {
 		JButton btnAddStudent = new JButton("Add Student");
 		btnAddStudent.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				
 				String studentID = textField_StudentID.getText();
 				String sName = textField_StudentName.getText();
 				Student newStudent = new Student();//studentID, sName)
 				newStudent.setStudentID(studentID);
 				newStudent.setName(sName);
-				 
-				controller.addStudent(newStudent);
 				
+				//KAN VARA FEL
+				if(sName.trim().equals("")|| studentID.trim().equals("")){
+					textArea_StudentAnswer.setText("You did not enter anyting.");
+				}
+				
+				else if (sName.trim().equals("")) {
+					textArea_StudentAnswer.setText("You did not enter Student ID.");
+					
+				}
+				
+				else if (studentID.trim().equals("")) {
+					textArea_StudentAnswer.setText("You did not enter name.");
+					
+				}
+					
+				else {
+				controller.addStudent(newStudent);
 				textArea_StudentAnswer.setText("Student has been added");
+				}
 				
 			}
 		});
@@ -154,7 +171,7 @@ public class TestApp {
 					textArea_StudentAnswer.setText(newStudent.getName());
 				
                 } else {
-                    textArea_StudentAnswer.setText("Person can not be found");
+                    textArea_StudentAnswer.setText("Student can not be found");
 
                 }   
      
@@ -173,6 +190,11 @@ public class TestApp {
 		});
 		btnUpdateStudent.setBounds(39, 271, 130, 29);
 		Student.add(btnUpdateStudent);
+		
+		JLabel lblUserHelp1 = new JLabel("(Starts with \"S\" followed by 5 numbers)");
+		lblUserHelp1.setFont(new Font("Lucida Grande", Font.ITALIC, 10));
+		lblUserHelp1.setBounds(39, 85, 251, 16);
+		Student.add(lblUserHelp1);
 		
 		
 		////////////////
@@ -208,11 +230,11 @@ public class TestApp {
 		
 		//Skriva in poäng för kursen 
 		JLabel lblCredit = new JLabel("Credit");
-		lblCredit.setBounds(42, 95, 61, 16);
+		lblCredit.setBounds(42, 106, 61, 16);
 		Course.add(lblCredit);
 		
 		textField_Credit = new JTextField();
-		textField_Credit.setBounds(155, 90, 130, 26);
+		textField_Credit.setBounds(155, 100, 130, 26);
 		Course.add(textField_Credit);
 		textField_Credit.setColumns(10);
 		//
@@ -248,6 +270,11 @@ public class TestApp {
 		JButton btnRemoveCourse = new JButton("Remove Course");
 		btnRemoveCourse.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				
+				String courseCode = textField_CourseCode.getText();
+				controller.removeStudent(courseCode);
+				textArea_StudentAnswer.setText("The course has been removed");
+				
 			}
 		});
 		btnRemoveCourse.setBounds(42, 255, 130, 29);
@@ -279,6 +306,11 @@ public class TestApp {
 		});
 		btnUpdateCourse.setBounds(42, 313, 117, 29);
 		Course.add(btnUpdateCourse);
+		
+		JLabel lblUserHelp2 = new JLabel("(Starts with \"C\" followed by 5 numbers)");
+		lblUserHelp2.setFont(new Font("Lucida Grande", Font.ITALIC, 10));
+		lblUserHelp2.setBounds(42, 84, 266, 16);
+		Course.add(lblUserHelp2);
 		
 		
 		
@@ -322,34 +354,41 @@ public class TestApp {
 		
 		//Skriva in datum på WE
 		JLabel lblDate = new JLabel("Date");
-		lblDate.setBounds(20, 111, 61, 16);
+		lblDate.setBounds(20, 122, 61, 16);
 		WrittenExam.add(lblDate);
 		
 		textField_Date = new JTextField();
-		textField_Date.setBounds(107, 106, 107, 26);
+		textField_Date.setBounds(104, 117, 107, 26);
 		WrittenExam.add(textField_Date);
 		textField_Date.setColumns(10);
 		
-		//Skriva in location på WE
+		//Välja location på WE
 		JLabel lblLocation = new JLabel("Location");
-		lblLocation.setBounds(20, 143, 61, 16);
+		lblLocation.setBounds(20, 154, 61, 16);
 		WrittenExam.add(lblLocation);
 		
 		JComboBox comboBox_Location = new JComboBox();
-		comboBox_Location.setBounds(102, 139, 113, 27);
+		comboBox_Location.addItem("Room A123");
+		comboBox_Location.addItem("Room A167");
+		comboBox_Location.addItem("Room B198");
+		comboBox_Location.addItem("Room B067");
+		
+		comboBox_Location.setBounds(104, 150, 129, 27);
 		WrittenExam.add(comboBox_Location);
 		
-		//Skriva in time på WE
+		//Välja time på WE
 		JLabel lblTime = new JLabel("Time");
-		lblTime.setBounds(20, 171, 61, 16);
+		lblTime.setBounds(20, 189, 61, 16);
 		WrittenExam.add(lblTime);
 		
 		JComboBox comboBox_Time = new JComboBox();
 		comboBox_Time.addItem("07.00");
 		comboBox_Time.addItem("08.00");
+		comboBox_Time.addItem("09.00");
+		comboBox_Time.addItem("10.00");
 		comboBox_Time.setSelectedItem(""); //vet inte varför?
 		
-		comboBox_Time.setBounds(102, 167, 94, 27);
+		comboBox_Time.setBounds(104, 178, 94, 27);
 		WrittenExam.add(comboBox_Time);
 		
 		//Skriva in Student ID
@@ -357,7 +396,21 @@ public class TestApp {
 		lblStudentId_WEStudentID.setBounds(237, 51, 66, 16);
 		WrittenExam.add(lblStudentId_WEStudentID);
 		
+		//Välja registrerat Student ID
 		JComboBox comboBox_StudentiD = new JComboBox();
+		
+		//comboBox_StudentiD.addActionListener(new Action Listener() {
+			
+		
+		
+		/*private void fillComboBox_StudentID() {
+			String[] allStudentIDs = controller.retrieveAllStudents();
+			
+			for(int i = 0; i < allStudentIDs.length; i++) {
+				comboBox_StudentiD.addItem(allStudentIDs[i]);
+			}
+		*/
+		
 		comboBox_StudentiD.setBounds(315, 47, 94, 27);
 		WrittenExam.add(comboBox_StudentiD);
 		
@@ -367,6 +420,7 @@ public class TestApp {
 		WrittenExam.add(lblPoints);
 		
 		JSpinner spinner_Points = new JSpinner();
+		spinner_Points.setValue(82);
 		spinner_Points.setBounds(325, 78, 61, 27);
 		WrittenExam.add(spinner_Points);
 		
@@ -404,6 +458,11 @@ public class TestApp {
 		});
 		btnAddResult.setBounds(237, 263, 136, 29);
 		WrittenExam.add(btnAddResult);
+		
+		JLabel lblStartsWith = new JLabel("(Starts with \"E\" followed by 5 numbers)");
+		lblStartsWith.setFont(new Font("Lucida Grande", Font.ITALIC, 10));
+		lblStartsWith.setBounds(20, 100, 202, 16);
+		WrittenExam.add(lblStartsWith);
 		
 		
 		

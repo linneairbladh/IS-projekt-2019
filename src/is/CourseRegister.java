@@ -38,7 +38,11 @@ public class CourseRegister {
 	
 	public Course removeCourse(String courseCode) {
 		Course c = findCourse(courseCode);
+		if(c != null) {
 		courseRegisterList.remove(c);
+		}
 		return c; 
 	}
+		
+	
 }

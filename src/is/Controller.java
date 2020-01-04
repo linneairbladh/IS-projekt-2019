@@ -8,15 +8,15 @@ public class Controller {
 	
 	JFrame frame; //Refererar till det grafiska gränssnittet
 	
-	StudentRegister studentLista = new StudentRegister(); //Refererar till modellen ("Studentregister")
-	Student newStudent = new Student(); //Referar till 
+	StudentRegister studentLista = new StudentRegister(); //Refererar till StudentRegister
+	Student newStudent = new Student(); //Referar till Student
 	
-	WrittenExamRegister writtenExamList = new WrittenExamRegister(); //Refererar till WrittenExam
-	WrittenExam writtenExam = new WrittenExam(); 
+	WrittenExamRegister writtenExamList = new WrittenExamRegister(); //Refererar till WrittenExamRegister
+	WrittenExam writtenExam = new WrittenExam(); //Refererar till WrittenExam
 	
-	CourseRegister courseRegisterList = new CourseRegister(); 
-	//Course course = new Course(); 
-	//Result newResult = new Result ();
+	CourseRegister courseRegisterList = new CourseRegister(); //Refererar till CourseRegister
+	Course course = new Course(); //Refererar till Course
+	Result newResult = new Result (); //Refererar till Result
 	
 	
 	//Knappar på studentfliken
@@ -35,9 +35,9 @@ public class Controller {
 		 return s;
 	 }
 	 
-	 //public Student updateStudent()
+	 //GLÖM EJ public Student updateStudent()
 	 
-	 //Knappar på course-fliken
+	 //Knappar på coursefliken
 	 
 	 public void addCourse(Course newCourse) {
 		 courseRegisterList.addCourse(newCourse);
@@ -51,7 +51,7 @@ public class Controller {
 		 return courseRegisterList.findCourse(courseCode);
 	 }
 	 
-	 /*public Course updateCourse() {
+	 /* GLÖM EJ public Course updateCourse() {
 		 return course; 
 	 }
 	 */
@@ -68,12 +68,12 @@ public class Controller {
 	 
 	 
 	 //"Register result for student:"
-	 /*
+	 
 	 public void addResult(String examID, String date, String location, String time) {
 		  Result newresult = new Result();
 			writtenExam.addResult(newresult);
 		}
-	*/
+	
 
 	  
 	 
@@ -96,6 +96,19 @@ public class Controller {
 	  
 	 public String []retrieveAllStudents(){
 		 return studentLista.retrieveAllStudents();
+	 }
+	 
+	 public String [] findStudentArray(String studentID) {
+		 Student newStudent = studentLista.findStudent(studentID);
+		 String[] studentArray = new String [3];
+		 
+		 if(newStudent != null) {
+			 studentArray[0] = newStudent.getName();
+			 studentArray[1] = newStudent.getStudentID();
+			 studentArray[2] = newStudent.ge
+		 }
+		 return studentArray;
+		 
 	 }
 	 
 	
