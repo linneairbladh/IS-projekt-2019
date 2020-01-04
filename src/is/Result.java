@@ -7,8 +7,8 @@ public class Result {
 	private Student student; // Association till student
 	private WrittenExam writtenExam;
 
-	
-	public Result(double result, String letterGrade, WrittenExam Exam, Student student) {
+	//
+	public Result() {
 		this.result = result; 
 		this.letterGrade = letterGrade;
 		this.writtenExam = writtenExam;

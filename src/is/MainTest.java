@@ -5,19 +5,14 @@ public class MainTest {
 	public static void main(String[] args) {
 		
 		Student st1 = new Student("Viktor", "S11111");
-		
 		Student st2 = new Student("Tove", "S22222");
-		
 		Course co1 = new Course("C11111", "SYSA21", 15.0);
-		
 		Course co2 = new Course("C22222", "SYSA12", 30.0);
 		
 		WrittenExam we1 = new WrittenExam();
-		
 		WrittenExam we2 = new WrittenExam();
 		
 		Result r1 = new Result(90.0, we1, st1);
-		
 		Result r2 = new Result(50.0, we2, st2);
 		
 		CourseRegister cr1 = new CourseRegister();
