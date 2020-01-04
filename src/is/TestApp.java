@@ -12,6 +12,7 @@ import javax.swing.JDesktopPane;
 import javax.swing.JPanel;
 import javax.swing.JComboBox;
 import java.awt.event.ActionListener;
+import java.text.ParseException;
 import java.awt.event.ActionEvent;
 import java.awt.Font;
 import javax.swing.JTextPane;
@@ -19,6 +20,9 @@ import javax.swing.JSpinner;
 import javax.swing.SwingConstants;
 import javax.swing.JTextArea;
 import javax.swing.UIManager;
+import javax.swing.JFormattedTextField;
+import java.awt.Color;
+import javax.swing.text.*;
 
 public class TestApp {
 
@@ -103,8 +107,8 @@ public class TestApp {
 		
 		//Svar på Student
 		JTextArea textArea_StudentAnswer = new JTextArea();
-		textArea_StudentAnswer.setBackground(UIManager.getColor("CheckBox.background"));
-		textArea_StudentAnswer.setBounds(39, 113, 266, 35);
+		textArea_StudentAnswer.setBackground(Color.WHITE);
+		textArea_StudentAnswer.setBounds(172, 66, 266, 35);
 		Student.add(textArea_StudentAnswer);
 		
 		
@@ -195,6 +199,21 @@ public class TestApp {
 		lblUserHelp1.setFont(new Font("Lucida Grande", Font.ITALIC, 10));
 		lblUserHelp1.setBounds(39, 85, 251, 16);
 		Student.add(lblUserHelp1);
+		
+		//TEST textfält för max 6 siffror
+		JFormattedTextField formattedTextField_StudentID = new JFormattedTextField();		
+		MaskFormatter ssnFormatter  = null; 
+		JFormattedTextField ssnField  = null; 
+		try  {
+		    ssnFormatter = new MaskFormatter("A#####");
+		    ssnField = new JFormattedTextField(ssnFormatter);
+		}
+		catch (ParseException e)  {
+		    e.printStackTrace();
+		}
+					
+		formattedTextField_StudentID.setBounds(147, 113, 96, 26);
+		Student.add(formattedTextField_StudentID);
 		
 		
 		////////////////
@@ -372,6 +391,7 @@ public class TestApp {
 		comboBox_Location.addItem("Room A167");
 		comboBox_Location.addItem("Room B198");
 		comboBox_Location.addItem("Room B067");
+		comboBox_Location.setSelectedItem("");
 		
 		comboBox_Location.setBounds(104, 150, 129, 27);
 		WrittenExam.add(comboBox_Location);
