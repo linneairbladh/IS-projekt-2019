@@ -10,7 +10,7 @@ public class Course {
 	private ArrayList <WrittenExam> writtenExamList = new ArrayList <WrittenExam>();
 	private CourseRegister courseRegister;
  
-	 public Course(String newcourseCode, String newname, double newcredits) {
+	 public Course() {
 		 this.courseCode = newcourseCode; 
 		 this.name = newname; 
 		 this.credits = newcredits; 

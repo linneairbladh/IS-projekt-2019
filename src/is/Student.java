@@ -9,7 +9,7 @@ public class Student {
 	private StudentRegister studentRegister;
 	private ArrayList<Result>resultList = new ArrayList<Result>();
 	
-	public Student(String studentID, String sName) {
+	public Student() {
 		this.setStudentID(studentID);
 		this.setName(sName);
 	}

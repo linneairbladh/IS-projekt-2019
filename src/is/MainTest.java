@@ -12,9 +12,9 @@ public class MainTest {
 		
 		Course co2 = new Course("C22222", "SYSA12", 30.0);
 		
-		WrittenExam we1 = new WrittenExam("E11111");
+		WrittenExam we1 = new WrittenExam();
 		
-		WrittenExam we2 = new WrittenExam("E22222");
+		WrittenExam we2 = new WrittenExam();
 		
 		Result r1 = new Result(90.0, we1, st1);
 		

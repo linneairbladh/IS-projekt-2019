@@ -164,19 +164,20 @@ public class Application {
 		btnFindStudent.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-				/*String examID = textField_StudentID.getText();
-				Student s = controller.findStudent(studentID); //varför fel?
+				String studentID = textField_StudentID.getText();
+				Student s = controller.findStudent(studentID); 
 				
 				if (s!=null) {
 					textArea_StudentAnswer.setText(s.getName());
 				
                 } else {
-                    textArea_StudentAnswer.setText("Personen kan inte hittas.");
+                    textArea_StudentAnswer.setText("Student can't be found. ");
 
                 }   
                 }
-                */
-			}});
+
+                
+			});
 		btnFindStudent.setBounds(39, 238, 117, 29);
 		Student.add(btnFindStudent);
 		
