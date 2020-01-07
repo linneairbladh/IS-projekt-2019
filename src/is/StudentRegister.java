@@ -15,7 +15,7 @@ public class StudentRegister {
 	}
 	
 	
-	//Add,find, remove and update Student
+	//Add,remove and update Student
 	public void addStudent(Student newStudent) {
 		this.studentRegisterList.add(newStudent);
 	}
@@ -38,12 +38,13 @@ public class StudentRegister {
 		return s;
 		}	
 	
-	public void updateStudent(Student newStudent, String newName, String newStudentID) {
+	/*public void updateStudent(Student newStudent, String newName, String newStudentID) {
 		newStudent.setName(newName);
 		newStudent.setStudentID(newStudentID);
-	}
+	}*/
 	
-	
+}
+
 	//metod för att fylla Combobox med ArrayList
 	public String[] retrieveAllStudents() {
 		String [] allStudents = new String[studentRegisterList.size()];

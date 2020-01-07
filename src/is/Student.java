@@ -1,6 +1,11 @@
 package is;
 
 import java.util.ArrayList;
+import java.util.Random;
+
+import is.Result;
+import is.StudentRegister;
+import is.WrittenExam;
 
 public class Student {
 	
@@ -8,6 +13,7 @@ public class Student {
 	private String sName;
 	private StudentRegister studentRegister;
 	private ArrayList<Result>resultList = new ArrayList<Result>();
+	private ArrayList<WrittenExam> writtenExams = new ArrayList<WrittenExam>();
 	
 	public Student() {
 		this.setStudentID(studentID);
@@ -38,6 +44,24 @@ public class Student {
 	public void setResultList(ArrayList<Result> resultList) {
 		this.resultList = resultList;
 	}
+	
+	public ArrayList<WrittenExam> getWrittenExams() {
+		return writtenExams;
+	}
+
+	public void setWrittenExams(ArrayList<WrittenExam> writtenExams) {
+		this.writtenExams = writtenExams;
+	}
+	
+	//Skapa ett studentID
+	public String generateStudentID() {
+		Random random = new Random(); //Man importerar denna 
+		int randomInt = random.nextInt(90000) + 10000; // Gör ett random nummer mellan 10000 and 99999
+		String studentID = "S" + randomInt;
+		return studentID;
+	}
+	
+	//Metoder för add & find result
 	public void addResult(Result r) {
 		resultList.add(r);
 	}
@@ -51,6 +75,10 @@ public class Student {
 		return null;
 	}
 	
+	//Metoder för add & find exam
+	public void addWrittenExam(WrittenExam exam) {
+		writtenExams.add(exam);
+	}
 	public void AddWrittenExam(WrittenExam e, double resultNr) {
 		Result a = findResult(resultNr);
 		if(a!=null) {
@@ -58,5 +86,28 @@ public class Student {
 		}
 		
 	}
+	
+	public void removeWrittenExam(String examID) {
+		WrittenExam remove = new WrittenExam();
+		for (WrittenExam tmpExam : writtenExams) {
+			if (tmpExam.getExamID().equals(examID)) {
+				remove = tmpExam;
+			}
+		}
+		writtenExams.remove(remove);
+	}
+
+	public WrittenExam findWrittenExam(String examID) {
+			for(WrittenExam a: writtenExams) {
+				if(a.getExamID().equals(examID)) {
+					return a;
+				}
+			}
+			return null;
+		}
+
+	
+
+	
 }
 
