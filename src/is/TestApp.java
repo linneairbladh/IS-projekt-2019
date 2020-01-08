@@ -120,25 +120,16 @@ public class TestApp {
 		btnAddStudent.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-				String sName = textField_StudentName.getText();
-				if (sName.equals("")){
-					textArea_StudentAnswer.setText("You did not enter anyting.");
-				}
-				
-				else if(textField_StudentName.getText().equals("")) {
-						textArea_StudentAnswer.setText("Please insert a name.");			//Checks that the field is valid
-				}
-				
-				else { 
+
 				String studentID = controller.generateStudentID();
-				//studentID = controller.addStudent(sName, studentID);
-				Student newStudent = new Student();
+				String sName = textField_StudentName.getText();
+				Student newStudent = new Student();//studentID, sName)
+				newStudent.setStudentID(studentID);
+				newStudent.setName(sName);
+				 
 				controller.addStudent(newStudent);
-				textArea_StudentAnswer.setText(textField_StudentName.getText() +", " + studentID + " added to students.");
-				textField_StudentName.setText("");
-			}	
 				
-				
+				textArea_StudentAnswer.setText("Student: " + sName + " with student ID: " + studentID + " has been added");
 				
 			}
 		});
@@ -166,16 +157,6 @@ public class TestApp {
 		btnFindStudent.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-				/*String studentID = textField_StudentID.getText();
-				Student newStudent = controller.findStudent(studentID);
-
-			   if (newStudent!=null) {
-					textArea_StudentAnswer.setText(newStudent.getName());
-				
-                } else {
-                    textArea_StudentAnswer.setText("Person can not be found");
-
-                }*/
 				String studentID = textField_StudentID.getText();
 				Student newStudent = controller.findStudent(studentID);
 				
@@ -185,7 +166,7 @@ public class TestApp {
                 } else {
                     textArea_StudentAnswer.setText("Student can not be found");
 
-                }  
+                }
 				
 			}});
 		btnFindStudent.setBounds(169, 184, 117, 29);
