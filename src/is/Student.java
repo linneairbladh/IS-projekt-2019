@@ -16,7 +16,7 @@ public class Student {
 	private ArrayList<WrittenExam> writtenExams = new ArrayList<WrittenExam>();
 	
 	//Constructor för Student
-	public Student() {
+	public Student(String sName, String studentID) {
 		this.setStudentID(studentID);
 		this.setName(sName);
 		}
