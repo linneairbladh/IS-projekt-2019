@@ -54,6 +54,19 @@ public class CourseRegister {
 		}
 		return null;
 	}
+
+	public String validateCourseCode(Course c)	{
+		for (Course tmp : courseRegisterList) {
+			if (tmp == c) { 			//Skips c
+				continue;
+			}
+			while (tmp.getCourseCode().equals(c.getCourseCode())){
+				String courseCode = c.generateCourseCode();
+				c.setCourseCode(courseCode);;
+			}
+		}
+		return c.getCourseCode();				//Validates a course code. If it is not unique, a new one is generated and validated again
+	}
 		
 	
 }

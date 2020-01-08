@@ -24,6 +24,7 @@ import javax.swing.UIManager;
 import javax.swing.JFormattedTextField;
 import java.awt.Color;
 import javax.swing.text.*;
+import java.awt.SystemColor;
 
 public class TestApp {
 
@@ -33,9 +34,10 @@ public class TestApp {
 	private JTextField textField_CourseName;
 	private JTextField textField_CourseCode;
 	private JTextField textField_Credit;
-	private JTextField textField_ExamID;
+	private JTextField textField_ExamName;
 	private JTextField textField_Date;
 	private Controller controller = new Controller();
+	private StudentRegister studentRegister;
 	private JTextField textField_Points;
 	private JComboBox<String> comboBox_StudentiD;
 	
@@ -109,7 +111,7 @@ public class TestApp {
 		
 		//Svar på Student
 		JTextArea textArea_StudentAnswer = new JTextArea();
-		textArea_StudentAnswer.setBackground(Color.WHITE);
+		textArea_StudentAnswer.setBackground(SystemColor.window);
 		textArea_StudentAnswer.setBounds(39, 66, 367, 35);
 		Student.add(textArea_StudentAnswer);
 		
@@ -120,25 +122,12 @@ public class TestApp {
 		btnAddStudent.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-				String sName = textField_StudentName.getText();
-				if (sName.equals("")){
-					textArea_StudentAnswer.setText("You did not enter anyting.");
-				}
-				
-				else if(textField_StudentName.getText().equals("")) {
-						textArea_StudentAnswer.setText("Please insert a name.");			//Checks that the field is valid
-				}
-				
-				else { 
+
 				String studentID = controller.generateStudentID();
-				//studentID = controller.addStudent(sName, studentID);
-				Student newStudent = new Student();
-				controller.addStudent(newStudent);
-				textArea_StudentAnswer.setText(textField_StudentName.getText() +", " + studentID + " added to students.");
-				textField_StudentName.setText("");
-			}	
+				String sName = textField_StudentName.getText();
+				controller.addStudent(sName, studentID);
 				
-				
+				textArea_StudentAnswer.setText("Student: " + sName + " with student ID: " + studentID + " has been added");
 				
 			}
 		});
@@ -166,16 +155,6 @@ public class TestApp {
 		btnFindStudent.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-				/*String studentID = textField_StudentID.getText();
-				Student newStudent = controller.findStudent(studentID);
-
-			   if (newStudent!=null) {
-					textArea_StudentAnswer.setText(newStudent.getName());
-				
-                } else {
-                    textArea_StudentAnswer.setText("Person can not be found");
-
-                }*/
 				String studentID = textField_StudentID.getText();
 				Student newStudent = controller.findStudent(studentID);
 				
@@ -185,7 +164,7 @@ public class TestApp {
                 } else {
                     textArea_StudentAnswer.setText("Student can not be found");
 
-                }  
+                }
 				
 			}});
 		btnFindStudent.setBounds(169, 184, 117, 29);
@@ -276,7 +255,7 @@ public class TestApp {
 				newCourse.setName(name);
 				newCourse.setCredits(credits);
 				 
-				controller.addCourse(newCourse);
+				controller.addCourse(courseCode, name, credits);
 				
 				textPane_AnswerCourse.setText("Course:" + name + " with course code: " + courseCode + " and credits " + credits + "has been added");
 				
@@ -370,19 +349,14 @@ public class TestApp {
 		WrittenExam.add(comboBox_Course);
 
 		//Skriva in Exam ID på WE
-		JLabel lblExamId = new JLabel("Exam ID");
-		lblExamId.setBounds(20, 83, 61, 16);
+		JLabel lblExamId = new JLabel("Exam Name");
+		lblExamId.setBounds(20, 83, 74, 16);
 		WrittenExam.add(lblExamId);
 		
-		JLabel lblStartsWith = new JLabel("(Starts with \"E\" followed by 5 numbers)");
-		lblStartsWith.setFont(new Font("Lucida Grande", Font.ITALIC, 10));
-		lblStartsWith.setBounds(20, 100, 202, 16);
-		WrittenExam.add(lblStartsWith);
-		
-		textField_ExamID = new JTextField();
-		textField_ExamID.setBounds(93, 78, 122, 26);
-		WrittenExam.add(textField_ExamID);
-		textField_ExamID.setColumns(10);
+		textField_ExamName = new JTextField();
+		textField_ExamName.setBounds(103, 78, 112, 26);
+		WrittenExam.add(textField_ExamName);
+		textField_ExamName.setColumns(10);
 		
 		//Skriva in datum på WE
 		JLabel lblDate = new JLabel("Date");
@@ -390,7 +364,7 @@ public class TestApp {
 		WrittenExam.add(lblDate);
 		
 		textField_Date = new JTextField();
-		textField_Date.setBounds(93, 117, 122, 26);
+		textField_Date.setBounds(103, 117, 112, 26);
 		WrittenExam.add(textField_Date);
 		textField_Date.setColumns(10);
 		
@@ -444,7 +418,6 @@ public class TestApp {
 		WrittenExam.add(comboBox_StudentiD);
 		
 		
-		
 		//Skriva in points
 		JLabel lblPoints = new JLabel("Points");
 		lblPoints.setBounds(237, 122, 61, 16);
@@ -456,12 +429,27 @@ public class TestApp {
 		textField_Points.setColumns(10);
 		
 		
-		
-		
 		//Knappar på WE
 		JButton btnAddExam = new JButton("Add Exam");
 		btnAddExam.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				
+				/*String examID = controller.generateExamID();
+				String cName = textField_ExamName.getText();
+				double credits = Double.parseDouble(textField_Credit.getText());
+				WrittenExam newCourse = new WrittenExam();
+				newCourse.setCourseCode(courseCode);
+				newCourse.setName(name);
+				newCourse.setCredits(credits);
+				 
+				controller.addCourse(newCourse);
+				
+				textPane_AnswerCourse.setText("Course:" + name + " with course code: " + courseCode + " and credits " + credits + "has been added");
+				
+				*/
+				
+				
+				
 				String courseCode = textField_CourseCode.getText();
 				String location = "";
 				String time;
@@ -504,14 +492,14 @@ public class TestApp {
 		btnAddResult.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			
-			String examID = textField_ExamID.getText();
+			String examID = textField_ExamName.getText();
 			//String studentID = textField_StudentID.getText();
 			
 			int result = Integer.parseInt(textField_Points.getText());
 			
 			String studentID = (String) comboBox_StudentiD.getSelectedItem();
 			
-			if (textField_ExamID.getText().equals("") || textField_StudentID.getText().equals("") || textField_Points.getText().equals("")) {
+			if (textField_ExamName.getText().equals("") || textField_StudentID.getText().equals("") || textField_Points.getText().equals("")) {
 				textPane_AnswerResult.setText("Please enter an Exam-ID, a Student-ID and a score");
 			}
 			else if (controller.getExamDate(examID) == null) {

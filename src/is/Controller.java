@@ -4,35 +4,33 @@ import java.util.ArrayList;
 import javax.swing.JFrame;
 
 
+
 public class Controller {
 	
 	JFrame frame; //Refererar till det grafiska gränssnittet
 	
 	StudentRegister studentLista = new StudentRegister(); //Refererar till StudentRegister
-	Student newStudent = new Student(); //Referar till Student
+	//Student newStudent = new Student(); //Referar till Student
 	
 	WrittenExamRegister writtenExamList = new WrittenExamRegister(); //Refererar till WrittenExamRegister
 	WrittenExam writtenExam = new WrittenExam(); //Refererar till WrittenExam
 	
 	CourseRegister courseRegisterList = new CourseRegister(); //Refererar till CourseRegister
-	//Course course = new Course(); //Refererar till Course
+	Course course = new Course(); //Refererar till Course
 	Result newResult = new Result (); //Refererar till Result
 	
 	
 	//Knappar på studentfliken
 	
-	/*public void addStudent(Student newStudent) { 
-		 studentLista.addStudent(newStudent);
-	}*/
-	
-	public String addStudent(Student newStudent) {
+	public String addStudent(String name, String studentID) {
+		Student newStudent = new Student(name, studentID);
 		studentLista.addStudent(newStudent);
 		return studentLista.validateStudentID(newStudent);			//Adds student to the studentLista and returns a validated studentID
 		
 	}
 	
 	public String generateStudentID() {
-		Student newStudent = new Student(); //"", ""
+		Student newStudent = new Student("", ""); 
 		String studentID = newStudent.generateStudentID();
 		return studentID;
 	}
@@ -68,8 +66,10 @@ public class Controller {
 	 
 	 //Knappar på coursefliken
 	 
-	 public void addCourse(Course newCourse) {
+	 public void addCourse(String courseCode, String name, double credits) {
+		 Course newCourse = new Course(); 
 		 courseRegisterList.addCourse(newCourse);
+		 return courseRegisterList.validateCourseCode(newCourse);
 	 }
 	 
 	 public Course removeCourse(String courseCode) {
@@ -227,6 +227,8 @@ public class Controller {
 		String courseCode = tmp.generateCourseCode();
 		return courseCode;
 	}
+
+	
 
 	
 
