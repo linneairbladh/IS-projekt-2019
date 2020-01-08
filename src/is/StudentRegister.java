@@ -6,29 +6,33 @@ public class StudentRegister {
 	
 	private ArrayList <Student> studentRegisterList = new ArrayList <Student>();
 	
-	public void setStudents(ArrayList<Student> studentRegisterList) { 
-		this.studentRegisterList = studentRegisterList; 
-		
-	}
-	public ArrayList<Student> getStudents() {
-		return this.studentRegisterList;
-	}
-	
-	
-	//Add,remove and update Student
+	//Add, find, remove, validate and update Student
 	public void addStudent(Student newStudent) {
 		this.studentRegisterList.add(newStudent);
 	}
 
 	public Student findStudent(String studentID) { 
-		Student a = null;
 		for (Student s : this.studentRegisterList) {
 			if (s.getStudentID().equals(studentID)) { 
-				a = s;
+				return s;
 			} 
 		}
-		return a; 
+		return null; 
 	}
+	
+	public String validateStudentID(Student newStudent)	{
+		for (Student tmp : studentRegisterList) {
+			if (tmp == newStudent) { 			//Skips s
+				continue;
+			}
+			while (tmp.getStudentID().equals(newStudent.getStudentID())){
+				String studentID = newStudent.generateStudentID();
+				newStudent.setStudentID(studentID);
+			}
+		}
+		return newStudent.getStudentID();				//Validates a studentID. If it is not unique a new one is generated and validated again
+	}
+	
 	
 	
 	public Student removeStudent(String studentID) {
@@ -38,13 +42,19 @@ public class StudentRegister {
 		return s;
 		}	
 	
+	public void setStudents(ArrayList<Student> studentRegisterList) { 
+		this.studentRegisterList = studentRegisterList; 
+		
+	}
+	public ArrayList<Student> getStudents() {
+		return this.studentRegisterList;
+	}
+	
 	public void updateStudent(Student newStudent, String newName, String newStudentID) {
 		newStudent.setName(newName);
 		newStudent.setStudentID(newStudentID);
 	}
 	
-
-
 	//metod för att fylla Combobox med ArrayList
 	public String[] retrieveAllStudents() {
 		String [] allStudents = new String[studentRegisterList.size()];
@@ -56,21 +66,6 @@ public class StudentRegister {
 		}
 		return allStudents;
 	}
-	
-	public String validateStudentID(Student s)	{
-		for (Student tmp : studentRegisterList) {
-			if (tmp == s) { 			//Skips s
-				continue;
-			}
-			while (tmp.getStudentID().equals(s.getStudentID())){
-				String studentID = s.generateStudentID();
-				s.setStudentID(studentID);
-			}
-		}
-		return s.getStudentID();				//Validates a studentID. If it is not unique a new one is generated and validated again
-	}
-	
-	
 	
 	
 }
