@@ -1,6 +1,7 @@
 package is;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 public class Course {
 	
@@ -10,9 +11,6 @@ public class Course {
 	private ArrayList <WrittenExam> writtenExamList = new ArrayList <WrittenExam>();
 	private CourseRegister courseRegister;
  
-	 public Course() {
-		 
-	}
 	public String getCourseCode() {
 		return courseCode;
 	 }
@@ -64,4 +62,10 @@ public class Course {
 		 WrittenExam a1 = this.findWrittenExam(examID);
 				writtenExamList.remove(a1);
 			}
+	public String generateCourseCode() {
+		Random random = new Random();
+		int randomInt = random.nextInt(90000) + 10000; // Generates a random number between 10000 and 99999
+		String courseCode = "C" + randomInt;
+		return courseCode;
+	}
 	}

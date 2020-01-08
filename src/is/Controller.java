@@ -4,33 +4,39 @@ import java.util.ArrayList;
 import javax.swing.JFrame;
 
 
-
 public class Controller {
 	
 	JFrame frame; //Refererar till det grafiska gränssnittet
 	
 	StudentRegister studentLista = new StudentRegister(); //Refererar till StudentRegister
-	//Student newStudent = new Student(); //Referar till Student
+	Student newStudent = new Student(); //Referar till Student
 	
 	WrittenExamRegister writtenExamList = new WrittenExamRegister(); //Refererar till WrittenExamRegister
 	WrittenExam writtenExam = new WrittenExam(); //Refererar till WrittenExam
 	
 	CourseRegister courseRegisterList = new CourseRegister(); //Refererar till CourseRegister
-	Course course = new Course(); //Refererar till Course
+	//Course course = new Course(); //Refererar till Course
 	Result newResult = new Result (); //Refererar till Result
 	
 	
 	//Knappar på studentfliken
 	
-	public String addStudent(String sName, String studentID) {
-		Student newStudent = new Student(sName, studentID);
+	/*public void addStudent(Student newStudent) { 
+		 studentLista.addStudent(newStudent);
+	}*/
+	
+	public String addStudent(Student newStudent) {
 		studentLista.addStudent(newStudent);
 		return studentLista.validateStudentID(newStudent);			//Adds student to the studentLista and returns a validated studentID
 		
 	}
-	 /*public void addStudent(Student newStudent) { 
-		 studentLista.addStudent(newStudent);
-	 }*/
+	
+	public String generateStudentID() {
+		Student newStudent = new Student(); //"", ""
+		String studentID = newStudent.generateStudentID();
+		return studentID;
+	}
+	
 	 
 	 public Student removeStudent(String studentID) { 
 		 return studentLista.removeStudent(studentID);	
@@ -42,13 +48,17 @@ public class Controller {
 		 return s;
 	 }
 	 
+	/* public String findStudent(String studentID) {
+			Student tmp = studentLista.findStudent(studentID);
+			if(tmp == null) {
+			return null; 
+		}
+			return tmp.getName();
+	 }*/
+	 
 	 //GLÖM EJ public Student updateStudent()
 	//ny version av updateStudent 
-	 public String generateStudentID() {
-			Student tmp = new Student("", "");
-			String studentID = tmp.generateStudentID();
-			return studentID;
-		}
+	 
 	 
 	 public void updateStudent(String name, String studentID) {
 			Student tmp = studentLista.findStudent(studentID);
@@ -189,12 +199,13 @@ public class Controller {
 			return tmpExam.getDate();
 		}
 	  
-	 public String []retrieveAllStudents(){
+	 public String[] retrieveAllStudents(){
 		 return studentLista.retrieveAllStudents();
 	 }
 	 
-	 public String [] findStudentArray(String studentID) {
-		 Student newStudent = studentLista.findStudent(studentID);
+	 
+	 public String [] findStudentArray(String sName) {
+		 Student newStudent = studentLista.findStudent(sName);
 		 String[] studentArray = new String [3];
 		 
 		 if(newStudent != null) {
@@ -204,6 +215,22 @@ public class Controller {
 		 return studentArray;
 		 
 	 }
+
+	public String generateExamID() {
+		WrittenExam tmp = new WrittenExam();
+		String examID = tmp.generateExamID();
+		return examID;
+	}
+	
+	public String generateCourseCode() {
+		Course tmp = new Course();
+		String courseCode = tmp.generateCourseCode();
+		return courseCode;
+	}
+
+	
+
+	
 	 
 	
 	 }

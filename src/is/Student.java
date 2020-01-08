@@ -16,9 +16,18 @@ public class Student {
 	private ArrayList<WrittenExam> writtenExams = new ArrayList<WrittenExam>();
 	
 	//Constructor för Student
-	public Student(String studentID, String sName) {
+	public Student() {
 		this.setStudentID(studentID);
 		this.setName(sName);
+		}
+
+
+		//Skapa ett studentID
+		public String generateStudentID() {
+			Random random = new Random(); //Man importerar denna 
+			int randomInt = random.nextInt(90000) + 10000; // Gör ett random nummer mellan 10000 and 99999
+			String studentID = "S" + randomInt;
+			return studentID;
 		}
 	
 	//Set + get
@@ -55,13 +64,7 @@ public class Student {
 		this.writtenExams = writtenExams;
 	}
 	
-	//Skapa ett studentID
-	public String generateStudentID() {
-		Random random = new Random(); //Man importerar denna 
-		int randomInt = random.nextInt(90000) + 10000; // Gör ett random nummer mellan 10000 and 99999
-		String studentID = "S" + randomInt;
-		return studentID;
-	}
+	
 	
 	//Metoder för add & find result
 	public void addResult(Result r) {
