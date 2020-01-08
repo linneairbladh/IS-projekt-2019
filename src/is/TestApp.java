@@ -5,6 +5,7 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JTextField;
 import javax.swing.JLabel;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JLayeredPane;
 import javax.swing.JTabbedPane;
@@ -35,6 +36,7 @@ public class TestApp {
 	private JTextField textField_ExamID;
 	private JTextField textField_Date;
 	private Controller controller = new Controller();
+	private JTextField textField_Points;
 	
 	
 
@@ -118,6 +120,18 @@ public class TestApp {
 		btnAddStudent.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
+				if (textField_StudentName.getText().equals("")) {
+					textArea_StudentAnswer.setText("Error: Please insert a name.");			//Checks that the field is valid
+				}
+				else { 
+				String studentID = controller.generateStudentID();
+				studentID = controller.addStudent(textField_StudentName.getText(), studentID);
+				textArea_StudentAnswer.setText(textField_StudentName.getText() +", " + studentID + " added to students.");
+				textField_StudentName.setText("");
+			}	
+				
+				
+				/*
 				String studentID = textField_StudentID.getText();
 				String sName = textField_StudentName.getText();
 				Student newStudent = new Student();//studentID, sName)
@@ -143,7 +157,7 @@ public class TestApp {
 				controller.addStudent(newStudent);
 				textArea_StudentAnswer.setText("Student has been added");
 				}
-				
+				*/
 			}
 		});
 		btnAddStudent.setBounds(39, 172, 117, 29);
@@ -168,7 +182,7 @@ public class TestApp {
 		btnFindStudent.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-				String studentID = textField_StudentID.getText();
+				/*String studentID = textField_StudentID.getText();
 				Student newStudent = controller.findStudent(studentID);
 				
 				if (newStudent!=null) {
@@ -177,7 +191,33 @@ public class TestApp {
                 } else {
                     textArea_StudentAnswer.setText("Student can not be found");
 
-                }   
+                }  */
+				
+				String studentID = textField_StudentID.getText();
+				if (studentID.equals("")) {
+					textArea_StudentAnswer.setText("Please enter a student-ID.");
+				}
+				else if (controller.findStudent(studentID) == null) {
+					textArea_StudentAnswer.setText("Invalid student-ID.");
+				}
+				else {
+					String[] examIDs = controller.getWrittenExamIDs(studentID);
+					if (examIDs.length == 0) {
+						textArea_StudentAnswer.append("Student has no results");
+					}
+					else {
+						textArea_StudentAnswer.setText("Student " + controller.findStudent(studentID) +" has written following exams:" + "\n");
+					int[] examResults = controller.getWrittenExamResults(studentID, examIDs);
+					String[] examGrades = controller.getWrittenExamGrades(studentID, examIDs);
+					String[] examCourses = controller.getWrittenExamCourse(studentID, examIDs);
+						for (int i = 0; i < examIDs.length; i++) {
+							textArea_StudentAnswer.append("\n" + "Course:" + "\t" + "Exam-ID:" + "\t" + "Points" + "\t" + "Grade:" + "\n");
+							textArea_StudentAnswer.append("\n" + examCourses[i] + "\t" + examIDs[i] + "\t" + examResults[i] + "\t" + examGrades[i] + "\n");
+						}
+					}
+				}
+				
+				
      
 			
 			}});
@@ -390,12 +430,7 @@ public class TestApp {
 		WrittenExam.add(lblLocation);
 		
 		JComboBox comboBox_Location = new JComboBox();
-		comboBox_Location.addItem("Room A123");
-		comboBox_Location.addItem("Room A167");
-		comboBox_Location.addItem("Room B198");
-		comboBox_Location.addItem("Room B067");
-		comboBox_Location.setSelectedItem("");
-		
+		comboBox_Location.setModel(new DefaultComboBoxModel(new String[] {"Room A123", "Room A167", "Room B198", "Room B067"}));
 		comboBox_Location.setBounds(93, 150, 129, 27);
 		WrittenExam.add(comboBox_Location);
 		
@@ -405,12 +440,8 @@ public class TestApp {
 		WrittenExam.add(lblTime);
 		
 		JComboBox comboBox_Time = new JComboBox();
-		comboBox_Time.addItem("07.00");
-		comboBox_Time.addItem("08.00");
-		comboBox_Time.addItem("09.00");
-		comboBox_Time.addItem("10.00");
-		comboBox_Time.setSelectedItem(""); //vet inte varför?
-		
+		comboBox_Time.setModel(new DefaultComboBoxModel(new String[] {"07:00", "08:00", "09:00"}));
+		//comboBox_Time.setSelectedItem(""); //vet inte varför?
 		comboBox_Time.setBounds(93, 185, 129, 27);
 		WrittenExam.add(comboBox_Time);
 		
@@ -442,10 +473,10 @@ public class TestApp {
 		lblPoints.setBounds(237, 122, 61, 16);
 		WrittenExam.add(lblPoints);
 		
-		JSpinner spinner_Points = new JSpinner();
-		spinner_Points.setValue(82);
-		spinner_Points.setBounds(341, 117, 61, 27);
-		WrittenExam.add(spinner_Points);
+		textField_Points = new JTextField();
+		textField_Points.setBounds(315, 117, 94, 26);
+		WrittenExam.add(textField_Points);
+		textField_Points.setColumns(10);
 		
 		//Svarsrutor för WE
 		JTextPane textPane_AnswerResult = new JTextPane();
@@ -461,7 +492,32 @@ public class TestApp {
 		JButton btnAddExam = new JButton("Add Exam");
 		btnAddExam.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				String courseCode = textField_CourseCode.getText();
+				String location = "";
+				String time;
+				String date;
+				int maxPoints;
+				try {
+					if (controller.findCourse(courseCode) == null) {
+						textPane_AnswerExam.setText("Invalid course code");
+					}
+					else {
+						if (textField_Date.getText().equals("")) {
+							textPane_AnswerExam.setText("Please enter date for the exam");
+						}
+						//Checks that every field has a value
+						
+						String examID = controller.generateExamID();
+						date = textField_Date.getText();
+						
+					}
+				}
+					
+					catch (java.lang.NumberFormatException exception) {
+						textPane_AnswerExam.setText("Only numbers are allowed in the max points field");
+				}
 			}
+			
 		});
 		btnAddExam.setBounds(20, 263, 101, 29);
 		WrittenExam.add(btnAddExam);
@@ -477,42 +533,34 @@ public class TestApp {
 		JButton btnAddResult = new JButton("Register Result ");
 		btnAddResult.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-			}
-			/*
+			
 			String examID = textField_ExamID.getText();
-			String studentID = textField_StudentID.getText();
+			//String studentID = textField_StudentID.getText();
+			
 			int result = Integer.parseInt(textField_Points.getText());
+			
+			String studentID = comboBox_StudentiD.getSelectedItem();
+			
 			if (textField_ExamID.getText().equals("") || textField_StudentID.getText().equals("") || textField_Points.getText().equals("")) {
-				textArea_Info.setText("Please enter an Exam-ID, a Student-ID and a score");
+				textPane_AnswerResult.setText("Please enter an Exam-ID, a Student-ID and a score");
 			}
 			else if (controller.getExamDate(examID) == null) {
-				textArea_Info.setText("Invalid Exam-ID");
+				textPane_AnswerResult.setText("Invalid Exam-ID");
 			}
 			else if (controller.findStudent(studentID) == null) {
-				textArea_Info.setText("Invalid Student -ID");
+				textPane_AnswerResult.setText("Invalid Student -ID");
 			}
 			else if (result > controller.getExamMaxPoints(examID) || result < 0) {
-				textArea_Info.setText("Invalid amount of points");								//Checks that every field is valid
+				textPane_AnswerResult.setText("Invalid amount of points");								//Checks that every field is valid
 			}
 			else {
 				String letterGrade = controller.addResult(studentID, examID, result);
-				textArea_Info.setText("Added result for student: " + controller.findStudent(studentID) + " on exam " + examID + "\n");
-				textArea_Info.append("Points: " + result + "\t" + "Grade: " + letterGrade);
+				textPane_AnswerResult.setText("Added result for student: " + controller.findStudent(studentID) + " on exam " + examID + "\n");
+				textPane_AnswerResult.setText("Points: " + result + "\t" + "Grade: " + letterGrade);
 				textField_StudentID.setText("");
-				textField_Points.setText("");													//Register results for a student on an exam
+				textPane_AnswerResult.setText("");													//Register results for a student on an exam
 			}
-		}
-		catch (java.lang.NumberFormatException exception) {
-			textArea_Info.setText("Only numbers are allowed in the points field");
-		}
-	}
-*/
-			
-			
-			
-			
-			
-			
+			}	
 		});
 		btnAddResult.setBounds(237, 263, 136, 29);
 		WrittenExam.add(btnAddResult);
@@ -526,11 +574,14 @@ public class TestApp {
 		lblExamId_1.setBounds(237, 88, 61, 16);
 		WrittenExam.add(lblExamId_1);
 		
-		JComboBox comboBox = new JComboBox();
-		comboBox.setBounds(315, 83, 94, 27);
-		WrittenExam.add(comboBox);
+		JComboBox comboBox_ExamID = new JComboBox();
+		comboBox_ExamID.setBounds(315, 83, 94, 27);
+		WrittenExam.add(comboBox_ExamID);
 		
-	}}
+		
+		
+	}	
+}
 		
 		
 	
