@@ -2,29 +2,25 @@ package is;
 
 public class Result {
 	
-	private double result;
+	private int result;
 	private String letterGrade;
 	private Student student; // Association till student
 	private WrittenExam writtenExam;
 
 	//
-	public Result() {
+	/*public Result(int result) {
 		this.result = result; 
 		this.letterGrade = letterGrade;
 		this.writtenExam = writtenExam;
 		this.student = student;
 		
-	}
+	}*/
 
-	public Result(double d, WrittenExam we1, Student st1) {
-		// TODO Auto-generated constructor stub
-	}
-
-	public void setResult(double result) {
+	public void setResult(int result) {
 		this.result = result; 
 	}
 	
-	public double getResult() {
+	public int getResult() {
 		return result; 
 	}
 	

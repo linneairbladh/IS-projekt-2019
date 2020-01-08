@@ -3,7 +3,6 @@ package is;
 import java.util.ArrayList;
 import javax.swing.JFrame;
 
-import isprojekt.Student;
 
 
 public class Controller {
@@ -107,12 +106,12 @@ public class Controller {
 	 
 	 public String[] getWrittenExamCourse(String studentID, String[] examID) {
 			Student tmpStudent = studentLista.findStudent(studentID);
-			String[] examCourse = new String[tmpStudent.getResults().size()];
+			String[] examCourse = new String[tmpStudent.getResultList().size()];
 			int i = 0;
 			if (tmpStudent != null) {
 				while (i < examCourse.length) {
 					WrittenExam tmpExam = courseRegisterList.findWrittenExam(examID[i]);
-					for (Result tmpResult : tmpExam.getResults()) {
+					for (Result tmpResult : tmpExam.getExamResult()) {
 						if (tmpResult.getStudent().getStudentID().equals(studentID)) {
 							examCourse[i] = tmpResult.getWrittenExam().getCourse().getName();	
 						}
@@ -125,12 +124,12 @@ public class Controller {
 	 
 	 public String[] getWrittenExamGrades(String studentID, String[] examID) {
 			Student tmpStudent = studentLista.findStudent(studentID);
-			String[] examGrades = new String[tmpStudent.getResults().size()];
+			String[] examGrades = new String[tmpStudent.getResultList().size()];
 			int i = 0;
 			if (tmpStudent != null) {
 				while (i < examGrades.length) {
 					WrittenExam tmpExam = courseRegisterList.findWrittenExam(examID[i]);
-					for (Result tmpResult : tmpExam.getResults()) {
+					for (Result tmpResult : tmpExam.getExamResult()) {
 						if (tmpResult.getStudent().getStudentID().equals(studentID)) {
 							examGrades[i] = tmpResult.getLetterGrade();	
 						}
@@ -143,24 +142,25 @@ public class Controller {
 	 
 	 public String[] getWrittenExamIDs (String studentID) {
 			Student tmpStudent = studentLista.findStudent(studentID);
-			String[] examIDs = new String[tmpStudent.getResults().size()];
+			String[] examIDs = new String[tmpStudent.getResultList().size()];
 			int i = 0;
 			if (tmpStudent != null) {
-				for (Result tmpResult : tmpStudent.getResults()) {
+				for (Result tmpResult : tmpStudent.getResultList()) {
 					examIDs[i] = tmpResult.getWrittenExam().getExamID();
 					i++;
 				}
 			}
 			return examIDs;	
+	 }
 	 
 	 public int[] getWrittenExamResults(String studentID, String[] examID) {
 			Student tmpStudent = studentLista.findStudent(studentID);
-			int[] examResults = new int[tmpStudent.getResults().size()];
+			int[] examResults = new int[tmpStudent.getResultList().size()];
 			int i = 0;
 			if (tmpStudent != null) {
 				while (i < examResults.length) {
 					WrittenExam tmpExam = courseRegisterList.findWrittenExam(examID[i]);
-					for (Result tmpResult : tmpExam.getResults()) {
+					for (Result tmpResult : tmpExam.getExamResult()) {
 						if (tmpResult.getStudent().getStudentID().equals(studentID)) {
 							examResults[i] = tmpResult.getResult();	
 						}
