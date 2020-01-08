@@ -38,12 +38,12 @@ public class StudentRegister {
 		return s;
 		}	
 	
-	/*public void updateStudent(Student newStudent, String newName, String newStudentID) {
+	public void updateStudent(Student newStudent, String newName, String newStudentID) {
 		newStudent.setName(newName);
 		newStudent.setStudentID(newStudentID);
-	}*/
+	}
 	
-}
+
 
 	//metod för att fylla Combobox med ArrayList
 	public String[] retrieveAllStudents() {
@@ -56,6 +56,20 @@ public class StudentRegister {
 		}
 		return allStudents;
 	}
+	
+	public String validateStudentID(Student s)	{
+		for (Student tmp : studentRegisterList) {
+			if (tmp == s) { 			//Skips s
+				continue;
+			}
+			while (tmp.getStudentID().equals(s.getStudentID())){
+				String studentID = s.generateStudentID();
+				s.setStudentID(studentID);
+			}
+		}
+		return s.getStudentID();				//Validates a studentID. If it is not unique a new one is generated and validated again
+	}
+	
 	
 	
 	

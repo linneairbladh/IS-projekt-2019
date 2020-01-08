@@ -15,11 +15,13 @@ public class Student {
 	private ArrayList<Result>resultList = new ArrayList<Result>();
 	private ArrayList<WrittenExam> writtenExams = new ArrayList<WrittenExam>();
 	
-	public Student() {
+	//Constructor för Student
+	public Student(String studentID, String sName) {
 		this.setStudentID(studentID);
 		this.setName(sName);
-	}
+		}
 	
+	//Set + get
 	public String getStudentID() {
 		return studentID;
 	}

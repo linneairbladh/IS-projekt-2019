@@ -3,13 +3,15 @@ package is;
 import java.util.ArrayList;
 import javax.swing.JFrame;
 
+import isprojekt.Student;
+
 
 public class Controller {
 	
 	JFrame frame; //Refererar till det grafiska gränssnittet
 	
 	StudentRegister studentLista = new StudentRegister(); //Refererar till StudentRegister
-	Student newStudent = new Student(); //Referar till Student
+	//Student newStudent = new Student(); //Referar till Student
 	
 	WrittenExamRegister writtenExamList = new WrittenExamRegister(); //Refererar till WrittenExamRegister
 	WrittenExam writtenExam = new WrittenExam(); //Refererar till WrittenExam
@@ -21,9 +23,15 @@ public class Controller {
 	
 	//Knappar på studentfliken
 	
-	 public void addStudent(Student newStudent) { 
+	public String addStudent(String sName, String studentID) {
+		Student newStudent = new Student(sName, studentID);
+		studentLista.addStudent(newStudent);
+		return studentLista.validateStudentID(newStudent);			//Adds student to the studentLista and returns a validated studentID
+		
+	}
+	 /*public void addStudent(Student newStudent) { 
 		 studentLista.addStudent(newStudent);
-	 }
+	 }*/
 	 
 	 public Student removeStudent(String studentID) { 
 		 return studentLista.removeStudent(studentID);	
@@ -36,6 +44,18 @@ public class Controller {
 	 }
 	 
 	 //GLÖM EJ public Student updateStudent()
+	//ny version av updateStudent 
+	 public String generateStudentID() {
+			Student tmp = new Student("", "");
+			String studentID = tmp.generateStudentID();
+			return studentID;
+		}
+	 
+	 public void updateStudent(String name, String studentID) {
+			Student tmp = studentLista.findStudent(studentID);
+			tmp.setName(name);
+	 }
+	
 	 
 	 //Knappar på coursefliken
 	 
@@ -51,12 +71,7 @@ public class Controller {
 		 return courseRegisterList.findCourse(courseCode);
 	 }
 	 
-	 /* GLÖM EJ public Course updateCourse() {
-		 return course; 
-	 }
-	 */
-	 
-	 
+
 	 //Knappar från WrittenExam-fliken
 	 //"Add/remove exam for course:
 	 
@@ -64,35 +79,115 @@ public class Controller {
 			writtenExamList.addWrittenExam(a);
 		}
 	 
+	/* public String[] retrieveAllCourseNames() {
+		 return CourseRegister.retrieveAllCourseNames();
+	 }*/
 	 
-	 
+ 
 	 
 	 //"Register result for student:"
 	 
-	 public void addResult(String examID, String date, String location, String time) {
-		  Result newresult = new Result();
-			writtenExam.addResult(newresult);
+	 
+	 public String addResult(String studentID, String examID, int result) {
+			Result newResult = new Result();
+			Student newStudent = studentLista.findStudent(studentID);
+			WrittenExam newExam = writtenExamList.findWrittenExam(examID);
+			StudentRegister newStudentRegister = new StudentRegister();
+			
+			newResult.setWrittenExam(newExam);
+			newExam.addResult(newResult);
+			newStudentRegister.addStudent(newStudent);
+			newResult.setResult(result);
+			newResult.setStudent(newStudent);
+			newStudent.addResult(newResult);
+			newStudent.addWrittenExam(newExam);
+			return newResult.getLetterGrade(); 
+	 
+	 }
+	 
+	 public String[] getWrittenExamCourse(String studentID, String[] examID) {
+			Student tmpStudent = studentLista.findStudent(studentID);
+			String[] examCourse = new String[tmpStudent.getResults().size()];
+			int i = 0;
+			if (tmpStudent != null) {
+				while (i < examCourse.length) {
+					WrittenExam tmpExam = courseRegisterList.findWrittenExam(examID[i]);
+					for (Result tmpResult : tmpExam.getResults()) {
+						if (tmpResult.getStudent().getStudentID().equals(studentID)) {
+							examCourse[i] = tmpResult.getWrittenExam().getCourse().getName();	
+						}
+					}
+					i++;
+				}
+			}
+			return examCourse;					//Returns an array of course names for every exam a student has a result on
 		}
-	
-
-	  
 	 
-	 //metod från Student
-		//// Vet ej om vi behöver 
+	 public String[] getWrittenExamGrades(String studentID, String[] examID) {
+			Student tmpStudent = studentLista.findStudent(studentID);
+			String[] examGrades = new String[tmpStudent.getResults().size()];
+			int i = 0;
+			if (tmpStudent != null) {
+				while (i < examGrades.length) {
+					WrittenExam tmpExam = courseRegisterList.findWrittenExam(examID[i]);
+					for (Result tmpResult : tmpExam.getResults()) {
+						if (tmpResult.getStudent().getStudentID().equals(studentID)) {
+							examGrades[i] = tmpResult.getLetterGrade();	
+						}
+					}
+					i++;
+				}
+			}
+			return examGrades;				//Returns an array of grades for every exam a student has a result on
+	}
 	 
-		 /*public void addStudent(String studentID, String sName) {
-			 Student newstudent = new Student(studentID, sName);
-			 studentLista.addStudent(newstudent); } 
-			 
-			 */
-		 
-	//public Controller controller = new Controller();
-		
-		//metoder från StudentRegister
-		 public Controller() {
-			 this.studentLista = studentLista;
-			 this.frame = frame;
-			 } 
+	 public String[] getWrittenExamIDs (String studentID) {
+			Student tmpStudent = studentLista.findStudent(studentID);
+			String[] examIDs = new String[tmpStudent.getResults().size()];
+			int i = 0;
+			if (tmpStudent != null) {
+				for (Result tmpResult : tmpStudent.getResults()) {
+					examIDs[i] = tmpResult.getWrittenExam().getExamID();
+					i++;
+				}
+			}
+			return examIDs;	
+	 
+	 public int[] getWrittenExamResults(String studentID, String[] examID) {
+			Student tmpStudent = studentLista.findStudent(studentID);
+			int[] examResults = new int[tmpStudent.getResults().size()];
+			int i = 0;
+			if (tmpStudent != null) {
+				while (i < examResults.length) {
+					WrittenExam tmpExam = courseRegisterList.findWrittenExam(examID[i]);
+					for (Result tmpResult : tmpExam.getResults()) {
+						if (tmpResult.getStudent().getStudentID().equals(studentID)) {
+							examResults[i] = tmpResult.getResult();	
+						}
+					}
+					i++;
+				}
+			}
+			return examResults;				//Returns an array of results for every exam a student has a result on
+		}
+	 
+	 public int getExamMaxPoints(String examID) {
+			WrittenExam tmpExam = writtenExamList.findWrittenExam(examID);
+			if (tmpExam == null){
+				return 0;
+			}
+			
+			return tmpExam.getMaxPoints();
+		}	 	
+	 
+	 public String getExamDate(String examID) {
+			WrittenExam tmpExam = writtenExamList.findWrittenExam(examID);
+			if (tmpExam == null){
+				return null;
+			}
+			
+			return tmpExam.getDate();
+		}
 	  
 	 public String []retrieveAllStudents(){
 		 return studentLista.retrieveAllStudents();
@@ -105,7 +200,6 @@ public class Controller {
 		 if(newStudent != null) {
 			 studentArray[0] = newStudent.getName();
 			 studentArray[1] = newStudent.getStudentID();
-			 studentArray[2] = newStudent.ge
 		 }
 		 return studentArray;
 		 
