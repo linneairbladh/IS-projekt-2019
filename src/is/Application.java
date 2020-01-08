@@ -5,6 +5,7 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JTextField;
 import javax.swing.JLabel;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JLayeredPane;
 import javax.swing.JTabbedPane;
@@ -12,14 +13,16 @@ import javax.swing.JDesktopPane;
 import javax.swing.JPanel;
 import javax.swing.JComboBox;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.awt.event.ActionEvent;
 import java.awt.Font;
 import javax.swing.JTextPane;
 import javax.swing.JSpinner;
 import javax.swing.SwingConstants;
 import javax.swing.JTextArea;
+import javax.swing.UIManager;
 
-public class Application {
+public class A {
 
 	private JFrame frame;
 	private JTextField textField_StudentName;
@@ -29,8 +32,11 @@ public class Application {
 	private JTextField textField_Credit;
 	private JTextField textField_ExamID;
 	private JTextField textField_Date;
-	private Controller controller;
+	private Controller controller = new Controller(); 
+	JComboBox<String> comboBox_Course; 
+
 	
+
 	/**
 	 * Launch the application.
 	 */
@@ -38,7 +44,7 @@ public class Application {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					Application window = new Application();
+					A window = new A();
 					window.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -50,9 +56,12 @@ public class Application {
 	/**
 	 * Create the application.
 	 */
-	public Application() {
+	public A() {
 		initialize();
+		
 	}
+	
+	
 
 
 	/**
@@ -79,11 +88,12 @@ public class Application {
 		//
 		
 		JLabel lblStudentName = new JLabel("Student Name");
-		lblStudentName.setFont(new Font("Lao MN", Font.PLAIN, 13));
+		lblStudentName.setFont(new Font("PT Sans Caption", Font.PLAIN, 13));
 		lblStudentName.setBounds(39, 33, 96, 16);
 		Student.add(lblStudentName);
 		
 		textField_StudentName = new JTextField();
+		lblStudentName.setLabelFor(textField_StudentName);
 		textField_StudentName.setBounds(147, 28, 130, 26);
 		Student.add(textField_StudentName);
 		textField_StudentName.setColumns(10);
@@ -92,51 +102,33 @@ public class Application {
 		lblStudentId.setBounds(39, 66, 82, 16);
 		Student.add(lblStudentId);
 		
-		textField_StudentID = new JTextField();
+		textField_StudentID = new JTextField(5);
 		textField_StudentID.setBounds(147, 61, 130, 26);
 		Student.add(textField_StudentID);
 		textField_StudentID.setColumns(10);
 		
 		//Svar på Student
 		JTextArea textArea_StudentAnswer = new JTextArea();
-		textArea_StudentAnswer.setBounds(39, 125, 266, 35);
+		textArea_StudentAnswer.setBackground(UIManager.getColor("CheckBox.background"));
+		textArea_StudentAnswer.setBounds(39, 113, 266, 35);
 		Student.add(textArea_StudentAnswer);
 		
 		
 		// Knappar på studentfliken
+		
 		JButton btnAddStudent = new JButton("Add Student");
 		btnAddStudent.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
 				String studentID = textField_StudentID.getText();
 				String sName = textField_StudentName.getText();
-				
-				if(sName.trim().equals("")|| studentID.trim().equals("")){
-					textArea_StudentAnswer.setText("You did not enter anyting.");
-				}
-				
-				else {
-					controller.addStudent(studentID, sName);
-					textArea_StudentAnswer.setText("Student added.");
-				}
-				
-				/*else {
-					textArea_StudentAnswer.setText("Student already exists.");
-					
-				}
-				*/
-				
-				/*Student s = new Student();
-				String studentID = textField_StudentID.getText();
-				String sName = textField_StudentName.getText();
-				s.setStudentID(studentID);
-				s.setName(sName);
+				Student newStudent = new Student();//studentID, sName)
+				newStudent.setStudentID(studentID);
+				newStudent.setName(sName);
 				 
-				controller.addStudent(studentID, sName);
+				controller.addStudent(newStudent);
 				
+				textArea_StudentAnswer.setText("Student has been added");
 				
-				textArea_StudentAnswer.setText("Student has been added.");
-	*/
 			}
 		});
 		btnAddStudent.setBounds(39, 172, 117, 29);
@@ -148,12 +140,9 @@ public class Application {
 			public void actionPerformed(ActionEvent e) {
 				
 				String studentID = textField_StudentID.getText();
-				
-				if(controller.findStudent(studentID)!=null) {
 				controller.removeStudent(studentID);
 				textArea_StudentAnswer.setText("The student has been removed");
 	             }
-			}
 				
 		});
 		btnRemoveStudent.setBounds(39, 205, 145, 29);
@@ -165,19 +154,18 @@ public class Application {
 			public void actionPerformed(ActionEvent e) {
 				
 				String studentID = textField_StudentID.getText();
-				Student s = controller.findStudent(studentID); 
+				Student newStudent = controller.findStudent(studentID);
 				
-				if (s!=null) {
-					textArea_StudentAnswer.setText(s.getName());
+				if (newStudent!=null) {
+					textArea_StudentAnswer.setText(newStudent.getName());
 				
                 } else {
-                    textArea_StudentAnswer.setText("Student can't be found. ");
+                    textArea_StudentAnswer.setText("Person can not be found");
 
                 }   
-                }
-
-                
-			});
+     
+			
+			}});
 		btnFindStudent.setBounds(39, 238, 117, 29);
 		Student.add(btnFindStudent);
 		
@@ -185,6 +173,8 @@ public class Application {
 		JButton btnUpdateStudent = new JButton("Update Student");
 		btnUpdateStudent.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				
+				
 			}
 		});
 		btnUpdateStudent.setBounds(39, 271, 130, 29);
@@ -216,7 +206,7 @@ public class Application {
 		lblCourseCode.setBounds(42, 67, 90, 16);
 		Course.add(lblCourseCode);
 		
-		textField_CourseCode = new JTextField();
+		textField_CourseCode = new JTextField(5);
 		textField_CourseCode.setBounds(155, 62, 130, 26);
 		Course.add(textField_CourseCode);
 		textField_CourseCode.setColumns(10);
@@ -233,11 +223,29 @@ public class Application {
 		textField_Credit.setColumns(10);
 		//
 		
+		//Svarsruta för uppdatera kurs
+		JTextPane textPane_AnswerCourse = new JTextPane();
+		textPane_AnswerCourse.setBackground(UIManager.getColor("Button.background"));
+		textPane_AnswerCourse.setBounds(52, 152, 232, 53);
+		Course.add(textPane_AnswerCourse);
+				
 		/// Knappar för kursfliken 
 		
 		JButton btnAddCourse = new JButton("Add Course ");
 		btnAddCourse.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				String courseCode = textField_CourseCode.getText();
+				String name = textField_CourseName.getText();
+				double credits = Double.parseDouble(textField_Credit.getText());
+				Course newCourse = new Course();
+				newCourse.setCourseCode(courseCode);
+				newCourse.setName(name);
+				newCourse.setCredits(credits);
+				 
+				controller.addCourse(newCourse);
+				
+				textPane_AnswerCourse.setText("Course has been added");
+				
 			}
 		});
 		btnAddCourse.setBounds(42, 226, 117, 29);
@@ -254,8 +262,19 @@ public class Application {
 		JButton btnFindCourse = new JButton("Find Course");
 		btnFindCourse.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-			}
-		});
+				
+				String courseCode = textField_CourseCode.getText();
+				Course newCourse = controller.findCourse(courseCode);
+				
+				if (newCourse!=null) {
+					textPane_AnswerCourse.setText(newCourse.getName());
+				
+                } else {
+                	textPane_AnswerCourse.setText("Course can not be found");
+
+                }   
+			
+			}});
 		btnFindCourse.setBounds(42, 284, 106, 29);
 		Course.add(btnFindCourse);
 		
@@ -267,10 +286,7 @@ public class Application {
 		btnUpdateCourse.setBounds(42, 313, 117, 29);
 		Course.add(btnUpdateCourse);
 		
-		//Svarsruta för uppdatera kurs
-		JTextPane textPane_AnswerCourse = new JTextPane();
-		textPane_AnswerCourse.setBounds(52, 152, 232, 53);
-		Course.add(textPane_AnswerCourse);
+		
 		
 		///////////////////////
 		///Written exam flik///
@@ -291,21 +307,48 @@ public class Application {
 		lblAddremoveExamFor.setBounds(20, 16, 195, 16);
 		WrittenExam.add(lblAddremoveExamFor);
 		
+		//Svarsrutor för WE
+		JTextPane textPane_AnswerResult = new JTextPane();
+		textPane_AnswerResult.setBounds(237, 217, 160, 34);
+		WrittenExam.add(textPane_AnswerResult);
+						
+		JTextPane textPane_AnswerExam = new JTextPane();
+		textPane_AnswerExam.setBounds(24, 217, 181, 34);
+		WrittenExam.add(textPane_AnswerExam);
+				
+				
 		//Skriva in kurs på WE
 		JLabel lblCourse_WECourse = new JLabel("Course");
 		lblCourse_WECourse.setBounds(20, 51, 61, 16);
 		WrittenExam.add(lblCourse_WECourse);
 		
-		JComboBox comboBox_Course = new JComboBox();
+		JComboBox <String> comboBox_Course = new JComboBox <String>();
+		comboBox_Course.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				Object selectedItem = comboBox_Course.getSelectedItem();
+				String selectedCourseName = selectedItem.toString();
+				/*String[] selectedCourse = controller.findCourse(selectedCourseName);
+				
+				if(selectedCourse[2] != "") {
+					textPane_AnswerResult.setText(selectedCourse[2]);	
+				}
+				else{
+					textPane_AnswerResult.setText("No course selected!");
+				}*/
+			}
+		});
 		comboBox_Course.setBounds(104, 47, 101, 27);
 		WrittenExam.add(comboBox_Course);
+		
+		
+		
 
 		//Skriva in Exam ID på WE
 		JLabel lblExamId = new JLabel("Exam ID");
 		lblExamId.setBounds(20, 83, 61, 16);
 		WrittenExam.add(lblExamId);
 		
-		textField_ExamID = new JTextField();
+		textField_ExamID = new JTextField(5);//Accepterar 5 siffror
 		textField_ExamID.setBounds(107, 78, 107, 26);
 		WrittenExam.add(textField_ExamID);
 		textField_ExamID.setColumns(10);
@@ -335,7 +378,10 @@ public class Application {
 		WrittenExam.add(lblTime);
 		
 		JComboBox comboBox_Time = new JComboBox();
-		comboBox_Time.setBounds(102, 167, 113, 27);
+		comboBox_Time.setModel(new DefaultComboBoxModel(new String[] {"07:00", "08:00", "09:00"}));
+		//comboBox_Time.setSelectedItem(""); //vet inte varför?
+		
+		comboBox_Time.setBounds(102, 167, 94, 27);
 		WrittenExam.add(comboBox_Time);
 		
 		//Skriva in Student ID
@@ -355,6 +401,7 @@ public class Application {
 		JSpinner spinner_Points = new JSpinner();
 		spinner_Points.setBounds(325, 78, 61, 27);
 		WrittenExam.add(spinner_Points);
+		
 		
 		
 		//Knappar på WE
@@ -383,13 +430,14 @@ public class Application {
 		WrittenExam.add(btnAddResult);
 		
 		
-		//Svarsrutor för WE
-		JTextPane textPane_AnswerResult = new JTextPane();
-		textPane_AnswerResult.setBounds(237, 217, 160, 34);
-		WrittenExam.add(textPane_AnswerResult);
 		
-		JTextPane textPane_AnswerExam = new JTextPane();
-		textPane_AnswerExam.setBounds(24, 217, 181, 34);
-		WrittenExam.add(textPane_AnswerExam);
 	}
+	
+	/*private void fillCourseBox() {
+		String[] allCourseNames = controller.retrieveAllCourseNames(); 
+		
+		for(int i = 0; i < allCourseNames.length; i++) {
+			comboBox_Course.addItem(allCourseNames[i]);
+		}
+	}*/
 }
