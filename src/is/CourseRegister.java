@@ -43,6 +43,17 @@ public class CourseRegister {
 		}
 		return c; 
 	}
+
+	public WrittenExam findWrittenExam(String examID) {
+		for (Course tmp : courseRegisterList) {
+			for (WrittenExam tmpExam : tmp.getWrittenExamList() ) {
+				if(tmpExam.getExamID().equals(examID)) {
+					return tmpExam;
+				}
+			}
+		}
+		return null;
+	}
 		
 	
 }
