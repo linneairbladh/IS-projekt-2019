@@ -66,8 +66,23 @@ public class CourseRegister {
 		}
 		return c.getCourseCode();				//Validates a course code. If it is not unique, a new one is generated and validated again
 	}
+	
+	
+	public String[] retrieveAllCourses() {
+		String [] allCourses = new String[courseRegisterList.size()];
+		int i = 0;
+		
+		for(Course a: courseRegisterList) {
+			allCourses[i] = a.getCourseCode();
+			i++;
+		}
+		return allCourses;
+	}
+	
+	
+}
 
 	//public void addWrittenExam(WrittenExam newExam) {
 		// TODO Auto-generated method stub
 		
-	}
+	

@@ -27,29 +27,21 @@ public class Controller {
 		String studentID = newStudent.generateStudentID();
 		return studentID;
 	}
-	
-	 
 	 public Student removeStudent(String studentID) { 
 		 return studentLista.removeStudent(studentID);	
 	 }
-	 
 	 public Student findStudent(String studentID) {
-		 Student s;
-		 s = studentLista.findStudent(studentID);
-		 return s;
-	 }
-	 
-	 
-	 //GLÖM EJ public Student updateStudent()
-	//ny version av updateStudent 
-	 
-	 
+		 Student tmp = studentLista.findStudent(studentID);
+		 if (tmp == null) {
+			 return null;
+		 }
+		 return tmp;
+	 } 
 	 public void updateStudent(String name, String studentID) {
 			Student tmp = studentLista.findStudent(studentID);
 			tmp.setName(name);
 	 }
-	
-	 
+
 	 //Knappar på coursefliken
 	 
 	 public String addCourse(String courseCode, String name, double credits) {
@@ -75,14 +67,34 @@ public class Controller {
 			tmp.setName(name);
 	 }
 	 
-	 /*Course c;
-		 c = courseRegisterList.findCourse(courseCode);
-		 return c;
-	 }*/
-
+	 
+	public String generateExamID() {
+			WrittenExam tmp = new WrittenExam();
+			String examID = tmp.generateExamID();
+			return examID;
+		}
+	
+	public void updateCourseName(String courseCode, String name) {
+		Course newCourse = courseRegisterList.findCourse(courseCode);
+		newCourse.setCourseCode(courseCode);
+	}
+	
+	public void updateCourseCredit(String courseCode, double credits) {
+			Course newCourse = courseRegisterList.findCourse(courseCode);
+			newCourse.setCourseCode(courseCode);
+	}
+		
+		
 	 //Knappar från WrittenExam-fliken
 	 //"Add/remove exam for course:
 	 
+		
+	public String generateCourseCode() {
+			Course tmp = new Course("", "", 0);
+			String courseCode = tmp.generateCourseCode();
+			return courseCode;
+		}		
+		
 	 public String addWrittenExam(String courseCode, String examID, String time, String location, String date, int maxPoints) {
 		WrittenExam newExam = new WrittenExam();
 		Course course = courseRegisterList.findCourse(courseCode);
@@ -97,15 +109,29 @@ public class Controller {
 		}
 	  
 	 
-	 public String[] retrieveAllCourseNames() {
-		 return CourseRegister.retrieveAllCourseNames();
+	 //Fylla ComboBox StudentID och CourseID för Register Exam  for Student
+	 public String[] retrieveAllStudents(){
+		 return studentLista.retrieveAllStudents();
+		 
+	 } 
+	 
+	 public String [] findStudentArray(String studentID) {
+		 Student newStudent = studentLista.findStudent(studentID);
+		 String[] studentArray = new String [3];
+		 
+		 if(newStudent != null) {
+			 studentArray[0] = newStudent.getName();
+			 studentArray[1] = newStudent.getStudentID();
+		 }
+		 return studentArray;
+		 
+	 } 
+	 public String[] retrieveAllCourses() {
+		 return courseRegisterList.retrieveAllCourses();
 	 }
 	 
  
-	 
-	 //"Register result for student:"
-	 
-	 
+	//Knapp för Register Exam  for Student
 	 public String addResult(String studentID, String examID, int result) {
 			Result newResult = new Result();
 			Student newStudent = studentLista.findStudent(studentID);
@@ -123,6 +149,9 @@ public class Controller {
 	 
 	 }
 	 
+	 
+	 
+	 //Information om Student
 	 public String[] getWrittenExamCourse(String studentID, String[] examID) {
 			Student tmpStudent = studentLista.findStudent(studentID);
 			String[] examCourse = new String[tmpStudent.getResultList().size()];
@@ -138,7 +167,7 @@ public class Controller {
 					i++;
 				}
 			}
-			return examCourse;					//Returns an array of course names for every exam a student has a result on
+			return examCourse;					//Returnerar en array av kurser som varje student har resultat på 
 		}
 	 
 	 public String[] getWrittenExamGrades(String studentID, String[] examID) {
@@ -208,34 +237,12 @@ public class Controller {
 			return tmpExam.getDate();
 		}
 	  
-	 public String[] retrieveAllStudents(){
-		 return studentLista.retrieveAllStudents();
-	 }
-	 
-	 
-	 public String [] findStudentArray(String studentID) {
-		 Student newStudent = studentLista.findStudent(studentID);
-		 String[] studentArray = new String [3];
-		 
-		 if(newStudent != null) {
-			 studentArray[0] = newStudent.getName();
-			 studentArray[1] = newStudent.getStudentID();
-		 }
-		 return studentArray;
-		 
-	 }
 
-	public String generateExamID() {
-		WrittenExam tmp = new WrittenExam();
-		String examID = tmp.generateExamID();
-		return examID;
-	}
+	 
+	 
 	
-	public String generateCourseCode() {
-		Course tmp = new Course("", "", 0);
-		String courseCode = tmp.generateCourseCode();
-		return courseCode;
-	}		 
+
+ 
 	
 	
 	
