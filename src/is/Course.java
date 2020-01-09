@@ -10,7 +10,19 @@ public class Course {
 	private double credits;
 	private ArrayList <WrittenExam> writtenExamList = new ArrayList <WrittenExam>();
 	private CourseRegister courseRegister;
- 
+	
+	public Course (String courseCode, String name, double credits) {
+		this.courseCode = courseCode; 
+		this.name = name; 
+		this.credits = credits; 
+	}
+	
+	public void setCourseRegister(CourseRegister courseRegister) {
+		this.courseRegister = courseRegister;
+	 }
+	public CourseRegister getCourseRegister() {
+		 return this.courseRegister;
+	 }
 	public String getCourseCode() {
 		return courseCode;
 	 }
@@ -28,13 +40,6 @@ public class Course {
 	 }
 	 public void setCredits(double credits) {
 		this.credits = credits;
-	 }
-	 public void setCourseRegister(CourseRegister courseRegister) {
-		this.courseRegister = courseRegister;
-	 }
-	 
-	 public CourseRegister getCourseRegister() {
-		 return this.courseRegister;
 	 }
 	 
 	 public ArrayList <WrittenExam> getWrittenExamList() {

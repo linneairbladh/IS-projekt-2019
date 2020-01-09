@@ -3,20 +3,13 @@ package is;
 import java.util.ArrayList;
 import javax.swing.JFrame;
 
-
-
 public class Controller {
 	
 	JFrame frame; //Refererar till det grafiska gränssnittet
 	
 	StudentRegister studentLista = new StudentRegister(); //Refererar till StudentRegister
-	//Student newStudent = new Student(); //Referar till Student
-	
 	WrittenExamRegister writtenExamList = new WrittenExamRegister(); //Refererar till WrittenExamRegister
-	WrittenExam writtenExam = new WrittenExam(); //Refererar till WrittenExam
-	
 	CourseRegister courseRegisterList = new CourseRegister(); //Refererar till CourseRegister
-	Course course = new Course(); //Refererar till Course
 	Result newResult = new Result (); //Refererar till Result
 	
 	
@@ -46,13 +39,6 @@ public class Controller {
 		 return s;
 	 }
 	 
-	/* public String findStudent(String studentID) {
-			Student tmp = studentLista.findStudent(studentID);
-			if(tmp == null) {
-			return null; 
-		}
-			return tmp.getName();
-	 }*/
 	 
 	 //GLÖM EJ public Student updateStudent()
 	//ny version av updateStudent 
@@ -66,8 +52,8 @@ public class Controller {
 	 
 	 //Knappar på coursefliken
 	 
-	 public void addCourse(String courseCode, String name, double credits) {
-		 Course newCourse = new Course(); 
+	 public String addCourse(String courseCode, String name, double credits) {
+		 Course newCourse = new Course(courseCode, name, credits); 
 		 courseRegisterList.addCourse(newCourse);
 		 return courseRegisterList.validateCourseCode(newCourse);
 	 }
@@ -77,20 +63,43 @@ public class Controller {
 	 }
 	 
 	 public Course findCourse(String courseCode) {
-		 return courseRegisterList.findCourse(courseCode);
+		 Course tmp = courseRegisterList.findCourse(courseCode);
+		if (tmp == null) {
+			return null;
+		}
+		return tmp;
+	}
+	 
+	 public void u(String name, String studentID) {
+			Student tmp = studentLista.findStudent(studentID);
+			tmp.setName(name);
 	 }
 	 
+	 /*Course c;
+		 c = courseRegisterList.findCourse(courseCode);
+		 return c;
+	 }*/
 
 	 //Knappar från WrittenExam-fliken
 	 //"Add/remove exam for course:
 	 
-	 public void addWrittenExam(WrittenExam a) {
-			writtenExamList.addWrittenExam(a);
+	 public String addWrittenExam(String courseCode, String examID, String time, String location, String date, int maxPoints) {
+		WrittenExam newExam = new WrittenExam();
+		Course course = courseRegisterList.findCourse(courseCode);
+		newExam.setCourse(course);
+		newExam.setDate(date);
+		newExam.setMaxPoints(maxPoints);
+		newExam.setTime(time);
+		newExam.setLocation(location);
+		newExam.setExamID(examID);
+		writtenExamList.addWrittenExam(newExam);
+		return writtenExamList.validateExamID(newExam);
 		}
+	  
 	 
-	/* public String[] retrieveAllCourseNames() {
+	 public String[] retrieveAllCourseNames() {
 		 return CourseRegister.retrieveAllCourseNames();
-	 }*/
+	 }
 	 
  
 	 
@@ -217,23 +226,18 @@ public class Controller {
 	 }
 
 	public String generateExamID() {
-		WrittenExam tmp = new WrittenExam();
+		WrittenExam tmp = new WrittenExam(null, "", "", "", "", 0);
 		String examID = tmp.generateExamID();
 		return examID;
 	}
 	
 	public String generateCourseCode() {
-		Course tmp = new Course();
+		Course tmp = new Course("", "", 0);
 		String courseCode = tmp.generateCourseCode();
 		return courseCode;
-	}
-
+	}		 
 	
-
 	
-
-	
-	 
 	
 	 }
 	 
