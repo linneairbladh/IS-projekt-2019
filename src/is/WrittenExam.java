@@ -8,13 +8,19 @@ public class WrittenExam {
 	private String examID;
 	private String date; 
 	private String location; 
-	private String time; 
+	private String time;
 	private int maxPoints;
 	private Course course;
 	private ArrayList<Result>examResult = new ArrayList<Result>();
 	
-	public WrittenExam() {
-	}
+	/*public WrittenExam(String examID, String time, String location, String date, int maxPoints) {
+		//this.courseCode = courseCode; 
+		this.examID = examID; 
+		this.time = time; 
+		this.location = location; 
+		this.date = date; 
+		this.maxPoints = maxPoints; 
+	}*/
 
 	public String getExamID() {
 		return examID;
@@ -46,7 +52,6 @@ public class WrittenExam {
 	public void setMaxPoints(int maxPoints) {
 		this.maxPoints = maxPoints;
 	} 
-	
 	public void setCourse (Course course) {
 		this.course = course;
 	}
@@ -59,7 +64,6 @@ public class WrittenExam {
 	public ArrayList<Result> getExamResult() {
 		return examResult; 
 	}
-	
 	public void addResult(Result e) {
 		examResult.add(e);
 	}
@@ -70,6 +74,8 @@ public class WrittenExam {
 		String examID = "E" + randomInt;
 		return examID;
 	}
+
+	
 
 	
 		

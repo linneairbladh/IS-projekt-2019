@@ -18,14 +18,13 @@ public class CourseRegister {
 		courseRegisterList.add(c);
 	}
 	
-	public Course findCourse(String courseCode) {
-		Course c = null; 
+	public Course findCourse(String courseCode) { 
 		for(Course co : courseRegisterList) {
 			if(co.getCourseCode().equals(courseCode)) {
-				c = co;
+				return co;
 			}
 		}
-		return c;
+		return null;
 		
 	}
 
@@ -67,6 +66,12 @@ public class CourseRegister {
 		}
 		return c.getCourseCode();				//Validates a course code. If it is not unique, a new one is generated and validated again
 	}
+
+	//public void addWrittenExam(WrittenExam newExam) {
+		// TODO Auto-generated method stub
+		
+	}
+
 		
 	
 }

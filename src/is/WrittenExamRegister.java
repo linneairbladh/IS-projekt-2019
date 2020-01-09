@@ -32,6 +32,19 @@ private ArrayList <WrittenExam> writtenExamList = new ArrayList <WrittenExam>();
 		WrittenExam a = findWrittenExam(examID);
 		writtenExamList.remove(a);
 	}
+	
+	public String validateExamID(WrittenExam newExam) {
+			for (WrittenExam exam : writtenExamList) {
+				if (exam == newExam) { 			//Skips e
+					continue;
+				}
+				while (exam.getExamID().equals(newExam.getExamID())){
+					String examID = newExam.generateExamID();
+					newExam.setExamID(examID);
+				}
+			}
+		return null;
+	}
 }
 
 	
