@@ -71,7 +71,3 @@ public class CourseRegister {
 		// TODO Auto-generated method stub
 		
 	}
-
-		
-	
-}

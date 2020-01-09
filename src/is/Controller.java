@@ -213,8 +213,8 @@ public class Controller {
 	 }
 	 
 	 
-	 public String [] findStudentArray(String sName) {
-		 Student newStudent = studentLista.findStudent(sName);
+	 public String [] findStudentArray(String studentID) {
+		 Student newStudent = studentLista.findStudent(studentID);
 		 String[] studentArray = new String [3];
 		 
 		 if(newStudent != null) {
@@ -226,7 +226,7 @@ public class Controller {
 	 }
 
 	public String generateExamID() {
-		WrittenExam tmp = new WrittenExam(null, "", "", "", "", 0);
+		WrittenExam tmp = new WrittenExam();
 		String examID = tmp.generateExamID();
 		return examID;
 	}
