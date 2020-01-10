@@ -11,6 +11,7 @@ public class Controller {
 	WrittenExamRegister writtenExamList = new WrittenExamRegister(); //Refererar till WrittenExamRegister
 	CourseRegister courseRegisterList = new CourseRegister(); //Refererar till CourseRegister
 	Result newResult = new Result (); //Refererar till Result
+	WrittenExam writtenExam = new WrittenExam();
 	
 	
 	//Knappar på studentfliken
@@ -27,16 +28,17 @@ public class Controller {
 		String studentID = newStudent.generateStudentID();
 		return studentID;
 	}
-	 public Student removeStudent(String studentID) { 
-		 return studentLista.removeStudent(studentID);	
-	 }
-	 public Student findStudent(String studentID) {
+	 public String findStudent(String studentID) {
 		 Student tmp = studentLista.findStudent(studentID);
 		 if (tmp == null) {
 			 return null;
 		 }
-		 return tmp;
+		 return tmp.getStudentID();
 	 } 
+	 public void removeStudent(String studentID) { 
+		 studentLista.removeStudent(studentID);	
+	 }
+
 	 public void updateStudent(String name, String studentID) {
 			Student tmp = studentLista.findStudent(studentID);
 			tmp.setName(name);
@@ -49,7 +51,7 @@ public class Controller {
 		 courseRegisterList.addCourse(newCourse);
 		 return courseRegisterList.validateCourseCode(newCourse);
 	 }
-	 
+	 //Void?
 	 public Course removeCourse(String courseCode) {
 		 return courseRegisterList.removeCourse(courseCode);
 	 }
@@ -108,6 +110,15 @@ public class Controller {
 		return writtenExamList.validateExamID(newExam);
 		}
 	  
+	 public void removeWrittenExam(String examID) {
+	 for(Course c: courseRegisterList.getCourseRegisterList()) {
+		/* for (WrittenExam tmp : writtenExam.getExamResult() {
+				}
+				tmp.removeWrittenExam(examID);
+			*/
+		 }
+			
+		}
 	 
 	 //Fylla ComboBox StudentID och CourseID för Register Exam  for Student
 	 public String[] retrieveAllStudents(){
