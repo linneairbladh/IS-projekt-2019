@@ -192,22 +192,20 @@ public class TestApp {
 				btnRemoveStudent.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 						
+						String name = controller.findStudent(textField_StudentID.getText());
 						if (textField_StudentID.getText().equals("")) {
 							textArea_FoundStudent.setText("Error: Please input a studentID");
+						}		
+						if (name == null) {
+							textArea_FoundStudent.setText("No student found");
 						}
 						else {
-							String name = controller.findStudent(textField_StudentID.getText());
-									
-							if (name == null) {
-								textArea_FoundStudent.setText("No student found");
+							String studentID = textField_StudentID.getText();
+							controller.removeStudent(studentID);
+							textArea_FoundStudent.setText("Removed student: " + name +", " + textField.getText());
 							}
-							else {
-								String studentID = textField_StudentID.getText();
-								controller.removeStudent(studentID);
-								textArea_FoundStudent.setText("Removed student: " + name +", " + textField.getText());
-							}
-							}																										//Deletes found student
-					}	
+																												//Deletes found student
+						}
 				});
 				btnRemoveStudent.setBounds(147, 257, 145, 29);
 				Student.add(btnRemoveStudent);
@@ -219,7 +217,7 @@ public class TestApp {
 						
 						String studentID = textField_StudentID.getText();
 						if (studentID.equals("")) {
-							textArea_StudentAnswer.setText("Please enter a studentID");
+							textArea_StudentAnswer.setText("Please enter a Student ID");
 						}
 						else if (controller.findStudent(studentID) == null) {
 							textArea_StudentAnswer.setText("No student found");
@@ -386,18 +384,18 @@ public class TestApp {
 			
 				if (textField_CourseCode.getText().equals("") || textPane_FoundCourse.getText().equals("")) {
 					textPane_FoundCourse.setText("Please enter a coursecode.");
-					}
-					else {
-						String courseCode = textField_CourseCode.getText();
-					if (controller.findCourse(courseCode) == null) 
-						textPane_FoundCourse.setText("No course found");
-					}
+				}
 				else {
 					String courseCode = textField_CourseCode.getText();
-					String name = controller.findCourse(courseCode);
-					double credits = controller.getCourseCredits(courseCode);
+				if (controller.findCourse(courseCode) == null) 
+					textPane_FoundCourse.setText("No course found");
+				}
+				else {
+					String courseCode = textField_CourseCode.getText();
+					//String name = controller.findCourse(courseCode);
+					double credits = controller.get
+							controller.getCourseCredits(courseCode);
 				
-					controller.removeCourse(courseCode);
 					controller.removeCourse(courseCode);
 					textPane_FoundCourse.setText("The course " + name + "with courseCode " + courseCode + "and number of credits " + credits + "has been removed");
 				}	
@@ -414,7 +412,7 @@ public class TestApp {
 				if (courseCode.equals("")) {
 					textPane_FoundCourse.setText("Please enter a student ID");
 				}
-				else if (controller.findCourse(courseCode) == null) {
+				/*else if (controller.findCourse(courseCode) == null) {
 					textPane_FoundCourse.setText("No course found");
 				}
 				else if (controller.findCourse(courseCode) != null && textField_Name.isEditable() == false && textField_Credits.isEditable() == false) {		//Checks that all fields are valid
@@ -444,7 +442,7 @@ public class TestApp {
 				else if (controller.findCourse(courseCode) != null && textField_Name.isEditable() == true && textField_Name.getText().equals("")) {
 					textPane_FoundCourse.setText("No edit has been made");
 				}
-			
+			*/
 			
 			}
 		});
