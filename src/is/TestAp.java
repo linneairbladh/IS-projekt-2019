@@ -47,6 +47,8 @@ public class TestAp {
 	private JTextField textField;
 	private final ButtonGroup buttonGroup = new ButtonGroup();
 	private JTextField textField_ExamID;
+	private JTextField textField_WEStudentID;
+	private JTextField textField_WEExamID;
 	
 
 	/**
@@ -567,7 +569,7 @@ public class TestAp {
 		JTextPane textPane_AnswerResult = new JTextPane();
 		textPane_AnswerResult.setBackground(SystemColor.window);
 		textPane_AnswerResult.setEditable(false);
-		textPane_AnswerResult.setBounds(246, 251, 160, 49);
+		textPane_AnswerResult.setBounds(248, 241, 160, 49);
 		WrittenExam.add(textPane_AnswerResult);
 						
 		JTextPane textPane_AnswerExam = new JTextPane();
@@ -622,53 +624,10 @@ public class TestAp {
 		lblStudentId_WEStudentID.setBounds(236, 85, 74, 16);
 		WrittenExam.add(lblStudentId_WEStudentID);
 		
-		//Välja registrerad Student ID
-		// välj add student knapp för att koden ska köras eller annan knapp
-		JComboBox<String> comboBox_StudentID = new JComboBox<String>();
-		comboBox_StudentID.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				Object selectedItem = comboBox_StudentID.getSelectedItem();
-				String selectedStudentID = selectedItem.toString();
-				String[] selectedStudent = controller.findStudentArray(selectedStudentID);
-				
-				if(selectedStudent[2] != "") {
-					textPane_AnswerResult.setText(selectedStudent[2]);
-				}
-				else {
-					textPane_AnswerResult.setText("No choosen student");
-			}
-		}
-		
-		});
-		comboBox_StudentID.setBounds(314, 81, 94, 27);
-		WrittenExam.add(comboBox_StudentID);
-		
 		JLabel lblExamId_1 = new JLabel("Exam ID");
 		lblExamId_1.setFont(new Font("PT Sans Caption", Font.PLAIN, 13));
 		lblExamId_1.setBounds(236, 122, 61, 16);
 		WrittenExam.add(lblExamId_1);
-		
-		
-		JComboBox<String> comboBox_ExamID = new JComboBox<String>();
-		comboBox_ExamID.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				Object selectedItem = comboBox_ExamID.getSelectedItem();
-				String selectedExamID = selectedItem.toString();
-				String[] selectedExam = controller.findStudentArray(selectedExamID);
-				
-				if(selectedExam[2] != "") {
-					textPane_AnswerResult.setText(selectedExam[2]);
-				}
-				else {
-					textPane_AnswerResult.setText("No choosen course");
-			}
-				
-			}
-		});
-	
-		
-		comboBox_ExamID.setBounds(314, 113, 94, 27);
-		WrittenExam.add(comboBox_ExamID);
 		
 		
 		//Skriva in points
@@ -841,37 +800,55 @@ public class TestAp {
 		btnRemoveExam.setBounds(120, 400, 117, 29);
 		WrittenExam.add(btnRemoveExam);
 		
+		textField_WEStudentID = new JTextField();
+		textField_WEStudentID.setBounds(316, 78, 92, 26);
+		WrittenExam.add(textField_WEStudentID);
+		textField_WEStudentID.setColumns(10);
+		
+		textField_WEExamID = new JTextField();
+		textField_WEExamID.setBounds(316, 115, 92, 26);
+		WrittenExam.add(textField_WEExamID);
+		textField_WEExamID.setColumns(10);
+		
 		JButton btnAddResult = new JButton("Register Result ");
 		btnAddResult.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			
-			String examID = textField_MaxPoints.getText();
-			//String studentID = textField_StudentID.getText();
 			
-			/*int result = Integer.parseInt(textField_Points.getText());
-			
-			String studentID = (String) comboBox_StudentName.getSelectedItem();
-			
-			if (textField_MaxPoints.getText().equals("") || textField_StudentID.getText().equals("") || textField_Points.getText().equals("")) {
-				textPane_AnswerResult.setText("Please enter an Exam-ID, a Student-ID and a score");
-			}
-			else if (controller.getExamDate(examID) == null) {
-				textPane_AnswerResult.setText("Invalid Exam-ID");
-			}
-			else if (controller.findStudent(studentID) == null) {
+			try {
+				 if (controller.findStudent(textField_WEStudentID.getText()) == null) {
 				textPane_AnswerResult.setText("Invalid Student -ID");
 			}
-			else if (result > controller.getExamMaxPoints(examID) || result < 0) {
+			else if (controller.findExam(textField_WEExamID.getText()) == null) {
+				textPane_AnswerResult.setText("Invalid Exam-ID");
+			}
+			else{
+				int result = Integer.parseInt(textField_Points.getText());
+				if (result > controller.getExamMaxPoints(textField_WEExamID.getText()) || result < 0) {
 				textPane_AnswerResult.setText("Invalid amount of points");								//Checks that every field is valid
 			}
+				if (textField_Points.getText().equals("") && textField_WEStudentID.getText().equals("") && textField_WEExamID.getText().equals("")) {
+					textPane_AnswerResult.setText("Please enter an Exam-ID, a Student-ID and points");
+				}
 			else {
+				String examID = textField_WEExamID.getText();
+				String studentID = textField_WEStudentID.getText();
+				
 				String letterGrade = controller.addResult(studentID, examID, result);
 				textPane_AnswerResult.setText("Added result for student: " + controller.findStudent(studentID) + " on exam " + examID + "\n");
 				textPane_AnswerResult.setText("Points: " + result + "\t" + "Grade: " + letterGrade);
 				textField_StudentID.setText("");
 				textPane_AnswerResult.setText("");													//Register results for a student on an exam
-			}*/
-			}	
+			
+			}
+			}
+			}
+				catch (java.lang.NumberFormatException exception) {
+					textPane_AnswerResult.setText("Only numbers are allowed in the points field");
+					
+				}
+
+			}
 		});
 		btnAddResult.setBounds(225, 200, 136, 29);
 		WrittenExam.add(btnAddResult);
@@ -946,9 +923,9 @@ public class TestAp {
 		
 		
 		
+	
 	}
-		
-	}	
+}
 		
 		
 	

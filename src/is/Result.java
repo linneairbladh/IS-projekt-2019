@@ -7,8 +7,7 @@ public class Result {
 	private Student student; // Association till student
 	private WrittenExam writtenExam;
 
-	//
-	/*public Result(int result) {
+	/*public Result (int result, String letterGrade, WrittenExam writtenExam, Student student) {
 		this.result = result; 
 		this.letterGrade = letterGrade;
 		this.writtenExam = writtenExam;

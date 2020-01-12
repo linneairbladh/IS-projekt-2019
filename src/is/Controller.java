@@ -10,7 +10,7 @@ public class Controller {
 	StudentRegister studentLista = new StudentRegister(); //Refererar till StudentRegister
 	WrittenExamRegister writtenExamList = new WrittenExamRegister(); //Refererar till WrittenExamRegister
 	CourseRegister courseRegisterList = new CourseRegister(); //Refererar till CourseRegister
-	Result newResult = new Result (); //Refererar till Result
+	//Result newResult = new Result (); //Refererar till Result
 	WrittenExam writtenExam = new WrittenExam();
 	
 	public Controller() {
@@ -157,24 +157,59 @@ public class Controller {
 	 
  
 	//Knapp för Register Exam  for Student
-	 public String addResult(String studentID, String examID, int result) {
-			Result newResult = new Result();
-			Student newStudent = studentLista.findStudent(studentID);
-			WrittenExam newExam = writtenExamList.findWrittenExam(examID);
-			StudentRegister newStudentRegister = new StudentRegister();
+	 /*public String addResult(int result, String letterGrade, WrittenExam writtenExam, Student student) {
+	 //public String addResult(String studentID, String examID, int result) 
+			//Result newResult = new Result(result, letterGrade, writtenExam, student);
+			Student student = studentLista.findStudent(studentID);
+			Student newRsult = resultlist.
+			WrittenExam writtenExam = writtenExamList.findWrittenExam(examID);
+			
+			
+			
+			//StudentRegister newStudentRegister = new StudentRegister();
 			
 			newResult.setWrittenExam(newExam);
 			newExam.addResult(newResult);
-			newStudentRegister.addStudent(newStudent);
+			//newStudentRegister.addStudent(newStudent);
 			newResult.setResult(result);
 			newResult.setStudent(newStudent);
 			newStudent.addResult(newResult);
 			newStudent.addWrittenExam(newExam);
 			return newResult.getLetterGrade(); 
 	 
+	 }*/
+	 
+	 public String addResult(String studentID, String examID, int result) {
+			Result tmpResult = new Result();
+			Student tmpStudent = studentLista.findStudent(studentID);
+			WrittenExam tmpExam = courseRegisterList.findWrittenExam(examID);
+			tmpResult.setWrittenExam(tmpExam);
+			tmpExam.addResult(tmpResult);
+			//tmpStudent.addStudent(tmpStudent);
+			tmpResult.setResult(result);
+			tmpResult.setStudent(tmpStudent);
+			tmpStudent.addResult(tmpResult);
+			tmpStudent.addWrittenExam(tmpExam);
+			return tmpResult.getLetterGrade();	
+			
 	 }
 	 
+	 public String findExam (String examID) {
+		 WrittenExam exam = writtenExamList.findWrittenExam(examID);
+		 if (exam == null) {
+			 return null;
+		 }
+		 return exam.getExamID();
+	 }
 	 
+	 public int getExamMaxPoints(String examID) {
+			WrittenExam tmpExam = writtenExamList.findWrittenExam(examID);
+			if (tmpExam == null){
+				return 0;
+			}
+			
+			return tmpExam.getMaxPoints();
+		}	 	
 	 
 	 //Information om Student
 	 public String[] getWrittenExamCourse(String studentID, String[] examID) {
@@ -244,14 +279,6 @@ public class Controller {
 			return examResults;				//Returns an array of results for every exam a student has a result on
 		}
 	 
-	 public int getExamMaxPoints(String examID) {
-			WrittenExam tmpExam = writtenExamList.findWrittenExam(examID);
-			if (tmpExam == null){
-				return 0;
-			}
-			
-			return tmpExam.getMaxPoints();
-		}	 	
 	 
 	 public String getExamDate(String examID) {
 			WrittenExam tmpExam = writtenExamList.findWrittenExam(examID);
