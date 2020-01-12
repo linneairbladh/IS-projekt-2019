@@ -4,59 +4,93 @@ public class MainTest {
 
 	public static void main(String[] args) {
 		
-		Student st1 = new Student("Viktor", "S11111");
-		Student st2 = new Student("Tove", "S22222");
-		Course co1 = new Course("C11111", "SYSA21", 15.0);
-		Course co2 = new Course("C22222", "SYSA12", 30.0);
+		CourseRegister courseRegister = new CourseRegister(); 
+		StudentRegister studentRegister = new StudentRegister();
+		WrittenExamRegister writtenExamRegister = new WrittenExamRegister(); 
+		Controller controller = new Controller(); 
 		
-		WrittenExam we1 = new WrittenExam();
-		WrittenExam we2 = new WrittenExam();
+		//Lägger till studenter
+		Student s1 = new Student ("Jonas", "S87299");
+		Student s2 = new Student ("Lisa", "S78672");
+		Student s3 = new Student ("Olof", "S25436");
+		Student s4 = new Student ("Johanna", "S35267");
 		
-		Result r1 = new Result(90.0, we1, st1);
-		Result r2 = new Result(50.0, we2, st2);
+		//Lägger till kurser 
+		Course c1 = new Course("C56579", "Design", 30);
+		Course c2 = new Course("C27683", "Math", 60);
+		Course c3 = new Course("C10928", "Organisation", 15);
+		Course c4 = new Course("C67890", "Entrepreneurship", 30);
 		
-		CourseRegister cr1 = new CourseRegister();
-		StudentRegister sr1 = new StudentRegister();
+		//Lägger till Exams
+		WrittenExam wr1 = new WrittenExam();
+		//Association rill kurs
+		wr1.setCourse(c1);
+		wr1.setDate("02/03-20");
+		wr1.setExamID("E02863");
+		wr1.setLocation("Room A123");
+		wr1.setTime("08:00");
+		wr1.setMaxPoints(100);
+		
+		WrittenExam wr2 = new WrittenExam();
+		wr2.setCourse(c2);
+		wr2.setDate("02/15-20");
+		wr2.setExamID("E97263");
+		wr2.setLocation("Room A167");
+		wr2.setTime("09:00");
+		wr2.setMaxPoints(100);
+		
+		//Testar om det går att lägga till en student med ett genererat student-id och sedan hitta studenten
+		String studentID = controller.addStudent("Jonas", controller.generateStudentID());
+		String studentName = controller.findStudent(studentID); 
+		System.out.println(studentName + " " + studentID);
+		
+		//Testar om det går att ta bort student
+		controller.removeStudent(studentID);
+		String findStudent = controller.findStudent(studentID); 
+		if (findStudent == null) {
+			System.out.println("Ta bort student funkar :)");
+		}
+		else {
+			System.out.println("Funkar inte :(");
+		}
+		
+		//Testar om det går att lägga till en kurs med ett genererat kurs-id och sedan hitta kursen
+		String courseCode = controller.addCourse("Design", controller.generateCourseCode(), 30);
+		String courseName = controller.findCourse(courseCode); 
+		System.out.println(courseName + " " + courseCode);
+		
 	
-		cr1.addCourse(co1);
-		cr1.addCourse(co2);
-		co1.setCourseRegister(cr1);
-		co2.setCourseRegister(cr1);
+		//Testar om det går att lägga till en student med ett genererat student-id och sedan hitta studenten
+		String exam = controller.addWrittenExam(courseCode, controller.generateCourseCode(), "08:00", "Room A123", "02/03-20", 100);
+		System.out.println(exam);
 		
-		sr1.addStudent(st1); 
-		sr1.addStudent(st2);
-		st1.setStudentRegister(sr1);
-		st2.setStudentRegister(sr1);
-
-		st1.addResult(r1);
-		st2.addResult(r2);
-		r1.setStudent(st1);
-		r2.setStudent(st2);
+		//Testar om det går att ta bort kurs
+		controller.removeCourse(courseCode);
+		String findCourse = controller.findCourse(courseCode); 
+		if (findCourse == null) {
+			System.out.println("Ta bort kurs funkar :)");
+			}
+			else {
+			System.out.println("Funkar inte :(");
+		}
 		
-		we1.addResult(r1);
-		we2.addResult(r2);
-		r1.setWrittenExam(we1);
-		r2.setWrittenExam(we2);
 		
-		co1.addWrittenExam(we1);
-		co2.addWrittenExam(we2);
-		we1.setCourse(co1);
-		we2.setCourse(co2);
+				
+				//Testar om det går att ta bort student
+				controller.removeStudent(studentID);
+				//String findStudent = controller.findStudent(studentID); 
+				if (findStudent == null) {
+					System.out.println("Ta bort student funkar :)");
+				}
+				else {
+					System.out.println("Funkar inte :(");
+				}
 		
-		sr1.removeStudent("S12345");
-		sr1.findStudent("S12345");
-		sr1.updateStudent(st1, "Amanda", "S34567");
 		
-		st1.findResult(50.0);
+		
+		TestAp frame = new TestAp(new Controller(studentRegister, courseRegister, writtenExamRegister));
 	
-		cr1.removeCourse("C11111");
-		cr1.findCourse("C11111");
-		cr1.updateCourse(co1, "C33333", "SYSA24", 75.0);
-		
-		co1.addWrittenExam(we1);
-		co1.removeWrittenExam("E12345");
-		
-	} 
+	}
 	}
 
 

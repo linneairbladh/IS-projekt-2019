@@ -14,7 +14,6 @@ public class WrittenExam {
 	private ArrayList<Result>examResult = new ArrayList<Result>();
 	
 	/*public WrittenExam(String examID, String time, String location, String date, int maxPoints) {
-		//this.courseCode = courseCode; 
 		this.examID = examID; 
 		this.time = time; 
 		this.location = location; 
