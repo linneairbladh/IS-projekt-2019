@@ -3,7 +3,7 @@ package is;
 import java.util.ArrayList;
 import javax.swing.JFrame;
 
-public class Controller {
+public class Controll {
 	
 	JFrame frame; //Refererar till det grafiska gränssnittet
 	
@@ -13,17 +13,6 @@ public class Controller {
 	Result newResult = new Result (); //Refererar till Result
 	WrittenExam writtenExam = new WrittenExam();
 	
-	public Controller() {
-		this.courseRegisterList = new CourseRegister();
-		this.studentLista = new StudentRegister();
-		this.writtenExamList = new WrittenExamRegister();
-	}
-	
-	public Controller (StudentRegister studentLista, CourseRegister courseRegisterList, WrittenExamRegister writtenExamList) {
-		this.courseRegisterList = courseRegisterList;
-		this.studentLista = studentLista;
-		this.writtenExamList = writtenExamList;
-	}
 	
 	//Knappar på studentfliken
 	
@@ -68,37 +57,41 @@ public class Controller {
 	 }
 	 
 	 public String findCourse(String courseCode) {
-		 Course tmp = courseRegisterList.findCourse(courseCode);
-		if (tmp == null) {
+		 Course c = courseRegisterList.findCourse(courseCode);
+		if (c == null) {
 			return null;
 		}
-		return tmp.getName();
+		return c.getName();
 	}
 	 
 	 public double getCourseCredit(String courseCode) {
-		 Course tmp = courseRegisterList.findCourse(courseCode);
-		if (tmp == null) {
-			return 0;
-		}
-		return tmp.getCredits();
-	}
-	  
+		 Course c = courseRegisterList.findCourse(courseCode);
+		 if(c==null) {
+			 return 0;
+		 }
+		 return c.getCredits();
+		
+	 }
+	 
+	 
+	 
 	public String generateExamID() {
 			WrittenExam tmp = new WrittenExam();
 			String examID = tmp.generateExamID();
 			return examID;
 		}
 	
-	public void updateCourse(String courseCode, String name, double credits) {
+	public void updateCourseName(String courseCode, String name) {
 		Course newCourse = courseRegisterList.findCourse(courseCode);
-		newCourse.setName(name);
-		newCourse.setCredits(credits);
+		newCourse.setCourseCode(courseCode);
 	}
 	
 	public void updateCourseCredit(String courseCode, double credits) {
 			Course newCourse = courseRegisterList.findCourse(courseCode);
-			newCourse.setCredits(credits);
+			newCourse.setCourseCode(courseCode);
 	}
+	
+	
 		
 		
 	 //Knappar från WrittenExam-fliken
@@ -261,6 +254,16 @@ public class Controller {
 			
 			return tmpExam.getDate();
 		}
+
+	public void updateCourse(String courseCode, String courseName, double credit) {
+		Course updatedCourse = courseRegisterList.findCourse(courseCode);
+		updatedCourse.setCourseCode(courseCode);
+		updatedCourse.setName(courseName);
+		updatedCourse.setCredits(credit);
+	}
+	 
+	 
+	 
 	  
 
 	 
