@@ -89,15 +89,27 @@ public class Controller {
 			return examID;
 		}
 	
-	public void updateCourse(String courseCode, String name, double credits) {
+	/*public void updateCourse(String courseCode, double credits) {
 		Course newCourse = courseRegisterList.findCourse(courseCode);
-		newCourse.setName(name);
 		newCourse.setCredits(credits);
-	}
+	}*/
 	
 	public void updateCourseCredit(String courseCode, double credits) {
 			Course newCourse = courseRegisterList.findCourse(courseCode);
 			newCourse.setCredits(credits);
+	}
+	
+	public void updateCourseName(String courseCode, String name) {
+		Course newCourse = courseRegisterList.findCourse(courseCode);
+		newCourse.setName(name);
+		
+	}
+	public String getCourseName(String courseCode) {
+		 Course courseName = courseRegisterList.findCourse(courseCode);
+		if (courseName == null) {
+			return null;
+		}
+		return courseName.getName();
 	}
 		
 		
@@ -157,35 +169,13 @@ public class Controller {
 	 
  
 	//Knapp för Register Exam  for Student
-	 /*public String addResult(int result, String letterGrade, WrittenExam writtenExam, Student student) {
-	 //public String addResult(String studentID, String examID, int result) 
-			//Result newResult = new Result(result, letterGrade, writtenExam, student);
-			Student student = studentLista.findStudent(studentID);
-			Student newRsult = resultlist.
-			WrittenExam writtenExam = writtenExamList.findWrittenExam(examID);
-			
-			
-			
-			//StudentRegister newStudentRegister = new StudentRegister();
-			
-			newResult.setWrittenExam(newExam);
-			newExam.addResult(newResult);
-			//newStudentRegister.addStudent(newStudent);
-			newResult.setResult(result);
-			newResult.setStudent(newStudent);
-			newStudent.addResult(newResult);
-			newStudent.addWrittenExam(newExam);
-			return newResult.getLetterGrade(); 
-	 
-	 }*/
-	 
 	 public String addResult(String studentID, String examID, int result) {
 			Result tmpResult = new Result();
 			Student tmpStudent = studentLista.findStudent(studentID);
 			WrittenExam tmpExam = courseRegisterList.findWrittenExam(examID);
 			tmpResult.setWrittenExam(tmpExam);
 			tmpExam.addResult(tmpResult);
-			//tmpStudent.addStudent(tmpStudent);
+			tmpExam.addStudent(tmpStudent);
 			tmpResult.setResult(result);
 			tmpResult.setStudent(tmpStudent);
 			tmpStudent.addResult(tmpResult);
@@ -288,6 +278,8 @@ public class Controller {
 			
 			return tmpExam.getDate();
 		}
+
+	
 	  
 
 	 

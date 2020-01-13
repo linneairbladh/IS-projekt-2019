@@ -3,6 +3,9 @@ package is;
 import java.util.ArrayList;
 import java.util.Random;
 
+import isprojekt.Result;
+
+
 public class WrittenExam {
 	
 	private String examID;
@@ -12,6 +15,7 @@ public class WrittenExam {
 	private int maxPoints;
 	private Course course;
 	private ArrayList<Result>examResult = new ArrayList<Result>();
+	private StudentRegister studentRegisterList = new StudentRegister();
 	
 	/*public WrittenExam(String examID, String time, String location, String date, int maxPoints) {
 		this.examID = examID; 
@@ -65,6 +69,18 @@ public class WrittenExam {
 	}
 	public void addResult(Result e) {
 		examResult.add(e);
+	}
+	
+	public Result findResult(int result) {
+		for (Result tmp : examResult) {
+			if(tmp.getResult()==(result)) {
+				return tmp;
+			}
+		}
+		return null;
+	}
+	public void addStudent(Student s) {
+		studentRegisterList.addStudent(s);
 	}
 
 	public String generateExamID() {
