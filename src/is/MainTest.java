@@ -8,7 +8,7 @@ public class MainTest {
 		StudentRegister studentRegister = new StudentRegister();
 		WrittenExamRegister writtenExamRegister = new WrittenExamRegister(); 
 		Controller controller = new Controller(); 
-		TestAp frame = new TestAp(new Controller(studentRegister, courseRegister, writtenExamRegister));
+		Application frame = new Application(new Controller(studentRegister, courseRegister, writtenExamRegister));
 		
 		System.out.println(controller.generateStudentID());
 		System.out.println(controller.generateStudentID());
@@ -53,7 +53,7 @@ public class MainTest {
 		//Testar om det går att lägga till en student med ett genererat student-id och sedan hitta studenten
 		String studentID = controller.addStudent("Lisa", "S78672");
 		String studentName = controller.findStudent("S78672");
-		System.out.println(studentName + studentID);
+		System.out.println(studentName + " " + studentID);
 		
 		//Testar om det går att uppdatera student
 		controller.updateStudent("Jonass","S78672");
@@ -77,8 +77,8 @@ public class MainTest {
 		System.out.println("Ny credit är " + controller.getCourseCredit("C56579")); 
 
 		//denna metod finns ej i Controller än Sol!
-		//controller.updateCourseName("Code", "C56579"); 	
-		
+		controller.updateCourseName("Code", "C56579"); 	
+		System.out.println("Nytt namn är " + controller.getCourseName("C56579")); 
 		
 		//Testar om det går att lägga till ett prov
 		String exam = controller.addWrittenExam("C56579", "E02863", "09:00", "Room A123", "02/03-20", 100);

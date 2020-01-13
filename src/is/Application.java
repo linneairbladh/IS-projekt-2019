@@ -443,78 +443,43 @@ public class Application {
 		JButton btnUpdateCourse = new JButton("Update Course");
 		btnUpdateCourse.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
-				String courseCode = textField_CourseCode.getText();
-				
-				if (courseCode.equals("")) {
-					textPane_FoundCourse.setText("Please enter a course code");
-				}
-					
-					String courseName = controller.findCourse(courseCode);
-					double credit = controller.getCourseCredit(courseCode);
-					
-					if (courseCode.equals("")) {
+			
+					String courseCode = textField_CourseCode.getText();
+					try {
+					if (courseCode.equals(""))  {
 						textPane_FoundCourse.setText("Please enter a CourseCode");
+					}
+					else if (textField_CourseName.getText().equals("")) {
+						textPane_AnswerCourse.setText("No edits were made");			//Checks if the fields are valid
+					}
+					else if (textField_Credit.getText().equals("")) {
+						textPane_AnswerCourse.setText("Please enter credits");
 					}
 					else if (controller.findCourse(courseCode) == null) {
 						textPane_FoundCourse.setText("No course found");
 					}
-					else if (textField_CourseName.equals("")) {
-						textPane_AnswerCourse.setText("No edits were made");			//Checks if the fields are valid
-					}
-					else if (textField_Credit.equals("")) {
-						textPane_AnswerCourse.setText("Please enter credits");
-					}
 				
 					else {
-						controller.updateCourse(courseCode, courseName, credit);
-						//controller.updateCourseCredit(courseCode, credit);
-						textPane_AnswerCourse.setText("Updated course: " + courseName + " with credits: " + credit);			//Updates a students name
-						textField_CourseCode.setText("");
+						String courseName = textField_CourseName.getText();
+						double credit = Double.parseDouble(textField_Credit.getText());
+						controller.updateCourseName(courseCode, courseName);
+						controller.updateCourseCredit(courseCode, credit);
+						textPane_AnswerCourse.setText("Updated course: " + courseName + " (" + courseCode + ") with credits: " + credit);			//Updates a students name
+						//textField_CourseCode.setText("");
 						textField_CourseName.setText("");
 						textField_Credit.setText("");
-					}	
-							
-					
-					
-				}
+					}
+					}
+					catch (java.lang.NumberFormatException exception) {
+						textPane_AnswerCourse.setText("Only numbers are allowed in the credits field");
+					}
+			}
 				
 			
 		});
 		btnUpdateCourse.setBounds(285, 352, 117, 29);
 		Course.add(btnUpdateCourse);
 		
-		/*else if (controller.findCourse(courseCode) == null) {
-		textPane_FoundCourse.setText("No course found");
-	}
-	else if (controller.findCourse(courseCode) != null && textField_Name.isEditable() == false && textField_Credits.isEditable() == false) {		//Checks that all fields are valid
-		textPane_FoundCourse.setText("No edit has been made");
-	}
-	else if (controller.findCourse(courseCode) != null && textField_Name.isEditable() == true && textField_Credits.isEditable() == false) {
-		controller.updateCourseName(textField_Name.getText(), courseCode);
-		textPane_FoundCourse.setText("Course has been updated: " + textField_Name.getText() + ", " + courseCode + ", number of credits: " + controller.getCourseCredits(courseCode));
-	}
-	else if (controller.findCourse(courseCode) != null && textField_Name.isEditable() == false && textField_Credits.isEditable() == true) {
-		int credits = Integer.parseInt(textField_Credits.getText());
-		controller.updateCourseCredit(courseCode, credits);
-		textPane_FoundCourse.setText("Course has been updated: " + controller.findCourse(courseCode) +", " + courseCode + ", number of credits: " + credits);
-	}
-	else if (controller.findCourse(courseCode) != null && textField_Name.isEditable() == true && textField_Credits.isEditable() == true) {
-		int credits = Integer.parseInt(textField_Credits.getText());
-		controller.updateCourseCredit(courseCode, credits); 
-		controller.updateCourseName(courseCode, name);
-		
-	
-		controller.updateCourseName(textField_Name.getText(), courseCode);
-		textPane_FoundCourse.setText("Course has been updated: " + controller.findCourse(courseCode) + ", " + courseCode + ", number of credits: " + credits);		//Checks if it's the credits, name or both that is edited and edits it
-	}
-	else if (controller.findCourse(courseCode) != null && textField_Credits.isEditable() == true && textField_Credits.getText().equals("")) {
-		textPane_FoundCourse.setText("No edit has been made");
-	}
-	else if (controller.findCourse(courseCode) != null && textField_Name.isEditable() == true && textField_Name.getText().equals("")) {
-		textPane_FoundCourse.setText("No edit has been made");
-	}
-*/
 		JLabel lblRegisterCourseWith = new JLabel("Register course with name and credit points here:");
 		lblRegisterCourseWith.setFont(new Font("PT Sans Caption", Font.PLAIN, 13));
 		lblRegisterCourseWith.setBounds(53, 18, 320, 26);
@@ -803,11 +768,11 @@ public class Application {
 		WrittenExam.add(textField_WEExamID);
 		textField_WEExamID.setColumns(10);
 		
-		JTextArea textArea_Info = new JTextArea();
-		textArea_Info.setBackground(SystemColor.window);
-		textArea_Info.setEditable(false);
-		textArea_Info.setBounds(246, 243, 162, 57);
-		WrittenExam.add(textArea_Info);
+		JTextArea textArea_ResponseResult = new JTextArea();
+		textArea_ResponseResult.setBackground(SystemColor.window);
+		textArea_ResponseResult.setEditable(false);
+		textArea_ResponseResult.setBounds(246, 243, 162, 57);
+		WrittenExam.add(textArea_ResponseResult);
 		
 		JButton btnAddResult = new JButton("Register Result");
 		btnAddResult.addActionListener(new ActionListener() {
@@ -818,27 +783,28 @@ public class Application {
 					String studentID = textField_WEStudentID.getText();
 					int result = Integer.parseInt(textField_Points.getText());
 					if (textField_WEExamID.getText().equals("") || textField_WEStudentID.getText().equals("") || textField_Points.getText().equals("")) {
-						textArea_Info.setText("Please enter an Exam-ID, a Student-ID and a score");
+						textArea_ResponseResult.setText("Please enter an Exam-ID, a Student-ID and a score");
 					}
 					else if (controller.findExam(examID) == null) {
-						textArea_Info.setText("Invalid Exam-ID");
+						textArea_ResponseResult.setText("Invalid Exam-ID");
 					}
 					else if (controller.getExamDate(examID) == null) {
-						textArea_Info.setText("Invalid Student -ID");
+						textArea_ResponseResult.setText("Invalid Student -ID");
 					}
 					else if (result > controller.getExamMaxPoints(examID) || result < 0) {
-						textArea_Info.setText("Invalid amount of points");								//Checks that every field is valid
+						textArea_ResponseResult.setText("Invalid amount of points");								//Checks that every field is valid
 					}
 					else {
 						String letterGrade = controller.addResult(studentID, examID, result);
-						textArea_Info.setText("Added result for student: " + controller.findStudent(studentID) + " on exam " + examID + "\n");
-						textArea_Info.append("Points: " + result + "\t" + "Grade: " + letterGrade);
+						textArea_ResponseResult.setText("Added result for student: " + controller.findStudent(studentID) + " on exam " + examID + "\n");
+						textArea_ResponseResult.append("Points: " + result + "\t" + "Grade: " + letterGrade);
 						textField_WEExamID.setText("");
-						textField_WEStudentID.setText("");													//Register results for a student on an exam
+						textField_WEStudentID.setText("");	
+					
 					}
 				}
 				catch (java.lang.NumberFormatException exception) {
-					textArea_Info.setText("Only numbers are allowed in the points field");
+					textArea_ResponseResult.setText("Only numbers are allowed in the points field");
 				}
 			}
 

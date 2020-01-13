@@ -16,7 +16,21 @@ public class Result {
 	}*/
 
 	public void setResult(int result) {
-		this.result = result; 
+		int score = writtenExam.getMaxPoints();
+		if(score < 0.5) {
+			this.letterGrade = "U";
+		}else if(score >= 0.5 && score < 0.55){
+			this.letterGrade = "E";
+		}else if(score >= 0.55 && score < 0.65) {
+			this.letterGrade = "D";
+		}else if(score >= 0.65 && score < 0.75) {
+			this.letterGrade = "C";
+		}else if(score >= 0.75 && score < 0.85) {
+			this.letterGrade = "B";
+		}else if(score >= 0.85 && score <= 1) {
+			this.letterGrade = "A";
+		}
+		this.result = score; 
 	}
 	
 	public int getResult() {
