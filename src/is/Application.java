@@ -28,7 +28,7 @@ import java.awt.SystemColor;
 import javax.swing.JRadioButton;
 import javax.swing.ButtonGroup;
 
-public class TestAp {
+public class Application {
 	//Controller controller;
 
 	private JFrame frame;
@@ -58,7 +58,7 @@ public class TestAp {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					TestAp window = new TestAp();
+					Application window = new Application();
 					window.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -71,11 +71,11 @@ public class TestAp {
 	 * Create the application.
 	 * @param controller 
 	 */
-	public TestAp() {
+	public Application() {
 		initialize();
 	}
 	
-	public TestAp(Controller controller) {
+	public Application(Controller controller) {
 		this.controller = controller; 
 	}
 
@@ -564,13 +564,6 @@ public class TestAp {
 		lblAddremoveExamFor.setFont(new Font("PT Sans Caption", Font.PLAIN, 12));
 		lblAddremoveExamFor.setBounds(19, 50, 195, 16);
 		WrittenExam.add(lblAddremoveExamFor);
-		
-		//Svarsrutor för WE
-		JTextPane textPane_AnswerResult = new JTextPane();
-		textPane_AnswerResult.setBackground(SystemColor.window);
-		textPane_AnswerResult.setEditable(false);
-		textPane_AnswerResult.setBounds(248, 241, 160, 49);
-		WrittenExam.add(textPane_AnswerResult);
 						
 		JTextPane textPane_AnswerExam = new JTextPane();
 		textPane_AnswerExam.setBackground(SystemColor.window);
@@ -810,45 +803,45 @@ public class TestAp {
 		WrittenExam.add(textField_WEExamID);
 		textField_WEExamID.setColumns(10);
 		
-		JButton btnAddResult = new JButton("Register Result ");
+		JTextArea textArea_Info = new JTextArea();
+		textArea_Info.setBackground(SystemColor.window);
+		textArea_Info.setEditable(false);
+		textArea_Info.setBounds(246, 243, 162, 57);
+		WrittenExam.add(textArea_Info);
+		
+		JButton btnAddResult = new JButton("Register Result");
 		btnAddResult.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			
-			
-			try {
-				 if (controller.findStudent(textField_WEStudentID.getText()) == null) {
-				textPane_AnswerResult.setText("Invalid Student -ID");
-			}
-			else if (controller.findExam(textField_WEExamID.getText()) == null) {
-				textPane_AnswerResult.setText("Invalid Exam-ID");
-			}
-			else{
-				int result = Integer.parseInt(textField_Points.getText());
-				if (result > controller.getExamMaxPoints(textField_WEExamID.getText()) || result < 0) {
-				textPane_AnswerResult.setText("Invalid amount of points");								//Checks that every field is valid
-			}
-				if (textField_Points.getText().equals("") && textField_WEStudentID.getText().equals("") && textField_WEExamID.getText().equals("")) {
-					textPane_AnswerResult.setText("Please enter an Exam-ID, a Student-ID and points");
+				try {
+					String examID = textField_WEExamID.getText();
+					String studentID = textField_WEStudentID.getText();
+					int result = Integer.parseInt(textField_Points.getText());
+					if (textField_WEExamID.getText().equals("") || textField_WEStudentID.getText().equals("") || textField_Points.getText().equals("")) {
+						textArea_Info.setText("Please enter an Exam-ID, a Student-ID and a score");
+					}
+					else if (controller.findExam(examID) == null) {
+						textArea_Info.setText("Invalid Exam-ID");
+					}
+					else if (controller.getExamDate(examID) == null) {
+						textArea_Info.setText("Invalid Student -ID");
+					}
+					else if (result > controller.getExamMaxPoints(examID) || result < 0) {
+						textArea_Info.setText("Invalid amount of points");								//Checks that every field is valid
+					}
+					else {
+						String letterGrade = controller.addResult(studentID, examID, result);
+						textArea_Info.setText("Added result for student: " + controller.findStudent(studentID) + " on exam " + examID + "\n");
+						textArea_Info.append("Points: " + result + "\t" + "Grade: " + letterGrade);
+						textField_WEExamID.setText("");
+						textField_WEStudentID.setText("");													//Register results for a student on an exam
+					}
 				}
-			else {
-				String examID = textField_WEExamID.getText();
-				String studentID = textField_WEStudentID.getText();
-				
-				String letterGrade = controller.addResult(studentID, examID, result);
-				textPane_AnswerResult.setText("Added result for student: " + controller.findStudent(studentID) + " on exam " + examID + "\n");
-				textPane_AnswerResult.setText("Points: " + result + "\t" + "Grade: " + letterGrade);
-				textField_StudentID.setText("");
-				textPane_AnswerResult.setText("");													//Register results for a student on an exam
-			
-			}
-			}
-			}
 				catch (java.lang.NumberFormatException exception) {
-					textPane_AnswerResult.setText("Only numbers are allowed in the points field");
-					
+					textArea_Info.setText("Only numbers are allowed in the points field");
 				}
-
 			}
+
 		});
 		btnAddResult.setBounds(225, 200, 136, 29);
 		WrittenExam.add(btnAddResult);
@@ -920,6 +913,8 @@ public class TestAp {
 		label_14.setForeground(SystemColor.inactiveCaptionText);
 		label_14.setBounds(32, 312, 182, 16);
 		WrittenExam.add(label_14);
+		
+		
 		
 		
 		
