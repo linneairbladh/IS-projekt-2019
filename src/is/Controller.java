@@ -3,6 +3,7 @@ package is;
 import java.util.ArrayList;
 import javax.swing.JFrame;
 
+
 public class Controller {
 	
 	JFrame frame; //Refererar till det grafiska gränssnittet
@@ -10,8 +11,11 @@ public class Controller {
 	StudentRegister studentLista = new StudentRegister(); //Refererar till StudentRegister
 	WrittenExamRegister writtenExamList = new WrittenExamRegister(); //Refererar till WrittenExamRegister
 	CourseRegister courseRegisterList = new CourseRegister(); //Refererar till CourseRegister
-	//Result newResult = new Result (); //Refererar till Result
+	Result newResult = new Result (); //Refererar till Result
 	WrittenExam writtenExam = new WrittenExam();
+	
+	
+	
 	
 	public Controller() {
 		this.courseRegisterList = new CourseRegister();
@@ -30,7 +34,7 @@ public class Controller {
 	public String addStudent(String name, String studentID) {
 		Student newStudent = new Student(name, studentID);
 		studentLista.addStudent(newStudent);
-		return studentLista.validateStudentID(newStudent);			//Adds student to the studentLista and returns a validated studentID
+		return studentLista.validateStudentID(newStudent);			//lägger till student på studentlista och returnerar ett validerat studentID
 		
 	}
 	
@@ -137,13 +141,19 @@ public class Controller {
 		}
 	  
 	 public void removeWrittenExam(String examID) {
-	 for(Course c: courseRegisterList.getCourseRegisterList()) {
-		/* for (WrittenExam tmp : writtenExam.getExamResult() {
+			for (Course course : courseRegisterList.getCourseRegisterList()) {
+				for (WrittenExam exam : course.getWrittenExamList()) {
+					if (exam.getExamID().equals(examID)) {
+						for (Result result : exam.getExamResult()) {
+							studentLista.removeResult(result);
+						}
+						for (Student student : studentLista.getStudents()) {
+							student.removeWrittenExam(examID);
+						}
+					}
 				}
-				tmp.removeWrittenExam(examID);
-			*/
-		 }
-			
+				course.removeWrittenExam(examID);
+			}
 		}
 	 
 	 //Fylla ComboBox StudentID och CourseID för Register Exam  for Student
@@ -167,9 +177,20 @@ public class Controller {
 		 return courseRegisterList.retrieveAllCourses();
 	 }
 	 
+	 public String addResult(String studentID, String examID, int result) {
+			Result newResult = new Result();
+			WrittenExam writtenExam = writtenExamList.findWrittenExam(examID);
+			Student student = studentLista.findStudent(studentID);
+			newResult.setStudent(student);
+			newResult.setWrittenExam(writtenExam);
+			newResult.setResult(result);
+			student.addResult(newResult);
+			writtenExam.addResult(newResult);
+			return newResult.getLetterGrade();
+			}
  
 	//Knapp för Register Exam  for Student
-	 public String addResult(String studentID, String examID, int result) {
+	 /*public int addResult(String studentID, String examID, int result) {
 			Result tmpResult = new Result();
 			Student tmpStudent = studentLista.findStudent(studentID);
 			WrittenExam tmpExam = courseRegisterList.findWrittenExam(examID);
@@ -180,9 +201,9 @@ public class Controller {
 			tmpResult.setStudent(tmpStudent);
 			tmpStudent.addResult(tmpResult);
 			tmpStudent.addWrittenExam(tmpExam);
-			return tmpResult.getLetterGrade();	
+			return tmpResult.getResult();	
 			
-	 }
+	 }*/
 	 
 	 public String findExam (String examID) {
 		 WrittenExam exam = writtenExamList.findWrittenExam(examID);
@@ -278,16 +299,6 @@ public class Controller {
 			
 			return tmpExam.getDate();
 		}
-
-	
-	  
-
-	 
-	 
-	
-
- 
-	
 	
 	
 	 }

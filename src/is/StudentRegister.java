@@ -2,6 +2,7 @@ package is;
 
 import java.util.ArrayList;
 
+
 public class StudentRegister {
 	
 	private ArrayList <Student> studentRegisterList = new ArrayList <Student>();
@@ -53,6 +54,14 @@ public class StudentRegister {
 	public void updateStudent(Student newStudent, String newName, String newStudentID) {
 		newStudent.setName(newName);
 		newStudent.setStudentID(newStudentID);
+	}
+	
+	public void removeResult(Result result) {				//Removes a result for every student that has that result. Not ideal but prevents app from crashing when an exam is removed and the student still has a result
+		Result remove = new Result();
+		for (Student student : studentRegisterList) {
+			remove = result;
+			student.getResultList().remove(remove);
+		}
 	}
 	
 	//metod för att fylla Combobox med ArrayList

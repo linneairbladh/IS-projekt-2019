@@ -3,9 +3,6 @@ package is;
 import java.util.ArrayList;
 import java.util.Random;
 
-import isprojekt.Result;
-
-
 public class WrittenExam {
 	
 	private String examID;
@@ -79,6 +76,15 @@ public class WrittenExam {
 		}
 		return null;
 	}
+	public Result removeResult(int result) {
+		for (Result r : examResult) {
+			if(r.getResult() ==(result)) {
+				examResult.remove(r);
+				return r;	
+			}
+		}
+		return null;
+	} 
 	public void addStudent(Student s) {
 		studentRegisterList.addStudent(s);
 	}

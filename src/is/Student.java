@@ -11,7 +11,7 @@ public class Student {
 	
 	private String studentID;
 	private String sName;
-	private StudentRegister studentRegister;
+	//private StudentRegister studentRegister;
 	private ArrayList<Result>resultList = new ArrayList<Result>();
 	private ArrayList<WrittenExam> writtenExams = new ArrayList<WrittenExam>();
 	
@@ -43,12 +43,12 @@ public class Student {
 	public void setName(String sName) {
 		this.sName = sName;
 	}
-	public StudentRegister getStudentRegister() {
+	/*public StudentRegister getStudentRegister() {
 		return studentRegister;
 	}
 	public void setStudentRegister(StudentRegister studentRegister) {
 		this.studentRegister = studentRegister;
-	}
+	}*/
 	public ArrayList<Result> getResultList() {
 		return resultList;
 	}
@@ -111,7 +111,6 @@ public class Student {
 			return null;
 		}
 
-	
 
 	
 }
