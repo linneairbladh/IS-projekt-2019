@@ -11,7 +11,7 @@ public class Student {
 	
 	private String studentID;
 	private String sName;
-	//private StudentRegister studentRegister;
+	private StudentRegister studentRegister;
 	private ArrayList<Result>resultList = new ArrayList<Result>();
 	private ArrayList<WrittenExam> writtenExams = new ArrayList<WrittenExam>();
 	
@@ -26,8 +26,8 @@ public class Student {
 		public String generateStudentID() {
 			Random random = new Random(); //Man importerar denna 
 			int randomInt = random.nextInt(90000) + 10000; // Gör ett random nummer mellan 10000 and 99999
-			String studentID = "S" + randomInt;
-			return studentID;
+			String studentID = "S" + randomInt; //Som börjar på S 
+			return studentID; //Metoden Returner
 		}
 	
 	//Set + get
@@ -43,12 +43,12 @@ public class Student {
 	public void setName(String sName) {
 		this.sName = sName;
 	}
-	/*public StudentRegister getStudentRegister() {
+	public StudentRegister getStudentRegister() {
 		return studentRegister;
 	}
 	public void setStudentRegister(StudentRegister studentRegister) {
 		this.studentRegister = studentRegister;
-	}*/
+	}
 	public ArrayList<Result> getResultList() {
 		return resultList;
 	}
@@ -65,32 +65,17 @@ public class Student {
 	}
 	
 	
-	
-	//Metoder för add & find result
+	//Metod för add result
 	public void addResult(Result r) {
-		resultList.add(r);
+		resultList.add(r); //Lägger till resultat på student
 	}
 
-	public Result findResult(double result) {
-		for(Result a: resultList) {
-			if(a.getResult()==(result)) {
-				return a;
-			}
-		}
-		return null;
-	}
 	
 	//Metoder för add & find exam
 	public void addWrittenExam(WrittenExam exam) {
 		writtenExams.add(exam);
 	}
-	public void AddWrittenExam(WrittenExam e, double resultNr) {
-		Result a = findResult(resultNr);
-		if(a!=null) {
-			a.setWrittenExam(e);
-		}
-		
-	}
+
 	
 	public void removeWrittenExam(String examID) {
 		WrittenExam remove = new WrittenExam();
@@ -99,19 +84,17 @@ public class Student {
 				remove = tmpExam;
 			}
 		}
-		writtenExams.remove(remove);
+		writtenExams.remove(remove); //Tar bort prov
 	}
 
 	public WrittenExam findWrittenExam(String examID) {
 			for(WrittenExam a: writtenExams) {
 				if(a.getExamID().equals(examID)) {
-					return a;
+					return a; //Hittar prov om det är lika med provID
 				}
 			}
 			return null;
 		}
 
-
-	
 }
 

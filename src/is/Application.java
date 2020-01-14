@@ -17,7 +17,6 @@ import java.text.ParseException;
 import java.awt.event.ActionEvent;
 import java.awt.Font;
 import javax.swing.JTextPane;
-import javax.swing.JSpinner;
 import javax.swing.SwingConstants;
 import javax.swing.JTextArea;
 import javax.swing.UIManager;
@@ -29,7 +28,6 @@ import javax.swing.JRadioButton;
 import javax.swing.ButtonGroup;
 
 public class Application {
-	//Controller controller;
 
 	private JFrame frame;
 	private JTextField textField_StudentName;
@@ -40,12 +38,10 @@ public class Application {
 	private JTextField textField_Date;
 	private Controller controller = new Controller();
 	private JTextField textField_Points;
-	private JComboBox<String> comboBox_ExamID;
-	private JComboBox<String> comboBox_StudentID;
 	private JTextField textField_Time;
-	private JTextField textField;
+	private JTextField textField_CourseID;
 	private final ButtonGroup buttonGroup = new ButtonGroup();
-	private JTextField textField_ExamID;
+	private JTextField textField_RemoveExamID;
 	private JTextField textField_WEStudentID;
 	private JTextField textField_WEExamID;
 	
@@ -78,21 +74,6 @@ public class Application {
 		this.controller = controller; 
 	}
 
-
-	private void fillStudentPicker() {
-		String [] allStudentIDs = controller.retrieveAllStudents();
-		for (int i = 0; i < allStudentIDs.length; i++ ) {
-			comboBox_StudentID.addItem(allStudentIDs[i]);
-		}
-	}
-	
-	private void fillExamPicker() {
-		String [] allExamID = controller.retrieveAllStudents();
-		for (int i = 0; i < allExamID.length; i++ ) {
-			comboBox_ExamID.addItem(allExamID[i]);
-		}
-	}
-
 	/**
 	 * Initialize the contents of the frame.
 	 */
@@ -115,13 +96,13 @@ public class Application {
 				tabbedPane.addTab("Student", null, Student, null);
 				Student.setLayout(null);
 				
-				JTextArea textArea_1 = new JTextArea();
-				textArea_1.setForeground(SystemColor.inactiveCaptionText);
-				textArea_1.setEditable(false);
-				textArea_1.setBackground(SystemColor.window);
-				textArea_1.setText("_____________________________________________________________________________");
-				textArea_1.setBounds(39, 237, 381, 26);
-				Student.add(textArea_1);
+				JTextArea textArea_Line1 = new JTextArea();
+				textArea_Line1.setForeground(SystemColor.inactiveCaptionText);
+				textArea_Line1.setEditable(false);
+				textArea_Line1.setBackground(SystemColor.window);
+				textArea_Line1.setText("_____________________________________________________________________________");
+				textArea_Line1.setBounds(26, 237, 381, 26);
+				Student.add(textArea_Line1);
 				//
 				
 				JLabel lblStudentName = new JLabel("Student Name");
@@ -234,21 +215,18 @@ public class Application {
 				btnUpdateStudent.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 						
-						//String studentID = textField_StudentID.getText();
-						if (textField_StudentName.getText().equals("") && textField_StudentID.getText().equals("")){
-							textArea_StudentAnswer.setText("Please enter a Student ID");
+						
+						if (textField_StudentName.getText().equals("")){
+							textArea_StudentAnswer.setText("Please enter name");
 						}
-						if (controller.findStudent(textField_StudentID.getText()) == null) {
+						else if (controller.findStudent(textField_StudentID.getText()) == null) {
 							textArea_StudentAnswer.setText("No student found");
-						}
-						if (textField_StudentName.getText().equals("") && controller.findStudent(textField_StudentID.getText()) == null) {
-							textArea_StudentAnswer.setText("No edits were made");			//Checks if the fields are valid
 						}
 						else {
 							controller.updateStudent(textField_StudentName.getText(), textField_StudentID.getText());
 							textArea_StudentAnswer.setText("Updated student: " + textField_StudentName.getText() + " (" + textField_StudentID.getText() + ")");			//Updates a students name
-							//textField_StudentName.setText("");
-							//textField_StudentID.setText("");
+							textField_StudentName.setText("");
+							textField_StudentID.setText("");
 						}	
 						
 						
@@ -284,336 +262,6 @@ public class Application {
 		
 		
 		
-		
-		///////////////////////
-		///Written exam flik///
-		///////////////////////
-		
-		//Bakgrund för fliken written exam 
-		JPanel WrittenExam = new JPanel();
-		tabbedPane.addTab("Written Exam", null, WrittenExam, null);
-		WrittenExam.setLayout(null);
-		
-		//Beskrivning av sidan 
-		JLabel lblRegisterResultFor = new JLabel("Register result for student:");
-		lblRegisterResultFor.setFont(new Font("PT Sans Caption", Font.PLAIN, 12));
-		lblRegisterResultFor.setBounds(236, 50, 172, 16);
-		WrittenExam.add(lblRegisterResultFor);
-		
-		JLabel lblAddremoveExamFor = new JLabel("Add/remove exam for course:");
-		lblAddremoveExamFor.setFont(new Font("PT Sans Caption", Font.PLAIN, 12));
-		lblAddremoveExamFor.setBounds(19, 50, 195, 16);
-		WrittenExam.add(lblAddremoveExamFor);
-		
-		//Skriva in kurs på WE
-		JLabel lblCourse_WECourse = new JLabel("Course ID");
-		lblCourse_WECourse.setFont(new Font("PT Sans Caption", Font.PLAIN, 13));
-		lblCourse_WECourse.setBounds(19, 85, 74, 16);
-		WrittenExam.add(lblCourse_WECourse);
-		
-		//Skriva in datum på WE
-		JLabel lblDate = new JLabel("Date");
-		lblDate.setFont(new Font("PT Sans Caption", Font.PLAIN, 13));
-		lblDate.setBounds(19, 118, 35, 16);
-		WrittenExam.add(lblDate);
-		
-		textField_Date = new JTextField();
-		textField_Date.setBounds(102, 113, 112, 26);
-		WrittenExam.add(textField_Date);
-		textField_Date.setColumns(10);
-		
-		//Välja location på WE
-		JLabel lblLocation = new JLabel("Location");
-		lblLocation.setFont(new Font("PT Sans Caption", Font.PLAIN, 13));
-		lblLocation.setBounds(19, 150, 61, 16);
-		WrittenExam.add(lblLocation);
-		
-		//Välja time på WE
-		JLabel lblTime = new JLabel("Time");
-		lblTime.setFont(new Font("PT Sans Caption", Font.PLAIN, 13));
-		lblTime.setBounds(19, 243, 35, 16);
-		WrittenExam.add(lblTime);
-		
-		//Skriva in Student ID
-		JLabel lblStudentId_WEStudentID = new JLabel("Student ID");
-		lblStudentId_WEStudentID.setFont(new Font("PT Sans Caption", Font.PLAIN, 13));
-		lblStudentId_WEStudentID.setBounds(236, 85, 74, 16);
-		WrittenExam.add(lblStudentId_WEStudentID);
-		
-		JLabel lblExamId_1 = new JLabel("Exam ID");
-		lblExamId_1.setFont(new Font("PT Sans Caption", Font.PLAIN, 13));
-		lblExamId_1.setBounds(236, 122, 61, 16);
-		WrittenExam.add(lblExamId_1);
-		
-		
-		//Skriva in points
-		JLabel lblPoints = new JLabel("Points");
-		lblPoints.setFont(new Font("PT Sans Caption", Font.PLAIN, 13));
-		lblPoints.setBounds(236, 156, 44, 16);
-		WrittenExam.add(lblPoints);
-		
-		textField_Points = new JTextField();
-		textField_Points.setBounds(353, 151, 55, 26);
-		WrittenExam.add(textField_Points);
-		textField_Points.setColumns(10);
-		
-		textField_Time = new JTextField();
-		textField_Time.setBounds(97, 236, 130, 26);
-		WrittenExam.add(textField_Time);
-		textField_Time.setColumns(10);
-		
-		//Radiobutton för att välja plats
-		JRadioButton rdbtnA123 = new JRadioButton("Room A123");
-		rdbtnA123.setFont(new Font("Monaco", Font.PLAIN, 13));
-		buttonGroup.add(rdbtnA123);
-		rdbtnA123.setBounds(102, 146, 141, 23);
-		WrittenExam.add(rdbtnA123);
-		
-		JRadioButton rdbtnB198 = new JRadioButton("Room B198");
-		rdbtnB198.setFont(new Font("Monaco", Font.PLAIN, 13));
-		buttonGroup.add(rdbtnB198);
-		rdbtnB198.setBounds(102, 184, 141, 23);
-		WrittenExam.add(rdbtnB198);
-		
-		JRadioButton rdbtnB067 = new JRadioButton("Room B067");
-		rdbtnB067.setFont(new Font("Monaco", Font.PLAIN, 13));
-		buttonGroup.add(rdbtnB067);
-		rdbtnB067.setBounds(102, 203, 141, 23);
-		WrittenExam.add(rdbtnB067);
-		
-		JRadioButton rdbtnA167 = new JRadioButton("Room A167");
-		rdbtnA167.setFont(new Font("Monaco", Font.PLAIN, 13));
-		buttonGroup.add(rdbtnA167);
-		rdbtnA167.setBounds(102, 165, 141, 23);
-		WrittenExam.add(rdbtnA167);
-		
-		
-		//Knappar på WE
-		
-		textField = new JTextField();
-		textField.setBounds(102, 80, 112, 26);
-		WrittenExam.add(textField);
-		textField.setColumns(10);
-		
-		JTextArea textArea_AnswerExam = new JTextArea();
-		textArea_AnswerExam.setEditable(false);
-		textArea_AnswerExam.setBackground(SystemColor.window);
-		textArea_AnswerExam.setBounds(29, 301, 379, 87);
-		WrittenExam.add(textArea_AnswerExam);
-		
-		JButton btnAddExam = new JButton("Add Exam");
-		btnAddExam.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				
-				String courseCode = textField.getText();
-				String location = "";
-				String time;
-				String date;
-				int maxPoints = 100;
-				
-				try {
-					if (controller.findCourse(courseCode) == null) {
-						textArea_AnswerExam.setText("Invalid course code");
-					}
-					
-					else {
-						if (textField_Date.getText().equals("") || textField_Time.getText().equals("")) { //|| textField_MaxPoints.getText().equals("")) {
-							textArea_AnswerExam.setText("Please enter time and a date for the exam.");
-						}
-						else if (rdbtnA123.isSelected() == false && rdbtnA167.isSelected() == false && rdbtnB198.isSelected() == false && rdbtnB067.isSelected() == false) {
-							textArea_AnswerExam.setText("Please enter location");
-							}
-				
-						else {
-							String examID = controller.generateExamID();
-							time = textField_Time.getText();
-							date = textField_Date.getText();
-							//maxPoints = Integer.parseInt(textField_MaxPoints.getText());
-							if (rdbtnA123.isSelected() == true && rdbtnA167.isSelected() == false && rdbtnB198.isSelected() == false && rdbtnB067.isSelected() == false) {
-								location += " Room A123 ";
-							}
-							if (rdbtnA167.isSelected() == true) {		
-								location += " Room A167 ";
-							}
-							if (rdbtnB198.isSelected() == true) {
-								location += " Room B198 ";
-							}
-							if (rdbtnB067.isSelected() == true) {
-								location += " Room B067 ";
-							}
-							controller.addWrittenExam(courseCode, examID,  time, location, date, maxPoints);				//Creates a new exam
-							textArea_AnswerExam.setText("Exam for course " + controller.findCourse(courseCode) + " has been created" +"\n");
-							textArea_AnswerExam.append("ExamID: " + examID + "\n" + "Time: " + time +"\n" + "Location: " + location +"\n" + "Date: " + date + "\n" + "Max points: " + maxPoints);
-							textField.setText("");
-							textField_Time.setText("");
-							textField_Date.setText("");
-							rdbtnA123.setSelected(false);
-							rdbtnA167.setSelected(false);
-							rdbtnB198.setSelected(false);
-							rdbtnB067.setSelected(false);
-						}
-					}
-				}
-				catch (java.lang.NumberFormatException exception) {
-					textArea_AnswerExam.setText("Only numbers are allowed in the max points field");
-				}
-			}
-					
-			
-		});
-		btnAddExam.setBounds(127, 271, 101, 29);
-		WrittenExam.add(btnAddExam);
-		
-		textField_ExamID = new JTextField();
-		textField_ExamID.setBounds(97, 411, 130, 26);
-		WrittenExam.add(textField_ExamID);
-		textField_ExamID.setColumns(10);
-		
-		JButton btnRemoveExam = new JButton("Remove Exam");
-		btnRemoveExam.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				
-				//String examID = toString().comboBox_ExamID.getSelectedItem();
-				String examID = textField_ExamID.getText();
-				if (examID.equals("")) {
-					textArea_AnswerExam.setText("Invalid exam-ID");
-				}
-				//else if (controller.get(examID) == null) {
-					//textPane_AnswerExam.setText("No exam found");
-				//}
-				else {
-					controller.removeWrittenExam(examID);
-					textArea_AnswerExam.setText("Exam with exam-ID " + examID + " has been removed.");
-					textField_ExamID.setText("");
-				
-			}
-			
-			}
-			
-		});
-		btnRemoveExam.setBounds(236, 411, 117, 29);
-		WrittenExam.add(btnRemoveExam);
-		
-		textField_WEStudentID = new JTextField();
-		textField_WEStudentID.setBounds(316, 78, 92, 26);
-		WrittenExam.add(textField_WEStudentID);
-		textField_WEStudentID.setColumns(10);
-		
-		textField_WEExamID = new JTextField();
-		textField_WEExamID.setBounds(316, 115, 92, 26);
-		WrittenExam.add(textField_WEExamID);
-		textField_WEExamID.setColumns(10);
-		
-		JButton btnAddResult = new JButton("Register Result");
-		btnAddResult.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			
-				try {
-					if (textField_WEExamID.getText().equals("") || textField_WEStudentID.getText().equals("") || textField_Points.getText().equals("")) {
-						textArea_AnswerExam.setText("Please enter an Exam-ID, a Student-ID and a score");
-					}
-					else if (controller.findExam(textField_WEExamID.getText()) == null) {
-						textArea_AnswerExam.setText("Invalid Exam-ID");
-					}
-					else if (controller.getExamDate(textField_WEExamID.getText()) == null) {
-						textArea_AnswerExam.setText("Invalid Student -ID");
-					}
-					else if (Integer.parseInt(textField_Points.getText()) > controller.getExamMaxPoints(textField_WEExamID.getText()) || Integer.parseInt(textField_Points.getText()) < 0) {
-						textArea_AnswerExam.setText("Invalid amount of points");						
-					}
-					else {
-						String examID = textField_WEExamID.getText();
-						String studentID = textField_WEStudentID.getText();
-						int result = Integer.parseInt(textField_Points.getText());
-						String letterGrade = controller.addResult(studentID, examID, result);
-						textArea_AnswerExam.setText("Added result for student: " + controller.findStudent(studentID) + "\n" + "on exam " + examID + "\n" + "with grade:" + letterGrade);
-						//textArea_AnswerExam.setText("With result:" + result);
-						
-						//textArea_ResponseResult.setText("Points: " + result + "\t" + "Grade: " + letterGrade);
-						textField_WEExamID.setText("");
-						textField_WEStudentID.setText("");	
-						textField_Points.setText("");
-					
-					}
-				}
-				catch (java.lang.NumberFormatException exception) {
-					textArea_AnswerExam.setText("Please put in all values correctly");
-				}
-			}
-
-		});
-		btnAddResult.setBounds(272, 201, 136, 29);
-		WrittenExam.add(btnAddResult);
-		
-		JLabel label_4 = new JLabel("*");
-		label_4.setForeground(Color.BLACK);
-		label_4.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
-		label_4.setBounds(84, 85, 19, 16);
-		WrittenExam.add(label_4);
-		
-		JLabel label_6 = new JLabel("*");
-		label_6.setForeground(Color.BLACK);
-		label_6.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
-		label_6.setBounds(84, 151, 19, 16);
-		WrittenExam.add(label_6);
-		
-		JLabel label_7 = new JLabel("*");
-		label_7.setForeground(Color.BLACK);
-		label_7.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
-		label_7.setBounds(52, 118, 19, 16);
-		WrittenExam.add(label_7);
-		
-		JLabel label_8 = new JLabel("*");
-		label_8.setForeground(Color.BLACK);
-		label_8.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
-		label_8.setBounds(59, 240, 12, 16);
-		WrittenExam.add(label_8);
-		
-		JLabel label_9 = new JLabel("*");
-		label_9.setForeground(Color.BLACK);
-		label_9.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
-		label_9.setBounds(3302, 50, 19, 16);
-		WrittenExam.add(label_9);
-		
-		JLabel label_10 = new JLabel("*");
-		label_10.setForeground(Color.BLACK);
-		label_10.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
-		label_10.setBounds(306, 85, 19, 16);
-		WrittenExam.add(label_10);
-		
-		JLabel label_11 = new JLabel("*");
-		label_11.setForeground(Color.BLACK);
-		label_11.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
-		label_11.setBounds(291, 122, 19, 16);
-		WrittenExam.add(label_11);
-		
-		JLabel label_12 = new JLabel("*");
-		label_12.setForeground(Color.BLACK);
-		label_12.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
-		label_12.setBounds(278, 155, 19, 16);
-		WrittenExam.add(label_12);
-		
-		JLabel label_13 = new JLabel("Fields marked with * are mandatory to fill in.");
-		label_13.setFont(new Font("PT Sans Caption", Font.PLAIN, 13));
-		label_13.setBounds(19, 12, 320, 26);
-		WrittenExam.add(label_13);
-		
-		JLabel lblExamId = new JLabel("Exam ID");
-		lblExamId.setBounds(19, 416, 61, 16);
-		WrittenExam.add(lblExamId);
-		
-		JLabel label_14 = new JLabel("_________________________");
-		label_14.setForeground(SystemColor.inactiveCaptionText);
-		label_14.setBounds(19, 388, 389, 16);
-		WrittenExam.add(label_14);
-		
-		JLabel lblMaxPointsIs = new JLabel("Max points is 100p");
-		lblMaxPointsIs.setFont(new Font("Lao Sangam MN", Font.PLAIN, 11));
-		lblMaxPointsIs.setBounds(236, 169, 105, 16);
-		WrittenExam.add(lblMaxPointsIs);
-		
-		
-		
 		////////////////
 		////Kursflik////
 		////////////////
@@ -623,13 +271,13 @@ public class Application {
 		tabbedPane.addTab("Course", null, Course, null);
 		Course.setLayout(null);
 		
-		JTextArea textArea = new JTextArea();
-		textArea.setForeground(SystemColor.inactiveCaptionText);
-		textArea.setFont(new Font("Lucida Grande", Font.PLAIN, 13));
-		textArea.setBackground(SystemColor.window);
-		textArea.setText("___________________________________________________________________");
-		textArea.setBounds(28, 233, 385, 16);
-		Course.add(textArea);
+		JTextArea textArea_Line2 = new JTextArea();
+		textArea_Line2.setForeground(SystemColor.inactiveCaptionText);
+		textArea_Line2.setFont(new Font("Lucida Grande", Font.PLAIN, 13));
+		textArea_Line2.setBackground(SystemColor.window);
+		textArea_Line2.setText("___________________________________________________________________");
+		textArea_Line2.setBounds(28, 233, 385, 16);
+		Course.add(textArea_Line2);
 		
 		//Skriva in text för kursnamn
 		JLabel lblCourseName = new JLabel("Course Name");
@@ -708,7 +356,7 @@ public class Application {
 				
 				}
 				catch (java.lang.NumberFormatException exception) {
-					textPane_FoundCourse.setText("Only numbers are allowed in the credits field");
+					textPane_AnswerCourse.setText("Only numbers are allowed in the credits field");
 				}
 				}
 			}
@@ -719,8 +367,7 @@ public class Application {
 		JButton btnFindCourse = new JButton("Find Course");
 		btnFindCourse.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
-			
+
 				String courseCode = textField_CourseCode.getText();
 				String courseName = controller.findCourse(courseCode);
 				double credits = controller.getCourseCredit(courseCode);
@@ -837,8 +484,356 @@ public class Application {
 		Course.add(lblFieldsMarkedWith);
 		
 	
+		///////////////////////
+		///Written exam flik///
+		///////////////////////
+		
+		//Bakgrund för fliken written exam 
+		JPanel WrittenExam = new JPanel();
+		tabbedPane.addTab("Written Exam", null, WrittenExam, null);
+		WrittenExam.setLayout(null);
+		
+		//Beskrivning av sidan 
+		JLabel lblRegisterResultFor = new JLabel("Register result for student:");
+		lblRegisterResultFor.setFont(new Font("PT Sans Caption", Font.PLAIN, 12));
+		lblRegisterResultFor.setBounds(236, 50, 172, 16);
+		WrittenExam.add(lblRegisterResultFor);
+		
+		JLabel lblAddremoveExamFor = new JLabel("Add/remove exam for course:");
+		lblAddremoveExamFor.setFont(new Font("PT Sans Caption", Font.PLAIN, 12));
+		lblAddremoveExamFor.setBounds(19, 50, 195, 16);
+		WrittenExam.add(lblAddremoveExamFor);
+		
+		//Skriva in kurs på WE
+
+		textField_CourseID = new JTextField();
+		textField_CourseID.setBounds(102, 80, 112, 26);
+		WrittenExam.add(textField_CourseID);
+		textField_CourseID.setColumns(10);
+		
+		JLabel lblCourse_WECourse = new JLabel("Course ID ");
+		lblCourse_WECourse.setFont(new Font("PT Sans Caption", Font.PLAIN, 13));
+		lblCourse_WECourse.setBounds(19, 85, 74, 16);
+		WrittenExam.add(lblCourse_WECourse);
+		
+		//Skriva in datum på WE
+		JLabel lblDate = new JLabel("Date");
+		lblDate.setFont(new Font("PT Sans Caption", Font.PLAIN, 13));
+		lblDate.setBounds(19, 118, 35, 16);
+		WrittenExam.add(lblDate);
+		
+		textField_Date = new JTextField();
+		textField_Date.setBounds(102, 113, 112, 26);
+		WrittenExam.add(textField_Date);
+		textField_Date.setColumns(10);
+		
+		//Välja location på WE
+		JLabel lblLocation = new JLabel("Location");
+		lblLocation.setFont(new Font("PT Sans Caption", Font.PLAIN, 13));
+		lblLocation.setBounds(19, 150, 61, 16);
+		WrittenExam.add(lblLocation);
+		
+		//Välja time på WE
+		JLabel lblTime = new JLabel("Time");
+		lblTime.setFont(new Font("PT Sans Caption", Font.PLAIN, 13));
+		lblTime.setBounds(19, 243, 35, 16);
+		WrittenExam.add(lblTime);
+		
+		textField_Time = new JTextField();
+		textField_Time.setBounds(97, 236, 130, 26);
+		WrittenExam.add(textField_Time);
+		textField_Time.setColumns(10);
+		
+		//Skriva in Student ID
+		JLabel lblStudentId_WEStudentID = new JLabel("Student ID");
+		lblStudentId_WEStudentID.setFont(new Font("PT Sans Caption", Font.PLAIN, 13));
+		lblStudentId_WEStudentID.setBounds(236, 85, 74, 16);
+		WrittenExam.add(lblStudentId_WEStudentID);
+		
+		JLabel lblExamId_1 = new JLabel("Exam ID");
+		lblExamId_1.setFont(new Font("PT Sans Caption", Font.PLAIN, 13));
+		lblExamId_1.setBounds(236, 122, 61, 16);
+		WrittenExam.add(lblExamId_1);
 		
 		
+		//Skriva in points
+		JLabel lblPoints = new JLabel("Points");
+		lblPoints.setFont(new Font("PT Sans Caption", Font.PLAIN, 13));
+		lblPoints.setBounds(236, 156, 44, 16);
+		WrittenExam.add(lblPoints);
+		
+		textField_Points = new JTextField();
+		textField_Points.setBounds(353, 151, 55, 26);
+		WrittenExam.add(textField_Points);
+		textField_Points.setColumns(10);
+
+		
+		//Radiobutton för att välja plats
+		JRadioButton rdbtnA123 = new JRadioButton("Room A123");
+		rdbtnA123.setFont(new Font("Monaco", Font.PLAIN, 13));
+		buttonGroup.add(rdbtnA123);
+		rdbtnA123.setBounds(102, 146, 141, 23);
+		WrittenExam.add(rdbtnA123);
+		
+		JRadioButton rdbtnB198 = new JRadioButton("Room B198");
+		rdbtnB198.setFont(new Font("Monaco", Font.PLAIN, 13));
+		buttonGroup.add(rdbtnB198);
+		rdbtnB198.setBounds(102, 184, 141, 23);
+		WrittenExam.add(rdbtnB198);
+		
+		JRadioButton rdbtnB067 = new JRadioButton("Room B067");
+		rdbtnB067.setFont(new Font("Monaco", Font.PLAIN, 13));
+		buttonGroup.add(rdbtnB067);
+		rdbtnB067.setBounds(102, 203, 141, 23);
+		WrittenExam.add(rdbtnB067);
+		
+		JRadioButton rdbtnA167 = new JRadioButton("Room A167");
+		rdbtnA167.setFont(new Font("Monaco", Font.PLAIN, 13));
+		buttonGroup.add(rdbtnA167);
+		rdbtnA167.setBounds(102, 165, 141, 23);
+		WrittenExam.add(rdbtnA167);
+		
+		
+		//Svar på WE
+		JTextArea textArea_AnswerExam = new JTextArea();
+		textArea_AnswerExam.setEditable(false);
+		textArea_AnswerExam.setBackground(SystemColor.window);
+		textArea_AnswerExam.setBounds(29, 301, 379, 87);
+		WrittenExam.add(textArea_AnswerExam);
+		
+		//Knappar på WE
+		JButton btnAddExam = new JButton("Add Exam");
+		btnAddExam.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				String courseCode = textField_CourseID.getText();
+				String location = "";
+				String time;
+				String date;
+				
+				try {
+					if (controller.findCourse(courseCode) == null) { 
+						textArea_AnswerExam.setText("Invalid course code"); //Om kursen inte finns returneras "Invalid course code"
+					}
+					
+					else {
+						if (textField_Date.getText().equals("") || textField_Time.getText().equals("")) { 
+							textArea_AnswerExam.setText("Please enter time and a date for the exam");
+						}
+						else if (rdbtnA123.isSelected() == false && rdbtnA167.isSelected() == false && rdbtnB198.isSelected() == false && rdbtnB067.isSelected() == false) {
+							textArea_AnswerExam.setText("Please enter location");
+							}
+				
+						else {
+							String examID = controller.generateExamID();
+							time = textField_Time.getText();
+							date = textField_Date.getText();
+							if (rdbtnA123.isSelected() == true) {
+								location += " Room A123 ";
+							}
+							if (rdbtnA167.isSelected() == true) {		
+								location += " Room A167 ";
+							}
+							if (rdbtnB198.isSelected() == true) {
+								location += " Room B198 ";
+							}
+							if (rdbtnB067.isSelected() == true) {
+								location += " Room B067 ";
+							}
+							controller.addWrittenExam(courseCode, examID,  time, location, date);				//Skapar ett nytt exam
+							int maxPoints = controller.getExamMaxPoints(examID);
+							textArea_AnswerExam.setText("Exam for course " + controller.findCourse(courseCode) + " has been created" +"\n");
+							textArea_AnswerExam.append("ExamID: " + examID + " Time: " + time +"\n" + "Location: " + location + " Date: " + date + "\n" + "Max points: " + maxPoints);
+							//Sätter text och radiobuttons till startläge
+							textField_CourseID.setText("");
+							textField_Time.setText("");
+							textField_Date.setText("");
+							rdbtnA123.setSelected(false);
+							rdbtnA167.setSelected(false);
+							rdbtnB198.setSelected(false);
+							rdbtnB067.setSelected(false);
+						}
+					}
+				}
+				catch (java.lang.NumberFormatException exception) {
+					textArea_AnswerExam.setText("Only numbers are allowed in the max points field");
+				}
+			}
+					
+			
+		});
+		btnAddExam.setBounds(127, 271, 101, 29);
+		WrittenExam.add(btnAddExam);
+		
+		//Skriva in för att remove exam
+		textField_RemoveExamID = new JTextField();
+		textField_RemoveExamID.setBounds(80, 411, 130, 26);
+		WrittenExam.add(textField_RemoveExamID);
+		textField_RemoveExamID.setColumns(10);
+		
+		textField_WEStudentID = new JTextField();
+		textField_WEStudentID.setBounds(316, 78, 92, 26);
+		WrittenExam.add(textField_WEStudentID);
+		textField_WEStudentID.setColumns(10);
+		
+		textField_WEExamID = new JTextField();
+		textField_WEExamID.setBounds(316, 115, 92, 26);
+		WrittenExam.add(textField_WEExamID);
+		textField_WEExamID.setColumns(10);
+		
+		JButton btnRemoveExam = new JButton("Remove Exam");
+		btnRemoveExam.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				String examID = textField_RemoveExamID.getText();
+				if (examID.equals("")) {
+					textArea_AnswerExam.setText("Invalid exam-ID");
+				}
+				else if (controller.getExamDate(examID) == null) {
+					textArea_AnswerExam.setText("No exam found");
+				}
+				else {
+					controller.removeWrittenExam(examID);
+					textArea_AnswerExam.setText("Exam with exam-ID " + examID + " has been removed");
+					//Sätter text till startläge
+					textField_RemoveExamID.setText("");
+				
+			}
+			
+			}
+			
+		});
+		btnRemoveExam.setBounds(210, 411, 117, 29);
+		WrittenExam.add(btnRemoveExam);
+		
+		JButton btnFindExam = new JButton("Find Exam");
+		btnFindExam.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String examID = textField_RemoveExamID.getText();
+				String exam = controller.findExam(examID);
+				
+				if (examID.equals("")) {
+					textArea_AnswerExam.setText("Please enter a course code");
+				}
+				
+				else if (exam!=null) {
+					textArea_AnswerExam.setText("Found exam: " + exam);
+				
+                } else {
+                	textArea_AnswerExam.setText("Course can not be found");
+
+                }
+				
+			}
+		});
+		btnFindExam.setBounds(316, 411, 101, 29);
+		WrittenExam.add(btnFindExam);
+		
+		JButton btnAddResult = new JButton("Register Result");
+		btnAddResult.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			
+				try {
+					if (textField_WEExamID.getText().equals("") || textField_WEStudentID.getText().equals("") || textField_Points.getText().equals("")) {
+						textArea_AnswerExam.setText("Please enter an Exam-ID, a Student-ID and a score");
+					}
+					else if (controller.findExam(textField_WEExamID.getText()) == null) {
+						textArea_AnswerExam.setText("Invalid Exam-ID");
+					}
+					else if (controller.getExamDate(textField_WEExamID.getText()) == null) {
+						textArea_AnswerExam.setText("Invalid Student -ID");
+					}
+					else if (Integer.parseInt(textField_Points.getText()) > controller.getExamMaxPoints(textField_WEExamID.getText()) || Integer.parseInt(textField_Points.getText()) < 0) {
+						textArea_AnswerExam.setText("Invalid amount of points");						
+					}
+					else {
+						String examID = textField_WEExamID.getText();
+						String studentID = textField_WEStudentID.getText();
+						int result = Integer.parseInt(textField_Points.getText());
+						String letterGrade = controller.addResult(studentID, examID, result);
+						textArea_AnswerExam.setText("Added result for student: " + controller.findStudent(studentID) + "\n" + "on exam " + examID + "\n" + "with grade: " + letterGrade);
+						//Sätter text till startläge
+						textField_WEExamID.setText("");
+						textField_WEStudentID.setText("");	
+						textField_Points.setText("");
+					
+					}
+				}
+				catch (java.lang.NumberFormatException exception) {
+					textArea_AnswerExam.setText("Please put in all values correctly");
+				}
+			}
+
+		});
+		btnAddResult.setBounds(272, 201, 136, 29);
+		WrittenExam.add(btnAddResult);
+		
+		JLabel label_4 = new JLabel("*");
+		label_4.setForeground(Color.BLACK);
+		label_4.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
+		label_4.setBounds(84, 85, 19, 16);
+		WrittenExam.add(label_4);
+		
+		JLabel label_6 = new JLabel("*");
+		label_6.setForeground(Color.BLACK);
+		label_6.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
+		label_6.setBounds(80, 151, 19, 16);
+		WrittenExam.add(label_6);
+		
+		JLabel label_7 = new JLabel("*");
+		label_7.setForeground(Color.BLACK);
+		label_7.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
+		label_7.setBounds(52, 118, 19, 16);
+		WrittenExam.add(label_7);
+		
+		JLabel label_8 = new JLabel("*");
+		label_8.setForeground(Color.BLACK);
+		label_8.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
+		label_8.setBounds(59, 240, 12, 16);
+		WrittenExam.add(label_8);
+		
+		JLabel label_9 = new JLabel("*");
+		label_9.setForeground(Color.BLACK);
+		label_9.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
+		label_9.setBounds(3302, 50, 19, 16);
+		WrittenExam.add(label_9);
+		
+		JLabel label_10 = new JLabel("*");
+		label_10.setForeground(Color.BLACK);
+		label_10.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
+		label_10.setBounds(306, 85, 19, 16);
+		WrittenExam.add(label_10);
+		
+		JLabel label_11 = new JLabel("*");
+		label_11.setForeground(Color.BLACK);
+		label_11.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
+		label_11.setBounds(291, 122, 19, 16);
+		WrittenExam.add(label_11);
+		
+		JLabel label_12 = new JLabel("*");
+		label_12.setForeground(Color.BLACK);
+		label_12.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
+		label_12.setBounds(278, 155, 19, 16);
+		WrittenExam.add(label_12);
+		
+		JLabel label_13 = new JLabel("Fields marked with * are mandatory to fill in.");
+		label_13.setFont(new Font("PT Sans Caption", Font.PLAIN, 13));
+		label_13.setBounds(19, 12, 320, 26);
+		WrittenExam.add(label_13);
+		
+		JLabel lblExamId = new JLabel("Exam ID");
+		lblExamId.setBounds(19, 416, 61, 16);
+		WrittenExam.add(lblExamId);
+		
+		JLabel label_Line = new JLabel("______________________________________________________");
+		label_Line.setForeground(SystemColor.inactiveCaptionText);
+		label_Line.setBounds(19, 388, 389, 16);
+		WrittenExam.add(label_Line);
+		
+		JLabel lblMaxPointsIs = new JLabel("Max points is 100p");
+		lblMaxPointsIs.setFont(new Font("Lao Sangam MN", Font.PLAIN, 11));
+		lblMaxPointsIs.setBounds(236, 169, 105, 16);
+		WrittenExam.add(lblMaxPointsIs);
 		
 		
 		

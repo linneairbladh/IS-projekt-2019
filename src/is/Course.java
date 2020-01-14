@@ -41,7 +41,6 @@ public class Course {
 	 public void setCredits(double credits) {
 		this.credits = credits;
 	 }
-	 
 	 public ArrayList <WrittenExam> getWrittenExamList() {
 		return writtenExamList;
 	 }
@@ -64,13 +63,22 @@ public class Course {
 		
 	 
 	 public void removeWrittenExam(String examID) {
-		 WrittenExam a1 = this.findWrittenExam(examID);
-				writtenExamList.remove(a1);
+		 WrittenExam e1 = new WrittenExam();
+			for (WrittenExam e: writtenExamList) {
+				if(e.getExamID().equals(examID)) {
+					e1 = e;
+				}
 			}
+			writtenExamList.remove(e1);
+		} 
+	 
+	 
 	public String generateCourseCode() {
 		Random random = new Random();
 		int randomInt = random.nextInt(90000) + 10000; // Generates a random number between 10000 and 99999
 		String courseCode = "C" + randomInt;
 		return courseCode;
 	}
+	
+	
 	}
