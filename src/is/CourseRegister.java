@@ -56,7 +56,7 @@ public class CourseRegister {
 
 	public String validateCourseCode(Course c)	{
 		for (Course tmp : courseRegisterList) {
-			if (tmp == c) { 			//Skips c
+			if (tmp == c) { 			
 				continue;
 			}
 			while (tmp.getCourseCode().equals(c.getCourseCode())){
@@ -64,25 +64,24 @@ public class CourseRegister {
 				c.setCourseCode(courseCode);;
 			}
 		}
-		return c.getCourseCode();				//Validates a course code. If it is not unique, a new one is generated and validated again
+		return c.getCourseCode();				//Validerar en kurskod. Om den inte är unik skapas en ny och valideras
 	}
-	
-	
-	public String[] retrieveAllCourses() {
-		String [] allCourses = new String[courseRegisterList.size()];
-		int i = 0;
-		
-		for(Course a: courseRegisterList) {
-			allCourses[i] = a.getCourseCode();
-			i++;
+
+	public String validateExamID(WrittenExam newExam) {
+		for (Course course : courseRegisterList) {	
+		for (WrittenExam exam : course.getWrittenExamList()) {
+				if (exam == newExam) { 		
+					continue;
+				}
+				while (exam.getExamID().equals(newExam.getExamID())){
+					String examID = newExam.generateExamID();
+					newExam.setExamID(examID);
+				}
+			}
 		}
-		return allCourses;
+		return newExam.getExamID();
 	}
-	
 	
 }
 
-	//public void addWrittenExam(WrittenExam newExam) {
-		// TODO Auto-generated method stub
-		
 	

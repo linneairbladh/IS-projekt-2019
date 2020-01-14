@@ -1,4 +1,4 @@
-package is;
+/*package is;
 
 import java.util.ArrayList;
 
@@ -35,7 +35,7 @@ private ArrayList <WrittenExam> writtenExamList = new ArrayList <WrittenExam>();
 	
 	public String validateExamID(WrittenExam newExam) {
 			for (WrittenExam exam : writtenExamList) {
-				if (exam == newExam) { 			//Skips e
+				if (exam == newExam) { 			//Skips exam
 					continue;
 				}
 				while (exam.getExamID().equals(newExam.getExamID())){
@@ -45,7 +45,7 @@ private ArrayList <WrittenExam> writtenExamList = new ArrayList <WrittenExam>();
 			}
 		return null;
 	}
-}
+}*/
 
 	
 	

@@ -9,7 +9,7 @@ public class WrittenExam {
 	private String date; 
 	private String location; 
 	private String time;
-	private int maxPoints;
+	private int maxPoints = 100; //Max points är alltid 100
 	private Course course;
 	private ArrayList<Result>examResult = new ArrayList<Result>();
 	private StudentRegister studentRegisterList = new StudentRegister();
@@ -47,16 +47,17 @@ public class WrittenExam {
 		this.time = time;
 	}
 	public int getMaxPoints() {
-		return maxPoints;
+		return maxPoints; 
 	}
-	public void setMaxPoints(int maxPoints) {
-		this.maxPoints = maxPoints;
-	} 
 	public void setCourse (Course course) {
 		this.course = course;
 	}
 	public Course getCourse() {
 		return course;
+	}
+	public void addStudent(Student s) {
+		studentRegisterList.addStudent(s);
+		
 	}
 	public void setExamResult(ArrayList<Result>examResult) {
 		this.examResult = examResult; 
@@ -85,19 +86,14 @@ public class WrittenExam {
 		}
 		return null;
 	} 
-	public void addStudent(Student s) {
-		studentRegisterList.addStudent(s);
-	}
+	
 
 	public String generateExamID() {
 		Random random = new Random();
-		int randomInt = random.nextInt(90000) + 10000; 		//Generates a random number between 10000 and 99999
+		int randomInt = random.nextInt(90000) + 10000; 		//Genererar ett random nummer mellan 1000 och 90000
 		String examID = "E" + randomInt;
 		return examID;
 	}
 
-	
-
-	
 		
-	}
+}

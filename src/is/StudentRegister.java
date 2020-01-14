@@ -9,7 +9,7 @@ public class StudentRegister {
 	
 	//Add, find, remove, validate and update Student
 	public void addStudent(Student newStudent) {
-		this.studentRegisterList.add(newStudent);
+		this.studentRegisterList.add(newStudent); //Lägger till en student i studentregisterlistan
 	}
 
 	public Student findStudent(String studentID) { 
@@ -23,7 +23,7 @@ public class StudentRegister {
 	
 	public String validateStudentID(Student newStudent)	{
 		for (Student tmp : studentRegisterList) {
-			if (tmp == newStudent) { 			//Skips s
+			if (tmp == newStudent) { 			
 				continue;
 			}
 			while (tmp.getStudentID().equals(newStudent.getStudentID())){
@@ -31,11 +31,9 @@ public class StudentRegister {
 				newStudent.setStudentID(studentID);
 			}
 		}
-		return newStudent.getStudentID();				//Validates a studentID. If it is not unique a new one is generated and validated again
+		return newStudent.getStudentID();				//Validerar studentID, om det inte är validerat så genereras ett nytt id och valideras igen
 	}
-	
-	
-	
+
 	public Student removeStudent(String studentID) {
 		Student s = this.findStudent(studentID); 
 		if (s != null) {
@@ -62,19 +60,5 @@ public class StudentRegister {
 			remove = result;
 			student.getResultList().remove(remove);
 		}
-	}
-	
-	//metod för att fylla Combobox med ArrayList
-	public String[] retrieveAllStudents() {
-		String [] allStudents = new String[studentRegisterList.size()];
-		int i = 0;
-		
-		for(Student a: studentRegisterList) {
-			allStudents[i] = a.getName();
-			i++;
-		}
-		return allStudents;
-	}
-	
-	
+	}	
 }
