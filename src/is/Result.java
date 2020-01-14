@@ -16,21 +16,28 @@ public class Result {
 	}*/
 
 	public void setResult(int result) {
-		int score = writtenExam.getMaxPoints();
-		if(score < 0.5) {
-			this.letterGrade = "U";
-		}else if(score >= 0.5 && score < 0.55){
-			this.letterGrade = "E";
-		}else if(score >= 0.55 && score < 0.65) {
-			this.letterGrade = "D";
-		}else if(score >= 0.65 && score < 0.75) {
-			this.letterGrade = "C";
-		}else if(score >= 0.75 && score < 0.85) {
-			this.letterGrade = "B";
-		}else if(score >= 0.85 && score <= 1) {
-			this.letterGrade = "A";
+		int maxPoints = 100;
+		if (result < (maxPoints*0.5) && result > (maxPoints - maxPoints -1)) {
+			letterGrade = "F";
 		}
-		this.result = score; 
+		if (result < (maxPoints*0.55) && result > (maxPoints*0.49)) {
+			letterGrade = "E";
+		}
+		if (result < (maxPoints*0.65) && result > (maxPoints*0.54)) {
+			letterGrade = "D";
+		}
+		if (result < (maxPoints*75) && result > (maxPoints*0.64)) {
+			letterGrade = "C";
+		}
+		if (result < (maxPoints*0.85) && result > (maxPoints*0.74)) {
+			letterGrade = "B";
+		}
+		if (result < (maxPoints+1) && result > (maxPoints*0.84)) {
+			letterGrade = "A";
+		}
+		if (result < 0 || result > maxPoints) {
+			letterGrade = "Wrong input";
+		}
 	}
 	
 	public int getResult() {
@@ -65,7 +72,7 @@ public class Result {
 	
 	// metod för att räkna ut betyg baser på poäng
 	
-	public void calculateGrade(double result) {
+	/*public void calculateGrade(double result) {
 		double score = (result / writtenExam.getMaxPoints());
 		if(score < 0.5) {
 			this.letterGrade = "U";
@@ -80,6 +87,6 @@ public class Result {
 		}else if(score >= 0.85 && score <= 1) {
 			this.letterGrade = "A";
 		}
-	}
+	}*/
 
 }
