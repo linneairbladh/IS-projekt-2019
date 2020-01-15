@@ -50,18 +50,18 @@ public class Course {
 	 public void addWrittenExam(WrittenExam a) {
 		 writtenExamList.add(a);
 	 }
+	 
 	 public WrittenExam findWrittenExam(String examID) {
-		 WrittenExam a = null; 
-			for (WrittenExam a1: writtenExamList) {
-				if (a1.getExamID().equals(examID)) {
-					a1 = a; 
+		 WrittenExam exam = null; 
+			for (WrittenExam e: writtenExamList) {
+				if (e.getExamID().equals(examID)) {
+					e = exam; 
 
 				}
 			}
-			return a;
+			return exam;
 	 }
 		
-	 
 	 public void removeWrittenExam(String examID) {
 		 WrittenExam e1 = new WrittenExam();
 			for (WrittenExam e: writtenExamList) {
@@ -72,12 +72,11 @@ public class Course {
 			writtenExamList.remove(e1);
 		} 
 	 
-	 
 	public String generateCourseCode() {
 		Random random = new Random();
-		int randomInt = random.nextInt(90000) + 10000; // Generates a random number between 10000 and 99999
-		String courseCode = "C" + randomInt;
-		return courseCode;
+		int randomNumber = random.nextInt(90000) + 10000; // Genererar ett nummer random mellan 10000 och 90000
+		String generatedCourseCode = "C" + randomNumber;
+		return generatedCourseCode;
 	}
 	
 	
