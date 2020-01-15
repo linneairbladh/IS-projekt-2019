@@ -21,15 +21,6 @@ public class Student {
 		this.setName(sName);
 		}
 
-
-		//Skapa ett studentID
-		public String generateStudentID() {
-			Random random = new Random(); //Man importerar denna 
-			int randomInt = random.nextInt(90000) + 10000; // Gör ett random nummer mellan 10000 and 99999
-			String studentID = "S" + randomInt; //Som börjar på S 
-			return studentID; //Metoden Returner
-		}
-	
 	//Set + get
 	public String getStudentID() {
 		return studentID;
@@ -79,9 +70,9 @@ public class Student {
 	
 	public void removeWrittenExam(String examID) {
 		WrittenExam remove = new WrittenExam();
-		for (WrittenExam tmpExam : writtenExams) {
-			if (tmpExam.getExamID().equals(examID)) {
-				remove = tmpExam;
+		for (WrittenExam exam : writtenExams) {
+			if (exam.getExamID().equals(examID)) {
+				remove = exam;
 			}
 		}
 		writtenExams.remove(remove); //Tar bort prov
@@ -95,6 +86,12 @@ public class Student {
 			}
 			return null;
 		}
-
+	//Skapa ett studentID
+	public String generateStudentID() {
+		Random random = new Random(); //Man importerar denna 
+		int randomInt = random.nextInt(90000) + 10000; // Gör ett random nummer mellan 10000 and 99999
+		String generatedStudentID = "S" + randomInt; //Som börjar på S 
+		return generatedStudentID; 
+	}
 }
 

@@ -7,7 +7,6 @@ public class Result {
 	private Student student; // Association till student
 	private WrittenExam writtenExam;
 
-
 	public void setResult(int result) {
 		int maxPoints = 100; //Max points är alltid 100
 		//Räknar ut betyget som resultatet ger 
@@ -37,29 +36,23 @@ public class Result {
 	public int getResult() {
 		return result; 
 	}
-	
 	public void setLetterGrade(String letterGrade) {
 		this.letterGrade = letterGrade; 
 	}
-	
 	public String getLetterGrade() {
 		return letterGrade;
 	}
 
 	// Metoder för att sätta associationen 
-	
 	public Student getStudent() {
 		return student;
 	}
-
 	public void setStudent(Student student) {
 		this.student = student;
 	}
-	
 	public WrittenExam getWrittenExam() {
 		return writtenExam;
 	}
-	
 	public void setWrittenExam(WrittenExam writtenExam) {
 		this.writtenExam = writtenExam;
 	}

@@ -7,7 +7,7 @@ public class StudentRegister {
 	
 	private ArrayList <Student> studentRegisterList = new ArrayList <Student>();
 	
-	//Add, find, remove, validate and update Student
+	//Lägg till, hitta, ta bort, validera och uppdatera student
 	public void addStudent(Student newStudent) {
 		this.studentRegisterList.add(newStudent); //Lägger till en student i studentregisterlistan
 	}
@@ -21,17 +21,17 @@ public class StudentRegister {
 		return null; 
 	}
 	
-	public String validateStudentID(Student newStudent)	{
-		for (Student tmp : studentRegisterList) {
-			if (tmp == newStudent) { 			
+	public String validateStudentID(Student newStudent)	{ //Validerar studentID och om det inte är validerat så görs ett nytt id och valideras igen
+		for (Student student : studentRegisterList) {
+			if (student == newStudent) { 			
 				continue;
 			}
-			while (tmp.getStudentID().equals(newStudent.getStudentID())){
+			while (student.getStudentID().equals(newStudent.getStudentID())){
 				String studentID = newStudent.generateStudentID();
 				newStudent.setStudentID(studentID);
 			}
 		}
-		return newStudent.getStudentID();				//Validerar studentID, om det inte är validerat så genereras ett nytt id och valideras igen
+		return newStudent.getStudentID();				
 	}
 
 	public Student removeStudent(String studentID) {
@@ -54,7 +54,7 @@ public class StudentRegister {
 		newStudent.setStudentID(newStudentID);
 	}
 	
-	public void removeResult(Result result) {				//Removes a result for every student that has that result. Not ideal but prevents app from crashing when an exam is removed and the student still has a result
+	public void removeResult(Result result) { //Tar bort resultet från student				
 		Result remove = new Result();
 		for (Student student : studentRegisterList) {
 			remove = result;

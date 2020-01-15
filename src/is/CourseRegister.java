@@ -9,7 +9,6 @@ public class CourseRegister {
 	public ArrayList<Course> getCourseRegisterList() {
 		return courseRegisterList;
 	}
-
 	public void setCourseRegisterList(ArrayList<Course> courseRegisterList) {
 		this.courseRegisterList = courseRegisterList;
 	} 
@@ -25,13 +24,12 @@ public class CourseRegister {
 			}
 		}
 		return null;
-		
 	}
-
-	public Course updateCourse(Course c, String newcourseCode, String newname, double newcredits) {
-		c.setCourseCode(newcourseCode);
-		c.setName(newname);
-		c.setCredits(newcredits);
+	
+	public Course updateCourse(Course c, String newCourseCode, String newName, double newCredits) {
+		c.setCourseCode(newCourseCode);
+		c.setName(newName);
+		c.setCredits(newCredits);
 			return c;
 	}
 	
@@ -42,29 +40,29 @@ public class CourseRegister {
 		}
 		return c; 
 	}
-
+	
 	public WrittenExam findWrittenExam(String examID) {
-		for (Course tmp : courseRegisterList) {
-			for (WrittenExam tmpExam : tmp.getWrittenExamList() ) {
-				if(tmpExam.getExamID().equals(examID)) {
-					return tmpExam;
+		for (Course course : courseRegisterList) {
+			for (WrittenExam exam : course.getWrittenExamList() ) {
+				if(exam.getExamID().equals(examID)) {
+					return exam;
 				}
 			}
 		}
 		return null;
 	}
-
-	public String validateCourseCode(Course c)	{
-		for (Course tmp : courseRegisterList) {
-			if (tmp == c) { 			
+	
+	public String validateCourseCode(Course c)	{ //Denna validerar en kurskod och m den inte är unik skapas en ny och den valideras
+		for (Course course : courseRegisterList) {
+			if (course == c) { 			
 				continue;
 			}
-			while (tmp.getCourseCode().equals(c.getCourseCode())){
+			while (course.getCourseCode().equals(c.getCourseCode())){
 				String courseCode = c.generateCourseCode();
 				c.setCourseCode(courseCode);;
 			}
 		}
-		return c.getCourseCode();				//Validerar en kurskod. Om den inte är unik skapas en ny och valideras
+		return c.getCourseCode();				
 	}
 
 	public String validateExamID(WrittenExam newExam) {

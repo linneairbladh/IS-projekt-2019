@@ -14,13 +14,6 @@ public class WrittenExam {
 	private ArrayList<Result>examResult = new ArrayList<Result>();
 	private StudentRegister studentRegisterList = new StudentRegister();
 	
-	/*public WrittenExam(String examID, String time, String location, String date, int maxPoints) {
-		this.examID = examID; 
-		this.time = time; 
-		this.location = location; 
-		this.date = date; 
-		this.maxPoints = maxPoints; 
-	}*/
 
 	public String getExamID() {
 		return examID;
@@ -91,8 +84,8 @@ public class WrittenExam {
 	public String generateExamID() {
 		Random random = new Random();
 		int randomInt = random.nextInt(90000) + 10000; 		//Genererar ett random nummer mellan 1000 och 90000
-		String examID = "E" + randomInt;
-		return examID;
+		String generatedExamID = "E" + randomInt;
+		return generatedExamID;
 	}
 
 		

@@ -12,7 +12,6 @@ public class Controller {
 	Result newResult = new Result (); //Refererar till Result
 	WrittenExam writtenExam = new WrittenExam();
 	
-	
 	public Controller() {
 
 	Student s1 = new Student("Sol Grip Rösth","S11111"); //Skapar studenter och tilldelar attribut på värden genom constructorn 
@@ -41,7 +40,25 @@ public class Controller {
 	wr1.addStudent(s1); //Association written exam -> student
 	s1.addWrittenExam(wr1); //Association student -> written exam
 	
+	WrittenExam wr2 = new WrittenExam();
+	wr2.setExamID("E22222");    //Tilldelar värden på attributen 
+	wr2.setDate("04/03-20");
+	wr2.setLocation("Room A123");
+	wr2.setTime("09:00");
+	wr2.addStudent(s2); //Association written exam -> student
+	s2.addWrittenExam(wr2); //Association student -> written exam
+	
+	WrittenExam wr3 = new WrittenExam();
+	wr3.setExamID("E33333");    //Tilldelar värden på attributen 
+	wr3.setDate("04/03-20");
+	wr3.setLocation("Room A123");
+	wr3.setTime("13:00");
+	wr3.addStudent(s3); //Association written exam -> student
+	s3.addWrittenExam(wr3); 
+	
 	c1.addWrittenExam(wr1);//Lägger till exam på kurs
+	c1.addWrittenExam(wr2);//Lägger till exam på kurs
+	c1.addWrittenExam(wr3);//Lägger till exam på kurs
 	
 	Result r1 = new Result(); //Skapar resultat
 	r1.setResult(80);
@@ -66,19 +83,19 @@ public class Controller {
 	}
 	
 	public String findStudent(String studentID) {
-		 Student tmp = studentList.findStudent(studentID);
-		 if (tmp == null) {
+		 Student student = studentList.findStudent(studentID);
+		 if (student == null) {
 			 return null;
 		 }
-		 return tmp.getName();
+		 return student.getName();
 	 } 
 	 public void removeStudent(String studentID) { 
 		 studentList.removeStudent(studentID);	
 	 }
 
-	 public void updateStudent(String name, String studentID) {
-			Student tmp = studentList.findStudent(studentID);
-			tmp.setName(name);
+	 public void updateStudent(String sName, String studentID) {
+			Student newStudent = studentList.findStudent(studentID);
+			newStudent.setName(sName);
 	 }
 
 	 //Knappar på coursefliken
@@ -88,34 +105,33 @@ public class Controller {
 		 courseRegisterList.addCourse(newCourse);
 		 return courseRegisterList.validateCourseCode(newCourse);
 	 }
-	 //Void?
+
 	 public Course removeCourse(String courseCode) {
 		 return courseRegisterList.removeCourse(courseCode);
 	 }
 	 
 	 public String findCourse(String courseCode) {
-		 Course tmp = courseRegisterList.findCourse(courseCode);
-		if (tmp == null) {
+		 Course findCourse = courseRegisterList.findCourse(courseCode);
+		if (findCourse == null) {
 			return null;
 		}
-		return tmp.getName();
+		return findCourse.getName();
 	}
 	 
 	 public double getCourseCredit(String courseCode) {
-		 Course tmp = courseRegisterList.findCourse(courseCode);
-		if (tmp == null) {
+		 Course courseCredit = courseRegisterList.findCourse(courseCode);
+		if (courseCredit == null) {
 			return 0;
 		}
-		return tmp.getCredits();
+		return courseCredit.getCredits();
 	}
 	  
 	public String generateExamID() {
-			WrittenExam tmp = new WrittenExam();
-			String examID = tmp.generateExamID();
+			WrittenExam generatedExamID = new WrittenExam();
+			String examID = generatedExamID.generateExamID();
 			return examID;
-		}
+	}
 
-	
 	public void updateCourseCredit(String courseCode, double credits) {
 			Course newCourse = courseRegisterList.findCourse(courseCode);
 			newCourse.setCredits(credits); //Uppdaterar credit på en kurs 
@@ -135,21 +151,21 @@ public class Controller {
 	}
 	
 	public String generateCourseCode() {
-			Course tmp = new Course("", "", 0);
-			String courseCode = tmp.generateCourseCode();
+			Course generatedCourseCode = new Course("", "", 0);
+			String courseCode = generatedCourseCode.generateCourseCode();
 			return courseCode;
 		}
 		
 	 //Knappar från WrittenExam-fliken
-	 //"Add/remove exam for course:
+	 //Lägg till/ta bort prov för kurs:
 	 public String addWrittenExam(String courseCode, String examID, String time, String location, String date) {
 		WrittenExam newExam = new WrittenExam();
 		Course course = courseRegisterList.findCourse(courseCode);
 		newExam.setCourse(course);
+		newExam.setExamID(examID);
 		newExam.setDate(date);
 		newExam.setTime(time);
 		newExam.setLocation(location);
-		newExam.setExamID(examID);
 		course.addWrittenExam(newExam);
 		return courseRegisterList.validateExamID(newExam); //Lägger till och returnerar ett validerat ExamID
 		}
@@ -178,6 +194,15 @@ public class Controller {
 				course.removeWrittenExam(examID);
 			}
 		}
+	 
+	 public int getExamMaxPoints(String examID) {
+			WrittenExam exam = courseRegisterList.findWrittenExam(examID);
+			if (exam == null){
+				return 0;
+			}
+			return exam.getMaxPoints();
+			
+		}	
 
 	 
 	//Knapp för Register Exam  for Student
@@ -191,26 +216,8 @@ public class Controller {
 			student.addResult(newResult);
 			writtenExam.addResult(newResult);
 			return newResult.getLetterGrade();
-			}
+			}	 
 	 
-	 
-	 public int getExamMaxPoints(String examID) {
-			WrittenExam tmpExam = courseRegisterList.findWrittenExam(examID);
-			if (tmpExam == null){
-				return 0;
-			}
-			return tmpExam.getMaxPoints();
-			
-		}	 
-	 
-	 public String getExamDate(String examID) {
-			WrittenExam tmpExam = courseRegisterList.findWrittenExam(examID);
-			if (tmpExam == null){
-				return null;
-			}
-			
-			return tmpExam.getDate();
-		}
 }
 
 	
